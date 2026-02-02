@@ -1,0 +1,51 @@
+﻿.wrapper {
+    max-width: 112.5rem;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem;
+}
+
+.grid {
+    --grid-min-size: 150px;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(var(--grid-min-size), 1fr));
+    gap: 0.5rem;
+}
+
+.item {
+    background: linear-gradient(to top left, #ffffff, #ffffff);
+    color: black;
+    text-align: center;
+    padding: 1rem 0rem 1rem 0.2rem;
+    border-radius: 0.5rem;
+    /* height: 100px; */
+    box-shadow: 0rem 0rem 0.1rem 0.1rem hsl(0deg 0% 0% / 10%);
+}
+
+.blue {
+    color: blue;
+}
+
+.item::-webkit-scrollbar {
+    display: none;
+}
+
+.cl10 {
+    font-size: 10px;
+}
+
+.cl20 {
+    font-size: 20px;
+}
+
+
+/*Trigger Button*/
+
+.login-trigger {
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(to bottom right, #B05574, #F87E7B);
+    padding: 15px 30px;
+    border-radius: 30px;
+    position: relative;
+    top: 50%;
+}

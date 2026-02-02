@@ -1,0 +1,219 @@
+﻿body {
+    margin: 2px 0;
+    /* Use system font to render text faster and accurately */
+    /* https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/#what-to-do-today */
+    font-family:
+      -apple-system,      /* iOS Safari, macOS Safari, macOS Firefox (San Francisco) */
+      BlinkMacSystemFont, /* macOS Chrome (San Francisco) */
+      "Segoe UI",         /* Windows */
+      Roboto,             /* Android, Chrome OS */
+      Oxygen-Sans,        /* KDE */
+      Ubuntu,             /* Ubuntu */
+      Cantarell,          /* GNOME */
+      "Helvetica Neue", Arial, sans-serif; /* Fallback */
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  
+  h3 {
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  
+  .breakpoints {
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .fontsize {
+    margin-bottom: 7px;
+    text-align: center;
+  }
+  
+  .table {
+    position: relative;
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .thead {
+    display: table-header-group;
+  }
+  
+  .tbody {
+    display: table-row-group;
+  }
+  
+  .tr {
+      display: table-row;
+    border: 1px solid #bfc5c6;
+  }
+
+  
+  .thead > .tr {
+    color: #333;
+    font-weight: bolder;
+    background-color: #dfe2e2;
+  }
+  
+  .tbody > .tr {
+    color: #555;
+  }
+  
+  .tbody > .tr:hover {
+    color: #000;
+    cursor: pointer;
+    background-color: #eef0f1;
+  }
+  
+  .td {
+    display: table-cell;
+  }
+  
+  .thead .td {
+    padding: .4rem 10px;
+  }
+  
+  .tbody .td {
+    padding: .55rem 10px;
+  }
+  
+  .thead .td-check, .tbody .td-check  {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .td-role {
+    color: #713e86;
+  }
+  .td-app {
+    color: #396f93;
+  }
+  .td-env {
+    color: #377b6e;
+  }
+  .td-loc {
+    color: #966d3b;
+  }
+  
+  @supports (display: grid) and (not (display: -ms-grid)) {
+    .thead, .tbody {
+      display: grid;
+      grid-auto-flow: row;
+      grid-auto-rows: min-content;
+    }
+    
+    .thead {
+      position: sticky;
+      top: -2px;
+      box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    }
+    
+    .tr {
+      display: grid;
+      grid-column-gap: 10px;
+      grid-template: 
+        "pairstatus name role app env loc last1 last2 last3 last" /
+         minmax(200px, 1fr) minmax(120px, 2fr) minmax(120px, 1fr) minmax(120px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) minmax(100px, 1.5fr) minmax(100px, 1.5fr) minmax(100px, 1.5fr) minmax(100px, 1.5fr);
+      align-content: start;
+      align-items: start;
+    }
+    
+    .thead > .tr {
+      padding: .4rem 0;
+    }
+    
+    .tbody > .tr {
+      padding: .55rem 0;
+    }
+    
+    .thead .td, .tbody .td {
+      padding: 0;
+    }
+    
+    .td-pairstatus {
+      grid-area: pairstatus;
+    }
+    .td-name {
+      grid-area: name;
+    }
+    .td-role {
+      grid-area: role;
+    }
+    .td-app {
+      grid-area: app;
+    }
+    .td-env {
+      grid-area: env;
+    }
+    .td-loc {
+      grid-area: loc;
+    }
+    .td-last1 {
+      grid-area: last1;
+    }
+    .td-last2 {
+      grid-area: last2;
+    }
+    .td-last3 {
+      grid-area: last3;
+    }
+    .td-last {
+      grid-area: last;
+    }
+    
+    @media (max-width: 960px) {
+      .tr {
+          grid-template: 
+            "check pairstatus app  env last" 
+            "..... name       role loc last" /
+            auto minmax(120px, 2fr) minmax(80px, 1fr) minmax(80px, 1fr) minmax(100px, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .tr {
+          align-items: start;
+          grid-template: 
+            "check pairstatus app  last" min-content
+            "..... name       env  last" min-content
+            "..... name       role last" min-content
+            "..... name       loc  last" min-content /
+             minmax(120px, 2fr) minmax(80px, 1fr) minmax(80px, 1fr);
+      }
+    }
+  
+    @media (max-width: 480px) {
+      .tr {
+          grid-template: 
+            "check pairstatus app" 
+            "..... last       env"
+            "..... name       role"
+            "..... name       loc"/
+             minmax(120px, 1.5fr) minmax(80px, 1fr);
+      }
+    }
+  }
+  
+  /* 13px @ 480px increasing to 16px @ 2560px */
+  @media (min-width: 480px) and (max-width: 2560px) {
+    :root {
+      font-size: calc(16px * 0.8125 + ((1vw - 4.8px) * 0.1442));
+      /* Where: * 0.1442 = 100 * font_Size_Difference / viewport_Width_Difference */
+    }
+  }
+  /* Prevent font scaling beyond this breakpoint */
+  @media (max-width: 480px) {
+    :root {
+      font-size: 13px;
+    }
+  }
+  @media (min-width: 2560px) {
+    :root {
+      font-size: 16px;
+    }
+  }
+  @media (max-width: 960px) {
+    body {
+      font-weight: 300;
+    }
+  }

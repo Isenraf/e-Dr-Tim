@@ -1,0 +1,421 @@
+@model BANA.Models.Fiche5
+
+@{
+    ViewData["Title"] = "Create";
+    Layout="_Layout3";
+}
+<script src="/template2/assets/js/chart.js"></script>
+
+    <style>
+      .svg-wrapper {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-top: 8px;
+      }
+
+      @@media print {
+        body * {
+          visibility: hidden;
+        }
+
+        .card,
+        .card * {
+          visibility: visible;
+        }
+
+        .card {
+          position: absolute;
+          left: 0;
+          top: 0;
+          box-shadow: none;
+        }
+
+        /* Hide buttons */
+        .card button {
+          visibility: hidden !important;
+        }
+      }
+    </style>
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a href="index.html">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">
+                Tableau de bord
+            </li>
+        </ol>
+        <!-- Breadcrumb ends -->
+
+        <!-- Sales stats starts -->
+        <div class="ms-auto d-lg-flex d-none flex-row">
+            <div class="d-flex flex-row gap-1 day-sorting">
+                <button class="btn btn-sm btn-primary">Aujourd'hui</button>
+                <button class="btn btn-sm">7j</button>
+                <button class="btn btn-sm">2s</button>
+                <button class="btn btn-sm">1m</button>
+                <button class="btn btn-sm">3m</button>
+                <button class="btn btn-sm">6m</button>
+                <button class="btn btn-sm">1A</button>
+            </div>
+        </div>
+        <!-- Sales stats ends -->
+    </div>
+    <!-- App Hero header ends -->
+
+    <!-- App body starts -->
+    <div class="app-body">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">FICHE OPHTALMOLOGIE</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="">
+                        <div class="d-flex mb-3">
+                            <!-- Stats starts -->
+                            <div class="d-flex align-items-center flex-wrap gap-4">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h4 class="mb-1">Carole</h4>
+                                        <p class="m-0">Nom du patient</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h4 class="mb-1">205</h4>
+                                        <p class="m-0">Chambre</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h4 class="mb-1">1</h4>
+                                        <p class="m-0">Lit</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <h4 class="mb-1">13/08/2025</h4>
+                                        <p class="m-0">Date d'Entrée</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="svg-wrapper">
+                            <svg class="right" width="350" height="350" viewBox="0 0 500 500">
+                                <circle cx="250" cy="250" r="200" fill="none" stroke="black" />
+                            </svg>
+
+                            <svg class="left" width="350" height="350" viewBox="0 0 500 500">
+                                <circle cx="250" cy="250" r="200" fill="none" stroke="black" />
+                            </svg>
+                        </div>
+
+                        <div class="table-responsive mb-3">
+                            <table class="table table-bordered truncate m-0 text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Œil</th>
+                                        <th>Distance</th>
+                                        <th>
+                                            SPH <br />
+                                            (Sphère)
+                                        </th>
+                                        <th>
+                                            CYL <br />
+                                            (Cylindre)
+                                        </th>
+                                        <th>AXE</th>
+                                        <th>
+                                            ADD <br />
+                                            (Addition)
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <th rowspan="2">Droit</th>
+                                        <th>Loin</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="axe" data-eye="right"></td>
+                                        <td rowspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Près</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="axe" data-eye="right"></td>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2">Gauche</th>
+                                        <th>Loin</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="axe" data-eye="left"></td>
+                                        <td rowspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Près</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="axe" data-eye="left"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <section class="p-3" style="border-bottom: 2px dashed;">
+                            <h6>REMARQUES:</h6>
+                            <div>
+                                <ul style="list-style: none;">
+                                    <li>
+                                        <strong>Lunettes vertex</strong>:
+                                        <span class="editable" style="display: inline-block; width: 50px; border-bottom: 1px solid;"></span>
+                                        mm (standard = 12)
+                                    </li>
+                                    <li>
+                                        <strong>Note:</strong>
+                                        <p class="border editable" style="height: 100px;"></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section style="border-bottom: 2px dashed;" class="row gx-3 p-3">
+                            <h6>EQUIPEMENT</h6>
+                            <div class="col-sm-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="" />
+                                    <label class="form-check-label" for="">UNIFOCAL</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="" />
+                                    <label class="form-check-label" for="">FILTRE DE RYSER - Calibrage(densite)</label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div>
+                                    <strong>OBTURATEUR</strong>
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Avec coquille et ventouse</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Avec micropores</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div>
+                                    <strong>TEINTE FIXE</strong>
+
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Sans filtre medical</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Avec filtre medical</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div>
+                                    <strong>PRISME</strong>
+
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Taille dans le verre - diplopie</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Fresnel</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div>
+                                    <strong>PHOTOCHROMATIQUE</strong>
+
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Sans filtre medical</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Avec filtre medical</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div>
+                                    <strong>MULTIFOCAL</strong>
+
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Bifocal</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Progressif</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Trifocal</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="" />
+                                        <label class="form-check-label" for="">Non specifie</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="row gx-3 p-3">
+                            <p class="col-sm-6">
+                                (*) INDICATION MEDICALE selon Art 30 de la nomenclature (POUR FILTRE MEDICAL AVEC ABSORPTION PREDETERMINEE DE LA LUMIERE BLEUE ET FILTRE MEDICAL AVEC TEINTE FIXE)
+                            </p>
+                        </section>
+
+                        <section class="row gx-3 p-3">
+                            <div class="col-sm-6">
+                                <span>CACHET DU PRESCRIPTEUR</span>
+                                <p></p>
+                            </div>
+
+                            <div style="height: 100px;" class="col-sm-6 border">
+                                <span>SIGNATURE + DATE</span>
+                                <p></p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- App body ends -->
+</div>
+
+
+<!-- My script -->
+    <script>
+      const tds = document.querySelectorAll("td");
+      const edits = document.querySelectorAll(".editable");
+
+      tds.forEach((td) => {
+        td.contentEditable = true;
+      });
+
+      edits.forEach((td) => {
+        td.contentEditable = true;
+      });
+    </script>
+
+    <script>
+      const svgs = document.querySelectorAll("svg");
+      const cx = 250,
+        cy = 250,
+        r = 200;
+
+      // --- Dessine le cercle + graduations ---
+      svgs.forEach((svg) => {
+        for (let angle = 0; angle < 360; angle += 10) {
+          const rad = (angle * Math.PI) / 180;
+          const x = cx + r * Math.sin(rad);
+          const y = cy - r * Math.cos(rad);
+
+          const line = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+          line.setAttribute("x1", cx);
+          line.setAttribute("y1", cy);
+          line.setAttribute("x2", x);
+          line.setAttribute("y2", y);
+          line.setAttribute("stroke", "black");
+          line.setAttribute("stroke-width", "1");
+          svg.appendChild(line);
+
+          // Texte
+          const tx = cx + (r + 20) * Math.sin(rad);
+          const ty = cy - (r + 20) * Math.cos(rad);
+          const text = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "text"
+          );
+          text.setAttribute("x", tx);
+          text.setAttribute("y", ty);
+          text.setAttribute("font-size", "12");
+          text.setAttribute("text-anchor", "middle");
+          text.setAttribute("dominant-baseline", "middle");
+          text.setAttribute("fill", "black");
+          text.textContent = angle + "°";
+          svg.appendChild(text);
+        }
+
+        // Crée la ligne rouge par défaut (0°)
+        const redLine = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "line"
+        );
+        redLine.classList.add("axe-line");
+        redLine.setAttribute("x1", cx);
+        redLine.setAttribute("y1", cy);
+        redLine.setAttribute("x2", cx);
+        redLine.setAttribute("y2", cy - r);
+        redLine.setAttribute("stroke", "red");
+        redLine.setAttribute("stroke-width", "3");
+        svg.appendChild(redLine);
+      });
+
+      // --- Fonction pour mettre à jour la ligne rouge ---
+      function updateAxe(svg, angle) {
+        const rad = (angle * Math.PI) / 180;
+        const x = cx + r * Math.sin(rad);
+        const y = cy - r * Math.cos(rad);
+
+        const redLine = svg.querySelector(".axe-line");
+        redLine.setAttribute("x2", x);
+        redLine.setAttribute("y2", y);
+      }
+
+      // --- Rendre les cellules AXE éditables ---
+      const axeCells = document.querySelectorAll(".axe");
+      axeCells.forEach((cell) => {
+        cell.contentEditable = true;
+        cell.addEventListener("input", () => {
+          const angle = parseFloat(cell.textContent);
+          if (!isNaN(angle)) {
+            const svg = document.querySelector("svg." + cell.dataset.eye);
+            updateAxe(svg, angle);
+          }
+        });
+      });
+    </script>

@@ -1,0 +1,280 @@
+@model BANA.Models.Dmi
+
+@{
+    ViewData["Title"] = "Details";
+    Layout="_Layout3";
+}
+
+<style>
+    .feed-item {
+    display: none;
+    }
+    .btn-updated {
+    background-color: #95d9bb !important;
+    border-color: #95d9bb !important;
+    }
+</style>
+
+<style>
+  .card{
+  margin: auto;
+  width: 21cm;
+  height: 29.7cm; 
+  background-image: url('/img1/pppp2.jpg');
+  background-repeat: round;
+
+  }
+</style>
+
+<!-- CSS page-->
+    <style>
+      ::selection {
+        background: rgba(187, 134, 252, 0.5);
+        color: #fff;
+      }
+
+      .container {
+        
+        padding: 50px 40px;
+        border-radius: 12px;
+
+      }
+
+      .container .topic {
+        font-size: 30px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .content .list {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 25%;
+        margin-right: 20px;
+      }
+
+      .content .text-content {
+        width: 75%;
+        height: 100%;
+      }
+
+      .content .text {
+        display: none;
+      }
+
+      .content .text.active {
+        display: block;
+      }
+
+      .content .text .title {
+        font-size: 25px;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .container .text p {
+        text-align: justify;
+      }
+    </style>
+
+        <!-- App container starts -->
+        <div class="app-container">
+            <!-- App hero header starts -->
+            <div class="app-hero-header d-flex align-items-center">
+                <!-- Breadcrumb starts -->
+                
+                
+                <!-- Breadcrumb ends -->
+
+                <!-- Sales stats starts -->
+                <div class="d-lg-flex d-none flex-row">
+                    <div class="d-flex flex-row gap-1 day-sorting">
+                        
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                <i class="ri-account-circle-line fs-3"></i>
+                            </div>
+                                <div>
+                                    <p class="m-0">Nom du patient</p>
+                                    <h5 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    @if(ViewBag.patient.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                </div>
+                                <div>
+                                    <p class="m-0">Genre</p>
+                                    <h5 class="mb-1">@ViewBag.patient.Genre</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-arrow-right-up-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Âge du patient</p>
+                                    <h5 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-contrast-drop-2-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Groupe sanguin</p>
+                                    <h5 class="mb-1">@ViewBag.patient.GroupeSanguin</h5>
+                                    
+                                </div>
+                            </div>
+                                       
+                    </div>
+                </div>
+                <!-- Sales stats ends -->
+            </div>
+            <!-- App Hero header ends -->
+            
+            
+                <br>
+              <div style="padding: 30px;" class="row">
+               
+
+        <div id="zoneAImprimer" class="container bg-white border shadow-sm card">
+        <br><br><br><br><br><br><br>
+            <!-- Header -->
+            
+            <h2 style="color: #2ea948;text-align: center;">Ordonnance</h2>
+
+            <!-- Infos Patient -->
+            <div class="p-3">
+              <div style="color: #2ea948;" class="fw-bold">INFORMATIONS PATIENT</div>
+             <strong>Nom:</strong>  @ViewBag.patient.Nom @ViewBag.patient.Prenom, <strong>Sexe:</strong> @ViewBag.patient.Genre, <strong>ÂGE:</strong> @((int)((DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365)) ans  @((int)(((DateTime.Now-ViewBag.patient.DateNaissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays)%365)%30) jours
+             
+            </div>
+
+            <div style="color: #2ea948;" class="fw-bold">Liste d'Examens</div>
+            <!-- Examens complémentaires -->
+            <div id="examcom" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[7])
+            </div>
+
+            
+            <div style="color: #2ea948;" class="fw-bold">Médicaments</div>
+            <!-- Traitement -->
+            <div id="rapptraitement" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[9])
+            </div>
+
+          
+
+            <!-- Footer -->
+            
+          </div>
+
+
+              </div>
+              
+            </div>
+            <!-- App body ends -->
+
+
+
+
+            <!-- JS pour affichage titre rapport -->
+    <script>
+      function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        let visible = false;
+
+        // Vérifier tous les spans
+        section.querySelectorAll("span").forEach((el) => {
+          if (el.textContent.trim() !== "") visible = true;
+        });
+
+        // Vérifier toutes les cellules de tableau
+        section.querySelectorAll("td").forEach((el) => {
+          if (el.textContent.trim() !== "") visible = true;
+        });
+
+        // Vérifier tous les divs qui contiennent du texte (pas les titres)
+        section.querySelectorAll("div").forEach((el) => {
+          if (!el.classList.contains("bg-info") && el.textContent.trim() !== "") visible = true;
+        });
+
+        // Afficher ou cacher la section
+        section.classList.toggle("d-none", !visible);
+      }
+
+      function updateAllSections() {
+        document.querySelectorAll(".rapport-section").forEach((sec) => {
+          toggleSection(sec.id);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", updateAllSections);
+
+      // Mise à jour à chaque saisie ou changement
+      document.addEventListener("input", updateAllSections);
+      document.addEventListener("change", updateAllSections);
+
+      // Observer les changements dynamiques
+      const observer = new MutationObserver(updateAllSections);
+      document.querySelectorAll(".rapport-section").forEach((sec) => {
+        observer.observe(sec, { childList: true, subtree: true });
+      });
+    </script>
+
+   
+   <script>
+function imprimerDiv(divId) {
+    // Taille de la fenêtre
+    var width = 800;
+    var height = 600;
+
+    // Calcul pour centrer la fenêtre
+    var left = (window.screen.width / 2) - (width / 2);
+    var top = (window.screen.height / 2) - (height / 2);
+
+    // Ouvre la fenêtre centrée
+    var fenetreImpression = window.open(
+        '',
+        '',
+        `width=${width},height=${height},top=${top},left=${left}`
+    );
+
+    // Contenu à imprimer
+    var contenu = document.getElementById(divId).innerHTML;
+
+    // Copie le CSS de la page
+    var styles = "";
+    document.querySelectorAll("link[rel='stylesheet'], style").forEach((node) => {
+        styles += node.outerHTML;
+    });
+
+    // Ajoute un padding pour l'impression
+    styles += `<style>body { padding: 20px; }</style>`;
+
+    // Écrit la page avec le CSS + padding
+    fenetreImpression.document.write('<html><head><title>Impression</title>');
+    fenetreImpression.document.write(styles);
+    fenetreImpression.document.write('</head><body>');
+    fenetreImpression.document.write(contenu);
+    fenetreImpression.document.write('</body></html>');
+
+    fenetreImpression.document.close();
+    fenetreImpression.print();
+}
+</script>

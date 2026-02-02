@@ -1,0 +1,62 @@
+@model BANA.Models.Tache
+
+@{
+    ViewData["Title"] = "Nos centres";
+}
+<div class="container-fluid">
+  <div class="block-header">
+    <div class="row clearfix">
+      <div class="col-lg-4 col-md-12 col-sm-12">
+        <h1>Policlinique de Poitiers</h1>
+        <span>Nos centres, Douala-Cameroun</span>
+      </div>
+      <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+        <div class="d-flex align-items-center justify-content-md-end mt-4 mt-md-0 flex-wrap vivify pullUp delay-550">
+          <div class="mb-3 mb-xl-0">
+            <button onclick="location.href='/Contact/Index';" class="btn btn-primary" title="Nos contacts">Nos contacts</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="card theme-bg gradient">
+        <div class="body">
+          <div class="row text-center">
+            <div class="col-lg-2 col-md-4 border-right pb-4 pt-4">
+              <label class="mb-0">Australie</label>
+              <h4 class="font-30 font-weight-bold text-col-blue">00</h4>
+            </div>
+            <div class="col-lg-2 col-md-4 border-right pb-4 pt-4">
+              <label class="mb-0">Amérique</label>
+              <h4 class="font-30 font-weight-bold text-col-blue">00</h4>
+            </div>
+            <div class="col-lg-2 col-md-4 border-right pb-4 pt-4">
+              <label class="mb-0">Europe</label>
+              <h4 class="font-30 font-weight-bold text-col-blue">00</h4>
+            </div>
+            <div class="col-lg-2 col-md-4 border-right pb-4 pt-4">
+              <label class="mb-0">Asie</label>
+              <h4 class="font-30 font-weight-bold text-col-blue">00</h4>
+            </div>
+            <div class="col-lg-2 col-md-4 border-right pb-4 pt-4">
+              <label class="mb-0">Afrique</label>
+              <h4 class="font-30 font-weight-bold text-col-blue">01</h4>
+            </div>
+            <div class="col-lg-2 col-md-4 pb-4 pt-4">
+              <label class="mb-0">Autres</label>
+              <h4 class="font-30 font-weight-bold text-col-blue">00</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="body">
+          <div id="world-map-markers" style="height: 300px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

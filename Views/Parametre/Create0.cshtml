@@ -1,0 +1,174 @@
+@model BANA.Models.Parametre
+
+@{
+    ViewData["Title"] = "Create";
+    Layout="_Layout3";
+}
+
+<style>
+
+svg, #input {
+	display:block;
+	width: 90vw;
+	max-width: 600px;
+	height: auto;
+	max-height: 50vh;
+}
+
+#app {
+	display:flex;
+	flex-flow: column nowrap;
+	align-items: center;
+}
+
+#input {
+	text-align: center;
+	padding: 0.4em 0;
+	border:none;
+	outline:none;
+	font-size: 2.2em;
+	text-transform: uppercase;
+}
+#input:hover {
+	opacity:0.75;
+}
+</style>
+
+
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">Prise des Paramètres</li>
+        </ol>
+        <!-- Breadcrumb ends -->
+    </div>
+    <!-- App Hero header ends -->
+
+
+    
+
+    <!-- App body starts -->
+    <div class="app-body">
+        <!-- Row starts -->
+        <div class="row gx-3">
+            <div class="col-sm-12">
+        <div class="card" style="min-height: 600px;">
+          <div class="card-header mb-3">
+            <h5 style="color: #0c90ac;" class="card-title"></h5>
+          </div>
+          <div class="card-body">
+           <div id="app">
+              <div id="svg"></div>
+              <input id="input" id="codeBarre" type="text" />
+              <input id="inputHidden" type="text" style="position:absolute; left:-9999px;" />
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <!-- Row ends -->
+    </div>
+    <!-- App body ends -->
+</div>
+<script>
+  const fill = '#333';
+const qscode = window.location.search.match(/code=([^&]*)/);
+const init_val = qscode ? decodeURI(qscode[1]) : 'Scannez la facture du patient';
+
+const bars = [
+  [1,0,0,0,1], [0,1,0,0,1], [1,1,0,0,0], [0,0,1,0,1], [1,0,1,0,0],
+  [0,1,1,0,0], [0,0,0,1,1], [1,0,0,1,0], [0,1,0,1,0], [0,0,1,1,0]
+];
+const spaces = [2, 3, 4, 1];
+const chars = '1234567890abcdefghijklmnopqrstuvwxyz-._*';
+
+const svgCreate = (tag, attrs) => {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (let k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+};
+
+const filter = (() => {
+  const neglist = chars.replace('-','');
+  const regex = new RegExp(`[^-${neglist}]`, 'g');
+  return (input) => input.replace(regex, '');
+})();
+
+const shape_padding = 7;
+const height = 100;
+
+const barcodeSVG = (input) => {
+  const svg = svgCreate('svg', {
+    width: 100,
+    height: 50, 
+    viewBox: '0 0 100 50'
+  });
+  const fulltext = filter(`*${input}*`);
+  let x = 0;
+  for (let i = 0, len = fulltext.length; i < len; i++) {
+    let index = chars.indexOf(fulltext[i].toLowerCase());
+    let space_index = ~~(index / 10);
+    let bar_index = index % 10;
+    let div = len + (len - 1) * (shape_padding / 100);
+    for (let j = 0; j < 5; j++) {
+      if (j === spaces[space_index]) x += shape_padding * 2 / div;
+      let width = bars[bar_index][j] ? 20 / div : 6 / div;
+      svg.appendChild(svgCreate('rect', { x, width, height, fill }));
+      x += width + (shape_padding / div);
+    }
+  }
+  return svg;
+};
+
+// Sélectionne les éléments
+const svg = document.getElementById('svg');
+const inputField = document.getElementById('input');        // input visible avec animation
+const inputHidden = document.getElementById('inputHidden'); // input invisible pour scan
+
+inputField.style.color = fill;
+
+// Fonction pour mettre à jour le SVG
+const update = () => {
+  const barcode = barcodeSVG(inputField.value);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  svg.appendChild(barcode);
+};
+
+inputField.addEventListener('input', update);
+
+// Animation de texte dans l'input visible
+(() => {
+  let i = 0;
+  let len = init_val.length;
+  const t = setInterval(() => {
+    inputField.value += init_val[i++];
+    update();
+    if (i === len) clearInterval(t);
+  }, 100);
+})();
+
+// Focus permanent sur l'input invisible pour capturer le scan
+inputHidden.focus();
+document.addEventListener("click", () => inputHidden.focus());
+
+// Quand le scan est détecté (souvent Enter à la fin)
+inputHidden.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    const scanned = inputHidden.value.trim();
+    if (scanned !== "") {
+      console.log(scanned); // <-- uniquement le code scanné
+       location.href="/Parametre/Create?nd="+scanned;
+      inputHidden.value = "";
+    }
+    e.preventDefault();
+  }
+});
+
+</script>

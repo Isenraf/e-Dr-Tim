@@ -1,0 +1,359 @@
+@model BANA.Models.Facture
+
+@{
+    ViewData["Title"] = "détails périodique";
+    int x=1;
+}
+
+<link rel="stylesheet" href="/template2/table/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/template2/table/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="/template2/table/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/template2/table/style.css" />
+<!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Détails Périodique
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+            <div class="card mb-3 px-2">
+              <div
+                class="card-header d-flex align-items-center justify-content-between"
+              >
+                <h5 class="card-title">
+                  Polyclinique de Poitiers<br /><h7
+                    style="font-size: 12px; color: #4c545e"
+                    >Détails de facturation périodique</h7
+                  >
+                </h5>
+              </div>
+              <br />
+
+              <div class="row gx-3 gy-3">
+                <div class="row gx-3">
+                  <form asp-action="comptadetailsp">
+                    <div class="d-flex gap-3">
+                      <div class="container">
+                        <div class="row g-3">
+                          <div class="col-md-6 col-12">
+                            <div class="card mb-3">
+                              <div class="form-control">
+                                <label class="form-label" for="a2">Date de début
+                                  <span class="text-danger">*</span></label>
+                                <input asp-for="Create_date" type="datetime-local" class="form-control" style="height: 50px; border: #c3dff1"/>
+                                <span asp-validation-for="Create_date" class="text-danger"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-12">
+                            <div class="card mb-3">
+                              <div class="form-control">
+                                <label class="form-label" for="a2">Date de fin</label>
+                                <input asp-for="Derniere_modification" type="datetime-local"  class="form-control" style="height: 50px; border: #c3dff1"/>
+                                <span asp-validation-for="Derniere_modification" class="text-danger"></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mx-3">
+                      <div style="display: flex; gap: 10px;margin-bottom: 20px;">
+                        <button type="submit" class="btn btn-info">
+                          <i class="ri-save-3-line"></i> Enregistrer
+                        </button>
+                        <div class="d-flex flex-wrap gap-2">
+                          <button type="reset" onclick="history.back()" class="btn btn-outline-primary">Annuler</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  
+                 
+                    <div  id="containerexample" >
+                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                      <thead class="">
+                        <tr>
+                          <th style="border: solid;white-space: nowrap;">Id</th>
+                          <th style="border: solid;white-space: nowrap;">Date</th>
+                          <th style="border: solid;white-space: nowrap;">N°Facture</th>
+                          <th style="border: solid;white-space: nowrap;">Patient</th>
+                          <th style="border: solid;white-space: nowrap;">Ligne de Facturation</th>
+                          <th style="border: solid;white-space: nowrap;">Montant Patient</th>
+                          <th style="border: solid;white-space: nowrap;">Montant Assurance</th>
+                          <th style="border: solid;white-space: nowrap;">Quantité</th>
+                          <th style="border: solid;white-space: nowrap;">MONTANT TOTAL</th>
+                          <th style="border: solid;white-space: nowrap;">Prescripteur</th>
+                          <th style="border: solid;white-space: nowrap;">Assurance</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-bordered">
+                              @foreach (var item in ViewBag.factures)
+                            {
+                              <tr>
+                                <td style="border: solid;white-space: nowrap;">@x</td>
+                                <td style="border: solid;white-space: nowrap;">@item.Create_date.ToShortDateString()</td>
+                                <td style="border: solid;white-space: nowrap;">@item.Numero_de_facture</td>
+                                <td style="border: solid;white-space: nowrap;">@item.Nom @item.Prenom</td>
+                                <td style="border: solid;white-space: nowrap; text-align:right;"></td>
+                                <td style="border: solid;white-space: nowrap;text-align:right;">@item.Net_a_payer_patient</td>
+                                <td style="border: solid;white-space: nowrap;text-align:right;">@item.Net_a_payer_assurance</td>
+                                <td style="border: solid;white-space: nowrap;text-align:right;"></td>
+                                <td style="border: solid;white-space: nowrap;text-align:right;">@(item.Net_a_payer_patient+item.Net_a_payer_assurance)</td>
+                                <td style="border: solid;white-space: nowrap;text-align:left;">@item.Medecin</td>
+                                <td style="border: solid;white-space: nowrap;text-align:left;">@item.Assureur</td>
+                              </tr>
+                              x++;
+                              {
+                                List<string> liste_de_facturation1 = new List<string>();
+            
+                                  int i=0;
+                                  string result="";
+                                  foreach(char c in item.Ligne_facturation1) {
+                                    
+                                    if(c.Equals('λ')){
+                                        if(i!=0){
+                                            liste_de_facturation1.Add(result);
+                                            result="";
+                                        }
+                                        
+                                    }else{
+                                        result+=c.ToString();
+                                    }
+                                    i++;
+                                    //Console.WriteLine(i+"-"+result);
+                                  }
+                                  
+
+                                  List<string> liste_de_facturation2 = new List<string>();
+                                  
+                                  i=0;
+                                  result="";
+                                  foreach(char c in item.Ligne_facturation2) {
+                                    
+                                    if(c.Equals('λ')){
+                                        if(i!=0){
+                                            liste_de_facturation2.Add(result);
+                                            result="";
+                                        }
+                                        
+                                    }else{
+                                        result+=c.ToString();
+                                    }
+                                    i++;
+                                    //Console.WriteLine(i+"-"+result);
+                                  }
+                                  
+
+                                  List<string> liste_de_facturation3 = new List<string>();
+                                  
+                                  i=0;
+                                  result="";
+                                  foreach(char c in item.Ligne_facturation3) {
+                                    
+                                    if(c.Equals('λ')){
+                                        if(i!=0){
+                                            liste_de_facturation3.Add(result);
+                                            result="";
+                                        }
+                                        
+                                    }else{
+                                        result+=c.ToString();
+                                    }
+                                    i++;
+                                    //Console.WriteLine(i+"-"+result);
+                                  }
+                                  
+
+                                  List<string> liste_de_facturation4 = new List<string>();
+                                  
+                                  i=0;
+                                  result="";
+                                  foreach(char c in item.Ligne_facturation4) {
+                                    
+                                    if(c.Equals('λ')){
+                                        if(i!=0){
+                                            liste_de_facturation4.Add(result);
+                                            result="";
+                                        }
+                                        
+                                    }else{
+                                        result+=c.ToString();
+                                    }
+                                    i++;
+                                    //Console.WriteLine(i+"-"+result);
+                                  }
+                                  
+                                if (item.Ligne_facturation1!="λ")
+                                {
+                                  for (int t = 0; t < liste_de_facturation1.Count-1; t+=7)
+                                  {
+                                    int x1=0;
+                                    int x2=0;
+                                    int x3=0;
+                                    int x4=0;
+                                    
+                                    if (liste_de_facturation1[t+2].Replace(" ","")!=""){int.TryParse(liste_de_facturation1[t+2].Replace(" ",""), out x1);}
+                                    if (liste_de_facturation1[t+4].Replace(" ","")!=""){int.TryParse(liste_de_facturation1[t+4].Replace(" ",""), out x2);}
+                                    if (liste_de_facturation1[t+3].Replace(" ","")!=""){int.TryParse(liste_de_facturation1[t+3].Replace(" ",""), out x3);}
+                                    if (liste_de_facturation1[t+6].Replace(" ","")!=""){int.TryParse(liste_de_facturation1[t+6].Replace(" ",""), out x4);}
+                                    
+                                    <tr>
+                                      <td style="border: solid;white-space: nowrap;">@x</td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap; text-align:left;">@liste_de_facturation1[t]</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(x4-(x1*x3/100))</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(x1*x3/100)</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(liste_de_facturation1[t+5])</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(liste_de_facturation1[t+6])</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:left;">@item.Medecin</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:left;">@item.Assureur</td>
+                                      
+                                    </tr>
+                                    x++;
+                                  }
+                                }
+
+                                if (item.Ligne_facturation2!="λ")
+                                {
+                                  
+                                  for (int t = 0; t < liste_de_facturation2.Count-1; t+=7)
+                                  {
+                                    int x1=0;
+                                    int x2=0;
+                                    int x3=0;
+                                    int x4=0;
+                                    
+                                    if (liste_de_facturation2[t+2].Replace(" ","")!=""){int.TryParse(liste_de_facturation2[t+2].Replace(" ",""), out x1);}
+                                    if (liste_de_facturation2[t+4].Replace(" ","")!=""){int.TryParse(liste_de_facturation2[t+4].Replace(" ",""), out x2);}
+                                    if (liste_de_facturation2[t+3].Replace(" ","")!=""){int.TryParse(liste_de_facturation2[t+3].Replace(" ",""), out x3);}
+                                    if (liste_de_facturation2[t+6].Replace(" ","")!=""){int.TryParse(liste_de_facturation2[t+6].Replace(" ",""), out x4);}
+                                    
+                                    <tr>
+                                      <td style="border: solid;white-space: nowrap;">@x</td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap; text-align:left;">@liste_de_facturation2[t]</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(x4-(x1*x3/100))</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(x1*x3/100)</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(liste_de_facturation2[t+5])</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(liste_de_facturation2[t+6])</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:left;">@item.Medecin</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:left;">@item.Assureur</td>
+                                      
+                                    </tr>
+                                    x++;
+                                  }
+                                }
+                                if (item.Ligne_facturation3!="λ")
+                                {
+                                  for (int t = 0; t < liste_de_facturation3.Count-1; t+=7)
+                                  {
+                                    int x1=0;
+                                    int x2=0;
+                                    int x3=0;
+                                    int x4=0;
+                                    
+                                    if (liste_de_facturation3[t+2].Replace(" ","")!=""){int.TryParse(liste_de_facturation3[t+2].Replace(" ",""), out x1);}
+                                    if (liste_de_facturation3[t+4].Replace(" ","")!=""){int.TryParse(liste_de_facturation3[t+4].Replace(" ",""), out x2);}
+                                    if (liste_de_facturation3[t+3].Replace(" ","")!=""){int.TryParse(liste_de_facturation3[t+3].Replace(" ",""), out x3);}
+                                    if (liste_de_facturation3[t+6].Replace(" ","")!=""){int.TryParse(liste_de_facturation3[t+6].Replace(" ",""), out x4);}
+                                    
+                                    <tr>
+                                      <td style="border: solid;white-space: nowrap;">@x</td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap; text-align:left;">@liste_de_facturation3[t]</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(x4-(x1*x3/100))</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(x1*x3/100)</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(liste_de_facturation3[t+5])</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(liste_de_facturation3[t+6])</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:left;">@item.Medecin</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:left;">@item.Assureur</td>
+                                      
+                                    </tr>
+                                    x++;
+                                  }
+                                }
+                                if (item.Ligne_facturation4!="λ")
+                                {
+                                  for (int t = 0; t < liste_de_facturation4.Count-1; t+=7)
+                                  {
+                                    int x1=0;
+                                    int x2=0;
+                                    int x3=0;
+                                    int x4=0;
+                                    
+                                    if (liste_de_facturation4[t+2].Replace(" ","")!=""){int.TryParse(liste_de_facturation4[t+2].Replace(" ",""), out x1);}
+                                    if (liste_de_facturation4[t+4].Replace(" ","")!=""){int.TryParse(liste_de_facturation4[t+4].Replace(" ",""), out x2);}
+                                    if (liste_de_facturation4[t+3].Replace(" ","")!=""){int.TryParse(liste_de_facturation4[t+3].Replace(" ",""), out x3);}
+                                    if (liste_de_facturation4[t+6].Replace(" ","")!=""){int.TryParse(liste_de_facturation4[t+6].Replace(" ",""), out x4);}
+                                    
+                                    <tr>
+                                      <td style="border: solid;white-space: nowrap;">@x</td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap;"></td>
+                                      <td style="border: solid;white-space: nowrap; text-align:left;">@liste_de_facturation4[t]</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(x4-(x1*x3/100))</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(x1*x3/100)</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(liste_de_facturation4[t+5])</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:right;">@(liste_de_facturation4[t+6])</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:left;">@item.Medecin</td>
+                                      <td style="border: solid;white-space: nowrap;text-align:left;">@item.Assureur</td>
+                                      
+                                    </tr>
+                                    x++;
+                                  }
+                                }
+                              }
+
+                              
+                            }
+                         
+                      </tbody>
+                    </table>
+                    <br />
+                    <br />
+                  </div>
+
+                 
+                </div>
+              </div>
+              <!-- App body ends -->
+            </div>
+          </div>
+
+          <div id="loadercontainer">
+            <div class="d-flex justify-content-center" id="loader" style="color: #126aef;">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+          </div>
+          
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+<input id="username" type="hidden" value="@ViewBag.user.nom" />
+
+

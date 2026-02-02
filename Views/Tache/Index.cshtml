@@ -1,0 +1,152 @@
+@model IEnumerable<BANA.Models.Tache>
+
+@{
+    ViewData["Title"] = "Tâches";
+}
+
+<div class="container-fluid">
+  <div class="block-header">
+    <div class="row clearfix">
+      <div class="col-xl-6 col-md-5 col-sm-12">
+        <h1>Salut, bienvenue !</h1>
+        <span>La liste de tâches, Juste faire,</span>
+      </div>
+      <div class="col-xl-6 col-md-7 col-sm-12 text-md-right">
+        <div class="d-flex align-items-center justify-content-md-end mt-4 mt-md-0 flex-wrap vivify pullUp delay-550">
+          <div class="mb-3 mb-xl-0">
+            <a href="setting.html" class="btn btn-default">Réglages</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <div class="col-12">
+      <div class="card">
+        <nav class="navbar navbar-expand-lg page_menu">
+          <a class="navbar-brand" href="#">M.</a>
+          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars text-muted"></i>
+          </button>
+          <div class="navbar-collapse collapse" id="navbarNavDropdown" style="">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="app-todo.html">Liste de choses à faire</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Fait</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Important</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Corbeille</a>
+              </li>
+            </ul>
+            <div class="ml-auto">
+              <button type="button" class="btn btn-primary theme-bg gradient" data-toggle="modal" data-target="#addtodo">Ajouter une tâche</button>
+            </div>
+          </div>
+        </nav>
+        <div class="body">
+          <div class="card">
+          <div class="body">
+            <form>
+              <div class="input-group">
+                <input type="search" id="search" class="form-control" placeholder="Barre de recherche...">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="search-mail">
+                    <i class="icon-magnifier"></i>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+          <ul id="testfiltre" class="todo_list list-unstyled">
+           @foreach (var item in Model)
+           {
+            <li class="montest">
+              <label class="fancy-checkbox">
+                <input type="checkbox" name="checkbox">
+                <span>
+                  <div class="d-flex justify-content-between">
+                    <span class="font-18 mb-1">@item.titre</span>
+                    <div>
+                      <a href="#" class="text-info mr-3" title="Rescheduled">
+                        <i class="fa fa-calendar"></i>
+                      </a>
+                      <a href="#" class="text-danger">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <small class="font-12 text-muted">
+                    <strong>Patient:</strong>@item.PatientId
+                    <span class="badge badge-secondary">34 age</span>
+                  </small>
+                  <p>
+                    <strong>Detail:</strong>imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.</p>
+                  <div class="avatar-list avatar-list-stacked">
+                    <img class="avatar avatar sm" src="/template/assets/images/xs/avatar5.jpg" data-toggle="tooltip" title="" data-original-title="Avatar">
+                    <img class="avatar avatar sm" src="/template/assets/images/xs/avatar6.jpg" data-toggle="tooltip" title="" data-original-title="Avatar">
+                    <img class="avatar avatar sm" src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" title="" data-original-title="Avatar">
+                    <img class="avatar avatar sm" src="/template/assets/images/xs/avatar4.jpg" data-toggle="tooltip" title="" data-original-title="Avatar">
+                  </div>
+                </span>
+              </label>
+            </li>
+           } 
+            
+
+            
+           
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addtodo" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="defaultModalLabel">Ajouter une tâche</h5>
+      </div>
+      <div class="modal-body">
+        <div class="form-group c_form_group">
+          <label>Patient</label>
+          <div class="form-line">
+            <input type="text" class="form-control" list="brow" placeholder="Nom du patient">
+            <datalist id="brow">
+                <option value="Internet Explorer">Internet Explorer</option>
+                <option value="Firefox">Firefox</option>
+                <option value="Chrome">Chrome</option>
+                <option value="Opera">Opera</option>
+                <option value="Safari">Safari</option>
+            </datalist>  
+          </div>
+        </div>
+        <div class="form-group c_form_group">
+          <label>Titre de la tâche</label>
+          <div class="form-line">
+            <input type="text" class="form-control" placeholder="Titre de la tâche">
+          </div>
+        </div>
+        <div class="form-group c_form_group">
+          <label>Description de la tâche</label>
+          <div class="form-line">
+            <textarea rows="4" class="form-control no-resize" placeholder="À faire, description...">
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary theme-bg gradient">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

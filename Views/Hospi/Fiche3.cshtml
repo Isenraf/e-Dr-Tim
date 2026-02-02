@@ -1,0 +1,254 @@
+@model BANA.Models.Hospi
+
+@{
+    ViewData["Title"] = "Index";
+    Layout="_Layout3";
+}
+<style>
+      @@media print {
+        body * {
+          visibility: hidden;
+        }
+
+        .card,
+        .card * {
+          visibility: visible;
+        }
+
+        .card {
+          position: absolute;
+          left: 0;
+          top: 0;
+          box-shadow: none;
+        }
+
+        /* Hide buttons */
+        .card button {
+          visibility: hidden !important;
+        }
+
+        /* Force hide the last column header & cells */
+        .card table th:last-child,
+        .card table td:last-child {
+          display: none !important;
+          visibility: hidden !important;
+        }
+      }
+    </style>
+
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">
+                Plan de soins
+            </li>
+        </ol>
+        <!-- Breadcrumb ends -->
+
+    </div>
+    <!-- App Hero header ends -->
+
+   <!-- App body starts -->
+<div class="app-body">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">PLAN DE SOINS</h5>
+                <div>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.print()">
+                        Imprimer
+                    </button>
+
+                    <button type="button" class="btn btn-outline-info btn-sm add-modal" data-bs-toggle="modal" data-bs-target="#parametreSoins">
+                        Ajouter un plan
+                    </button>
+                     <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/Hospi/Details/@Model.Id'">
+                            Dossier Hospitalisation
+                        </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+                  <div class="">
+                        <div class="d-flex mb-3 align-items-end justify-content-between">
+                                    <!-- Stats starts -->
+                                    <div class="d-flex align-items-center flex-wrap gap-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-account-circle-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Nom du patient</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                               @if(ViewBag.patient.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Genre</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Genre</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-arrow-right-up-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Âge du patient</p>
+                                                <h4 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-contrast-drop-2-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                               <p class="m-0">Groupe sanguin</p>
+                                                <h4 class="mb-1">@ViewBag.patient.GroupeSanguin</h4>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- Stats ends -->
+                                    @if(ViewBag.patient.Genre=="M"){
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient2.png" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }else{
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient1.jpg" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }           
+                                </div>
+                            </div>
+                        </div>
+
+                    <div style="padding: 10px;" class="table-responsive mb-3">
+                        <table class="table table-bordered truncate m-0 text-center">
+                            <caption class="small text-center" style="caption-side: top; font-weight: bold;"></caption>
+                            <thead>
+                                <tr>
+                                    <th>Besoins pertubé</th>
+                                    <th>Diagnostic Infirmier</th>
+                                    <th>Objectif</th>
+                                    <th>Intervention</th>
+                                    <th>
+                                        Horaire/ <br />
+                                        Planification
+                                    </th>
+                                    <th>Evaluation</th>
+                                    <th>Emargement</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                              @foreach(var item in ViewBag.fiche3){
+                                <tr>
+                                  <td>@item.Trumps[0]</td>
+                                  <td>@item.Trumps[1]</td>
+                                  <td>@item.Trumps[2]</td>
+                                  <td>@item.Trumps[3]</td>
+                                  <td>@item.CreateDate</td>
+                                  <td>@item.Trumps[4]</td>
+                                  <td>@item.infirmere</td>
+                                  <td></td>
+                                </tr>
+                              }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal parametre -->
+        <div class="modal fade" id="parametreSoins" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">
+                            PLAN DE SOINS
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                  <input type="hidden" id="NumeroDossier" value="@Model.Numero_dossier">
+                  <input type="hidden" id="NumeroHospi">
+                    <div class="modal-body">
+                            <div class="row gx-3">
+                                
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Besoins pertubé</label>
+                                        <textarea id="a1" class="form-control" name="bPertube" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Diagnostic Infirmier</label>
+                                        <textarea id="a2" class="form-control" name="dInfirmier" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Objectif</label>
+                                        <textarea id="a3" class="form-control" name="objectif" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Intervention</label>
+                                        <textarea id="a4" class="form-control" name="intervention" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Evaluation</label>
+                                        <textarea id="a5" class="form-control" name="evaluation" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Emargement </label>
+                                        <select id="infirmere" class="form-select" name="emargement">
+                                            <option value="">-- Choisissez --</option>
+                                            <option value="Infirmier 1">Infirmier 1</option>
+                                            <option value="Infirmier 2">Infirmier 2</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Horaires/Planification</label>
+                                       <input id="CreateDate" type="text" id="abc6" class="form-control datepicker-time-24">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="savefiche3" class="btn btn-outline-success" >
+                            Enregistrer
+                        </button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                            Annuler
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- App body ends -->

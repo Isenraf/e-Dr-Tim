@@ -1,0 +1,499 @@
+@model BANA.Models.Hospi
+
+@{
+    ViewData["Title"] = "Index";
+    Layout="_Layout3";
+}
+ <style>
+      @@media print {
+        body * {
+          visibility: hidden;
+        }
+
+        .card,
+        .card * {
+          visibility: visible;
+        }
+
+        .card {
+          position: absolute;
+          left: 0;
+          top: 0;
+          box-shadow: none;
+        }
+
+        /* Hide buttons */
+        .card button {
+          visibility: hidden !important;
+        }
+
+        /* Force hide the last column header & cells */
+        .card table th:last-child[rowspan="2"],
+        .card table td:last-child {
+          display: none !important;
+          visibility: hidden !important;
+        }
+      }
+    </style>
+
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">
+                Fiche de surveillance
+            </li>
+        </ol>
+        <!-- Breadcrumb ends -->
+
+    </div>
+    <!-- App Hero header ends -->
+
+    <!-- App body starts -->
+    <div class="app-body">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">
+                        FICHE DE SURVEILLANCE DES PARAMÈTRES
+                    </h5>
+                    <div>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.print()">
+                            Imprimer
+                        </button>
+
+                        <button type="button" class="btn btn-outline-info btn-sm add-modal" data-bs-toggle="modal" data-bs-target="#parametreSoins">
+                            Ajouter un parametre
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/Hospi/Details/@Model.Id'">
+                            Dossier Hospitalisation
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="">
+                        <div class="d-flex mb-3 align-items-end justify-content-between">
+                                    <!-- Stats starts -->
+                                    <div class="d-flex align-items-center flex-wrap gap-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-account-circle-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Nom du patient</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                @if(ViewBag.patient.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Genre</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Genre</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-arrow-right-up-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Âge du patient</p>
+                                                <h4 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-contrast-drop-2-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                               <p class="m-0">Groupe sanguin</p>
+                                                <h4 class="mb-1">@ViewBag.patient.GroupeSanguin</h4>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- Stats ends -->
+                                    @if(ViewBag.patient.Genre=="M"){
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient2.png" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }else{
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient1.jpg" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }           
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mb-3">
+                            <table class="table table-bordered truncate m-0 text-center">
+                                <caption class="small text-center" style="caption-side: top; font-weight: bold;"></caption>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">Heure</th>
+                                        <th colspan="2">Bras Gauche</th>
+                                        <th colspan="2">Bras Droit</th>
+                                        <th rowspan="2">Température</th>
+                                        <th rowspan="2">
+                                            SO<sub>2</sub> <br />
+                                            (%)
+                                        </th>
+                                        <th rowspan="2">
+                                            FR <br />
+                                            (mvts/min)
+                                        </th>
+                                        <th colspan="2">Diurese</th>
+                                        <th colspan="2">Drain</th>
+                                        <th rowspan="2">
+                                            Glycemie <br />
+                                            (mg/dL)
+                                        </th>
+                                        <th rowspan="2">Mobilisation</th>
+                                        <th rowspan="2">Observation</th>
+                                        <th rowspan="2">Actions</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>
+                                            TA <br />
+                                            (mmhg)
+                                        </th>
+                                        <th>Pouls</th>
+                                        <th>
+                                            TA <br />
+                                            (mmhg)
+                                        </th>
+                                        <th>Pouls</th>
+                                        <th>Entrés</th>
+                                        <th>Sortis</th>
+                                        <th>Drain 1</th>
+                                        <th>Drain 2</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal parametre -->
+            <div class="modal fade" id="parametreSoins" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">
+                                PARAMÈTRES PATIENT
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <form id="myForm">
+                                <div class="row gx-3">
+                                    <div class="col-sm-12">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Heure</label>
+
+                                            <input type="time" class="form-control" name="time" min="00:00" max="23:59" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Température</label>
+                                            <input type="number" step="0.1" min="30" max="42" class="form-control" name="temperature" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Saturation en Oxygene </label>
+                                            <input type="number" min="0" max="100" step="1" class="form-control" name="saturation" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Fréquence Respiratoire </label>
+                                            <input type="number" min="10" max="40" step="1" class="form-control" name="frequenceRespiratoire" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Glycemie </label>
+                                            <input type="number" class="form-control" name="glycemie" step="0.1" min="0" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Tension Arterielle Bras Gauche -->
+                                    <div class="col-sm-3">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">TA <strong>BG</strong></label>
+                                            <input type="number" step="0.1" min="30" max="300" class="form-control" name="tensionBG" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Pouls <strong>BG</strong></label>
+                                            <input type="number" min="30" max="150" class="form-control" name="poulBG" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Tension Arterielle Bras Droit -->
+                                    <div class="col-sm-3">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">TA <strong>BD</strong></label>
+                                            <input type="number" step="0.1" min="30" max="300" class="form-control" name="tensionBD" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Pouls <strong>BD</strong></label>
+                                            <input type="number" min="30" max="150" class="form-control" name="poulBD" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Diurèse Entrée (cc) </label>
+                                            <input type="number" min="0" step="1" class="form-control" name="diureseEntree" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Diurèse Sortie (cc) </label>
+                                            <input type="number" min="0" step="1" class="form-control" name="diureseSortie" />
+                                        </div>
+                                    </div>
+
+                                    <!--DRAIN (cc) -->
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Drain 1(cc) </label>
+                                            <input type="number" min="0" step="1" class="form-control" name="drainOne" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Drain 2(cc) </label>
+                                            <input type="number" min="0" step="1" class="form-control" name="drainTwo" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Mobilisation </label>
+                                            <select class="form-select" name="mobilisation">
+                                                <option value="">-- Choisissez --</option>
+                                                <option value="0">0 - Immobilisé au lit</option>
+                                                <option value="1">
+                                                    1 - Mobilisation au lit (ex: se retourner)
+                                                </option>
+                                                <option value="2">
+                                                    2 - Assis au bord du lit
+                                                </option>
+                                                <option value="3">3 - Debout avec aide</option>
+                                                <option value="4">4 - Marche avec aide</option>
+                                                <option value="5">
+                                                    5 - Marche seul, autonome
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Observation</label>
+                                            <textarea class="form-control" name="observation" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-success" form="myForm">
+                                Enregistrer
+                            </button>
+
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- App body ends -->
+
+
+        <script>
+      let state = [];
+      let editingRow = null;
+
+      const caption = document.querySelector("caption");
+      const tableBody = document.querySelector("table tbody");
+      const form = document.querySelector("#myForm");
+      const cancelBtn = document.querySelector(
+        '.modal-footer button[type="button"]'
+      );
+      const closeBtn = document.querySelector(".btn-close");
+      const addButton = document.querySelector(".add-modal");
+      const todaysDate = new Date().toLocaleString().split(",")[0];
+
+      function editRow(index) {
+        addButton.click();
+        const row = state.find((_, i) => i === index);
+
+        for (const [key, val] of Object.entries(row)) {
+          if (form.elements[key]) {
+            form.elements[key].value = val;
+          }
+        }
+
+        editingRow = index;
+      }
+
+      function deleteRow(index) {
+        state = state.filter((_, i) => i !== index);
+        render();
+      }
+
+      function clearChartData(ch) {
+        ch.data.labels = [];
+        ch.data.datasets.forEach((dataset) => {
+          dataset.data = [];
+        });
+        ch.update();
+      }
+
+      function render() {
+        let markup = "";
+
+        state.forEach((row, index) => {
+          const {
+            time,
+            temperature,
+            saturation,
+            frequenceRespiratoire,
+            tensionBG,
+            poulBG,
+            tensionBD,
+            poulBD,
+            diureseEntree,
+            diureseSortie,
+            drainOne,
+            drainTwo,
+            mobilisation,
+            observation,
+            glycemie,
+          } = row;
+          markup += `
+            <tr>
+              <td>${time}</td>
+              <td>${tensionBG}</td>
+              <td>${poulBG}</td>
+              <td>${tensionBD}</td>
+              <td>${poulBD}</td>
+              <td>${temperature}</td>
+              <td>${saturation}</td>
+              <td>${frequenceRespiratoire}</td>
+              <td>${diureseEntree}</td>
+              <td>${diureseSortie}</td>
+              <td>${drainOne}</td>
+              <td>${drainTwo}</td>
+              <td>${glycemie}</td>
+              <td>${mobilisation}</td>
+              <td>${observation}</td>
+              <td class="d-flex gap-2" style="border-left: 0;">
+                <button onclick="editRow(${index})" class="btn btn-outline-success btn-sm">
+                  <i class="ri-edit-fill"></i>
+                </button>
+
+                <button onclick="deleteRow(${index})" class="btn btn-outline-danger btn-sm">
+                  <i class="ri-delete-row"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+        tableBody.innerHTML = markup;
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const data = new FormData(form);
+        const time = data.get("time");
+        const temperature = data.get("temperature");
+        const saturation = data.get("saturation");
+        const frequenceRespiratoire = data.get("frequenceRespiratoire");
+        const tensionBG = data.get("tensionBG");
+        const poulBG = data.get("poulBG");
+        const tensionBD = data.get("tensionBD");
+        const poulBD = data.get("poulBD");
+        const diureseEntree = data.get("diureseEntree");
+        const diureseSortie = data.get("diureseSortie");
+        const drainOne = data.get("drainOne");
+        const drainTwo = data.get("drainTwo");
+        const glycemie = data.get("glycemie");
+        const mobilisation = data.get("mobilisation");
+        const observation = data.get("observation");
+
+        const params = {
+          time,
+          temperature,
+          saturation,
+          frequenceRespiratoire,
+          tensionBG,
+          poulBG,
+          tensionBD,
+          poulBD,
+          diureseEntree,
+          diureseSortie,
+          drainOne,
+          drainTwo,
+          glycemie,
+          mobilisation,
+          observation,
+        };
+
+        if (editingRow || editingRow === 0) {
+          state[editingRow] = params;
+          render();
+          editingRow = null;
+        } else {
+          state.push(params);
+          render();
+        }
+
+        form.reset();
+      });
+
+      caption.textContent = todaysDate;
+
+      closeBtn.addEventListener("click", function () {
+        form.reset();
+      });
+      cancelBtn.addEventListener("click", function () {
+        form.reset();
+      });
+
+      render();
+    </script>
+
+

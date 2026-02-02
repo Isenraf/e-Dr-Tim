@@ -1,0 +1,1020 @@
+﻿
+<!DOCTYPE html>
+<html lang="fr">  
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>e-Dr Tim | @ViewData["Title"]</title>
+
+    <!-- Meta -->
+    <meta
+      name="description"
+      content="e-Dr Tim Hospital Management"
+    />
+    <meta property="og:title" content="e-Dr Tim Hospital Management" />
+    <meta
+      property="og:description"
+      content="Logiciel de gestion Hospitalère"
+    />
+    <meta property="og:type" content="Website" />
+    <link rel="shortcut icon" href="/template2/assets/images/favicon.ico" />
+
+    <!-- *************
+		************ CSS Files *************
+	************* -->
+    <link rel="stylesheet" href="/template2/assets/fonts/remix/remixicon.css" />
+    <link rel="stylesheet" href="/template2/assets/css/main.min.css" />
+
+    <!-- *************
+		************ Vendor Css Files *************
+	************ -->
+
+    <!-- Scrollbar CSS -->
+    <link
+      rel="stylesheet"
+      href="/template2/assets/vendor/overlay-scroll/OverlayScrollbars.min.css"
+    />
+    <link rel="stylesheet" href="/template/assets/vendor/font-awesome/css/font-awesome.min.css">
+  </head>
+
+  <body>
+    <!-- Loading starts -->
+    <div id="loading-wrapper">
+      <div class="spin-wrapper">
+        <div class="spin">
+          <div class="inner"></div>
+        </div>
+        <div class="spin">
+          <div class="inner"></div>
+        </div>
+        <div class="spin">
+          <div class="inner"></div>
+        </div>
+        <div class="spin">
+          <div class="inner"></div>
+        </div>
+        <div class="spin">
+          <div class="inner"></div>
+        </div>
+        <div class="spin">
+          <div class="inner"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Loading ends -->
+    <!-- Page wrapper starts -->
+    <div class="page-wrapper">
+      <!-- App header starts -->
+      <div class="app-header d-flex align-items-center">
+        <!-- Toggle buttons starts -->
+        <div style="margin-left: -20px;" class="d-flex">
+          <button  class="toggle-sidebar">
+            <i class="ri-menu-line"></i>
+          </button>
+          <button style="display: none;" class="pin-sidebar">
+            <i class="ri-menu-line"></i>
+          </button>
+        </div>
+        <!-- Toggle buttons ends -->
+
+        <!-- App brand starts -->
+        <div class="app-brand ms-3">
+          <a href="/template2/index.html" class="d-lg-block d-none">
+            <img src="/template2/assets/images/hm.png" style=" width: 41px; font-size: 23px;box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);border: 1px solid #70a2ed;" class="logo" alt="e-Dr Tim Hospital Management"/>
+            <span style="position: absolute;color: white;font-family: Arial, sans-serif;top: 25%;">
+              <p style="font-size: 18px;font-weight: bold;margin: 0;line-height: 1;display: block;">&nbsp;&nbsp;Dr TIM</p>
+              <p style="font-size: 8px;margin: 0;padding: 0;line-height: 1;display: block;">&nbsp;&nbsp;&nbsp;HOSPITAL MANAGEMENT</p>
+            </span>
+          </a>
+          <a href="/template2/index.html" class="d-lg-none d-md-block">
+            <img src="/template2/assets/images/hm.png" style=" width: 41px;" class="logo" alt="e-Dr Tim Hospital Management"/>
+          </a>
+        </div>
+        <!-- App brand ends -->
+
+        <!-- App header actions starts -->
+        <div class="header-actions">
+          <!-- Search container starts -->
+          <div class="search-container d-lg-block d-none mx-3">
+            <form asp-controller="Patient" asp-action="index"  method="get">
+              <input type="text" class="form-control" name="SearchString2" id="searchId" placeholder="Dossier..."/>
+            </form>
+            <i class="ri-search-line"></i>
+          </div>
+          <!-- Search container ends -->
+
+          <!-- Header actions starts -->
+          <div class="d-lg-flex d-none gap-2">
+            <!-- Select country dropdown starts -->
+            <div class="dropdown">
+              <a
+                class="dropdown-toggle header-icon"
+                href="/template2/#!"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="/template2/assets/images/flags/1x1/cmr.png"
+                  class="header-country-flag"
+                  alt="Cameroun"
+                />
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-mini">
+                <div class="country-container">
+                  <a href="#" class="py-2">
+                    <img
+                      src="/template2/assets/images/flags/1x1/us.svg"
+                      alt="Admin Panel"
+                    />
+                  </a>
+                 
+                </div>
+              </div>
+            </div>
+            <!-- Select country dropdown ends -->
+
+           
+
+            <!-- Messages dropdown starts -->
+            <div class="dropdown">
+              <a
+                class="dropdown-toggle header-icon"
+                href="/template2/#!"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="ri-message-3-line"></i>
+                <span class="count-label"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-300">
+                <h5 class="fw-semibold px-3 py-2 text-primary">Messages</h5>
+
+                <!-- Scroll starts -->
+                <div class="scroll300">
+                  <!-- Messages list starts -->
+                  <div class="p-3">
+                      <div class="d-flex py-2">
+                          <img src="/template2/assets/images/user3.png" class="img-shadow img-3x me-3 rounded-5" alt="e-Dr Tim Hospital Management" />
+                          <div class="m-0">
+                              <h6 class="mb-1 fw-semibold">e-Dr Tim</h6>
+                              <p class="mb-1">Bienvenue sur e-Dr Tim version 2.0</p>
+                              <p class="small m-0 opacity-50">@DateTime.Now</p>
+                          </div>
+                      </div>
+                     
+                      
+                  </div>
+                  <!-- Messages list ends -->
+                </div>
+                <!-- Scroll ends -->
+
+                <!-- View all button starts -->
+                <div class="d-grid m-3">
+                  <a href="/template2/javascript:void(0)" class="btn btn-primary"
+                    >Tout voir</a
+                  >
+                </div>
+                <!-- View all button ends -->
+              </div>
+            </div>
+          </div>
+          <!-- Header actions ends -->
+
+          <!-- Header user settings starts -->
+          <div class="dropdown ms-2">
+              <a id="userSettings" class="dropdown-toggle d-flex align-items-center" href="/template2/#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="avatar-box">@ViewBag.user.Initial<span class="status busy"></span></div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                  <div class="px-3 py-2">
+                      <span class="small">@ViewBag.user.Departement</span>
+                      <h6 class="m-0">@ViewBag.user.nom</h6>
+                  </div>
+                  <div class="mx-3 my-2 d-grid">
+                      <a asp-action="Disconnect" asp-controller="User" class="btn btn-danger">Déconnexion</a>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Header user settings ends -->
+        </div>
+        <!-- App header actions ends -->
+      </div>
+      <!-- App header ends -->
+
+      <!-- Main container starts -->
+      <div class="main-container">
+        <!-- Sidebar wrapper starts -->
+        <nav id="sidebar" class="sidebar-wrapper">
+          <!-- Sidebar profile starts -->
+          <div class="sidebar-profile">
+            @if(ViewBag.user.Genre=="Homme"){
+              <img
+              src="/template2/assets/images/user_men.png"
+              class="img-shadow img-3x me-3 rounded-5"
+              alt="e-Dr Tim Hospital Management"
+            />
+            }else{
+              <img
+              src="/template2/assets/images/user_woman.webp"
+              class="img-shadow img-3x me-3 rounded-5"
+              alt="e-Dr Tim Hospital Management"
+            />
+            }
+            
+            <div class="m-0">
+              <h5 class="mb-1 profile-name text-nowrap text-truncate">
+                @ViewBag.user.nom
+              </h5>
+              <p class="m-0 small profile-name text-nowrap text-truncate">
+                @ViewBag.user.Departement
+              </p>
+            </div>
+          </div>
+          <!-- Sidebar profile ends -->
+
+          <!-- Sidebar menu starts -->
+          <div class="sidebarMenuScroll">
+            <ul class="sidebar-menu">
+              <li class="@ViewData["1"]">
+                <a href="javascript:void(0);" class="disabled">
+                  <span class="menu-text">Hôpital</span>
+                </a>
+                <a asp-action="Tableau" asp-controller="Facture">
+                  <i class="ri-home-6-line"></i>
+                  <span class="menu-text">Tableau de bord</span>
+                </a>
+              </li>
+              
+              
+              
+              <li class="treeview @ViewData["2"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-bank-card-2-line"></i>
+                  <span class="menu-text">Caisse</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li class="@ViewData["20"]">
+                    <a href="/Facture/caisseprincipale">Caisse Principale</a>
+                  </li>
+                  <li>
+                    <a href="/Facture/caissepharmacie">Caisse Pharmacie</a>
+                  </li>
+                  <li>
+                    <a href="/Paid/Tb">Controle de Caisse</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="treeview @ViewData["3"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-stethoscope-line"></i>
+                  <span class="menu-text">Médecins</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="/Doctor/Index">tous les Médecins</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index" asp-controller="Doctor" asp-route-typ="interne">Internes</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index" asp-controller="Doctor" asp-route-typ="externe">Externes</a>
+                  </li>
+                  <li>
+                    <a asp-action="Liste" asp-controller="Doctor" asp-route-typ="externe">Liste</a>
+                  </li>
+                  <li>
+                    <a href="/Doctor/Create">Ajouter des Médecins</a>
+                  </li>
+                  </li>
+                  <li>
+                    <a asp-action="Rapport2" asp-controller="Honoraire">Horaire des médecins</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="@ViewData["4"]">
+                <a asp-action="Index" asp-controller="Assurance">
+                  <i class="ri-home-heart-line"></i>
+                  <span class="menu-text">Assurances</span>
+                </a>
+              </li>
+              <li class="@ViewData["5"]">
+                <a asp-action="Index" asp-controller="Tache">
+                  <i class="ri-list-unordered"></i>
+                  <span class="menu-text">Liste des choses à faire</span>
+                </a>
+              </li>
+              
+              <li class="treeview @ViewData["6"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-contract-line"></i>
+                  <span class="menu-text">Examens LABO</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="Labo" asp-controller="Resultat">Laboratoire</a>
+                  </li>
+                  <li>
+                    <a asp-action="Validation0" asp-controller="Resultat" asp-route-tipe="Analyse Médicale">Validation Labo</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index2" asp-controller="Examen" asp-route-tipe="Analyse Médicale">Modèles Analyse</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index0" asp-controller="Resultat" asp-route-tipe="Analyse Médicale">Resultats Analyse</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview @ViewData["06"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-contract-line"></i>
+                  <span class="menu-text">Imagerie Médicale</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="Imagerie" asp-controller="Resultat">Imagerie</a>
+                  </li>
+                  <li>
+                    <a asp-action="Validation00" asp-controller="Resultat" asp-route-tipe="Imagerie Médicale">Validation Imagerie</a>
+                  </li>
+                   <li>
+                    <a asp-action="Index0_2" asp-controller="Examen" asp-route-tipe="Imagerie Médicale">Modèles Imagerie</a>
+                  </li>
+                  
+                  <li>
+                    <a asp-action="Index0_0" asp-controller="Resultat" asp-route-tipe="Imagerie Médicale">Resultats Imagerie</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview @ViewData["66"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-contract-line"></i>
+                  <span class="menu-text">Anapath</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="Anapath" asp-controller="Resultat">En attente</a>
+                  </li>
+                  <li>
+                    <a asp-action="Validation0_1" asp-controller="Resultat" asp-route-tipe="Anapath">Validation</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index2_1" asp-controller="Examen" asp-route-tipe="Anapath">Modèles</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index0_1" asp-controller="Resultat" asp-route-tipe="Anapath">Resultats</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview @ViewData["666"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-contract-line"></i>
+                  <span class="menu-text">Ophtalmologie</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="Ophtalmologie" asp-controller="Resultat">En attente</a>
+                  </li>
+                  <li>
+                    <a asp-action="Validation0_2" asp-controller="Resultat" asp-route-tipe="Ophtalmologie">Validation</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index2_2" asp-controller="Examen" asp-route-tipe="Ophtalmologie">Modèles</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index0_2" asp-controller="Resultat" asp-route-tipe="Ophtalmologie">Resultats</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview @ViewData["6666"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-contract-line"></i>
+                  <span class="menu-text">Explorations Fonct</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="Exploration" asp-controller="Resultat">En attente</a>
+                  </li>
+                  <li>
+                    <a asp-action="Validation0_3" asp-controller="Resultat" asp-route-tipe="Exploration Fonctionnelle">Validation</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index2_3" asp-controller="Examen" asp-route-tipe="Exploration Fonctionnelle">Modèles</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index0_3" asp-controller="Resultat" asp-route-tipe="Exploration Fonctionnelle">Resultats</a>
+                  </li>
+                </ul>
+              </li>
+             
+             
+
+              <li class="treeview @ViewData["7"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-hospital-fill"></i>
+                  <span class="menu-text">Dentiste</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="Indexdentiste0" asp-controller="Facture">Facture patient</a>
+                  </li>
+                  <li>
+                    <a asp-action="Indexdentiste02" asp-controller="Facture">Facture assurance</a>
+                  </li>
+                  <li>
+                    <a asp-action="Indexdentiste03" asp-controller="Facture">Proforma</a>
+                  </li>
+                  
+                </ul>
+              </li>
+
+              <li class="@ViewData["8"]">
+                <a asp-action="Index" asp-controller="Service">
+                  <i class="ri-book-read-line"></i>
+                  <span class="menu-text">Actes Médicaux</span>
+                </a>
+              </li>
+              <li class="treeview @ViewData["9"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-account-circle-fill"></i>
+                  <span class="menu-text">Les patients</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="Index" asp-controller="Patient">Tous les Patients</a>
+                  </li>
+                  <li>
+                    <a asp-action="Create" asp-controller="Patient">Ajouter un patient</a>
+                  </li>
+                  
+                </ul>
+              </li>
+            
+              <li class="treeview @ViewData["10"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-hotel-bed-line"></i>
+                  <span class="menu-text">Chambres</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="/Chambre/Index">Statistiques</a>
+                  </li>
+                  <li>
+                    <a href="/Chambre/Index">Chambres attribuées</a>
+                  </li>
+                  <li>
+                    <a href="/Chambre/Index">Chambres par département</a>
+                  </li>
+                  <li>
+                    <a href="/Chambre/Index">Chambres disponibles</a>
+                  </li>
+                  <li>
+                    <a href="/Chambre/Index">Réserver une chambre</a>
+                  </li>
+                  <li>
+                    <a href="/Chambre/Index">Ajouter une chambre</a>
+                  </li>
+                  
+                </ul>
+              </li>
+              <li class="treeview @ViewData["11"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-car-washing-line"></i>
+                  <span class="menu-text">Ambulance</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="javascript:void(0)">Liste des ambulances</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Ajouter une ambulance</a>
+                  </li>
+                  
+                </ul>
+              </li>
+              <li class="@ViewData["12"]">
+                <a href="/departement/Index">
+                  <i class="ri-building-line"></i>
+                  <span class="menu-text">Départements</span>
+                </a>
+              </li>
+              <li class="treeview @ViewData["13"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-money-dollar-circle-fill"></i>
+                  <span class="menu-text">Paiements</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="/Paid/comptapaid01">Paiements directs</a>
+                  </li>
+                  <li>
+                    <a href="#">Paiements Assurances</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="treeview @ViewData["14"]">
+                <a href="javascript:void(0)">
+                  <i class="ri-refund-2-fill"></i>
+                  <span class="menu-text">Factures</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="index0" asp-controller="facture">Factures Directe</a>
+                  </li>
+                  <li>
+                    <a asp-action="index02" asp-controller="facture">Factures assurances</a>
+                  </li>
+                  <li>
+                    <a asp-action="Caution0" asp-controller="facture">Cautions</a>
+                  </li>
+                  <li>
+                    <a asp-action="index05" asp-controller="facture">factures Proforma</a>
+                  </li>
+                  <li>
+                    <a asp-action="RecapFacture" asp-controller="facture">Recap factures assurances</a>
+                  </li>
+                  <li>
+                    <a asp-action="CumulFacture" asp-controller="facture">Culmul factures</a>
+                  </li>
+        
+                </ul>
+              </li>
+              <li class="treeview @ViewData["15"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-visa-fill"></i>
+                  <span class="menu-text">Honoraires</span>
+                </a>
+                <ul class="treeview-menu">
+                  @* <li>
+                    <a asp-action="index" asp-controller="Honoraire" asp-route-tipe="cash" asp-route-Etat="Cloturé">Traités</a>
+                  </li> *@
+                  <li>
+                    <a asp-action="index0" asp-controller="Honoraire">Périodique</a>
+                  </li>
+                  <li>
+                    <a asp-action="Rapport2" asp-controller="Honoraire">Etats</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview @ViewData["15_1"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-contract-line"></i>
+                  <span class="menu-text">Fiches Médicales</span>
+                </a>
+                <ul class="treeview-menu">
+                  @* <li>
+                    <a asp-action="index" asp-controller="Honoraire" asp-route-tipe="cash" asp-route-Etat="Cloturé">Traités</a>
+                  </li> *@
+                  <li>
+                    <a asp-action="Index" asp-controller="Fiche">Modèles</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index0" asp-controller="FinalFiche">documents</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="@ViewData["16"]">
+                <a href="javascript:void(0);" class="disabled">
+                  <span class="menu-text">PERSONNEL</span>
+                </a>
+                <a asp-action="Index" asp-controller="Staff">
+                  <i class="ri-team-fill"></i>
+                  <span class="menu-text">Notre personnel</span>
+                </a>
+              </li>
+              <li class="@ViewData["17"]">
+                <a asp-action="Index" asp-controller="Contact">
+                  <i class="ri-contacts-book-3-fill"></i>
+                  <span class="menu-text">Contacts</span>
+                </a>
+              </li>
+              <li class="@ViewData["18"]">
+                <a asp-action="Index" asp-controller="User">
+                  <i class="ri-group-2-fill"></i>
+                  <span class="menu-text">Utilisateurs</span>
+                </a>
+              </li>
+              <li class="@ViewData["19"]">
+                <a asp-action="Center" asp-controller="Tache">
+                  <i class="ri-map-pin-line"></i>
+                  <span class="menu-text">Nos centres</span>
+                </a>
+              </li>
+              
+               <li>
+                <a href="javascript:void(0);" class="disabled">
+                  <span class="menu-text">GESTION STOCK</span>
+                </a>
+                <a class="disabled" href="javascript:void(0);">
+                </a>
+              </li>
+              
+           
+              <li class="treeview @ViewData["21"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-stock-fill"></i>
+                  <span class="menu-text">Stock</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="Index" asp-controller="Emplacement">Emplacement</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)">Etat du stock</a>
+                  </li>
+                  <li>
+                    <a asp-action="Index0" asp-controller="TransactionStock">Mouvements de stock</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="treeview @ViewData["22"]">
+                <a href="javascript:void(0);">
+                  <i class="ri-funds-box-line"></i>
+                  <span class="menu-text">Comptabilité</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a asp-action="comptafact01" asp-controller="Facture">Factures Patient</a>
+                  </li>
+                  <li>
+                    <a asp-action="comptafact02" asp-controller="Facture">Factures assurances</a>
+                  </li>
+                  <li>
+                    <a asp-action="comptacaution0" asp-controller="Facture">Cautions</a>
+                  </li>
+                  <li>
+                    <a asp-action="comptapaid01" asp-controller="Paid">Caisse</a>
+                  </li>
+                  <li>
+                    <a asp-action="Comptadetails01" asp-controller="Facture">Details Facturation</a>
+                  </li>
+                  <li>
+                    <a asp-action="Comptadetailsp" asp-controller="Facture" class="active-sub">Details périodique</a>
+                  </li>
+                   <li>
+                    <a asp-action="Comptadetailsp1" asp-controller="Facture">Analytique détaillée</a>
+                  </li>
+
+                   <li>
+                    <a asp-action="Comptadetailsp2" asp-controller="Facture">Analytique globale</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="/template2/#!" class="disabled">
+                  <i class="ri-magic-line"></i>
+                  <span class="menu-text">Mémoire</span>
+                </a>
+                <div class="progress small">
+                  <div
+                    class="progress-bar bg-danger"
+                    role="progressbar"
+                    style="width: 77%"
+                    aria-valuenow="75"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+
+                <a href="/template2/#!" class="disabled">
+                  <i class="ri-server-line"></i>
+                  <span class="menu-text">Charge du serveur</span>
+                </a>
+                <div class="progress small">
+                  <div
+                    class="progress-bar bg-info"
+                    role="progressbar"
+                    style="width: 50%"
+                    aria-valuenow="75"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- Sidebar menu ends -->
+
+          <!-- Sidebar contact starts -->
+          <div class="sidebar-contact">
+            <p class="fw-light mb-1 text-nowrap text-truncate">
+              Contact sécrétariat
+            </p>
+            <h5 class="m-0 lh-1 text-nowrap text-truncate">690 07 34 67</h5>
+            <i class="ri-phone-line"></i>
+          </div>
+          <!-- Sidebar contact ends -->
+        </nav>
+        <!-- Sidebar wrapper ends -->
+
+       @RenderBody()
+          <!-- App footer starts -->
+          <div class="app-footer bg-white">
+            <span>© Dr TIM HOSPITAL MANAGEMENT 2025</span>
+          </div>
+          <!-- App footer ends -->
+        </div>
+        <!-- App container ends -->
+      </div>
+      <!-- Main container ends -->
+    </div>
+    <!-- Page wrapper ends -->
+    @* <a style="position: fixed;right: 50px;bottom: 100px;" onclick="history.back()" class="btn btn-lg btn-primary btn-lg-square" href="javascript:void(0);"><i class="fa fa-reply"></i></a> *@
+
+<style>
+   #ai-button {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        bottom: 40px;
+        right: 110px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s;
+      }
+
+      #ai-frame {
+        position: fixed;
+        bottom: 80px;
+        right: 110px;
+        width: 400px;
+        height: 500px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        border-radius: 0px;
+        display: none;
+        z-index: 1000;
+      }
+
+      #ai-frame iframe {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+      }
+
+      /* Style du cadre visible */
+      #ai-frame.show {
+        display: block;
+      }
+</style>
+
+     @* <div>
+        <button id="ai-button" style="background-color: #0c90ac;color: white;" onclick="toggleFrame()" class="btn btn-outline-primary">
+          <i class="ri-robot-2-fill"></i>
+        </button>
+
+        <div id="ai-frame">
+          <iframe src="https://edoctor-tim.com/home/iframe2" frameborder="0"></iframe>
+        </div>
+      </div>
+
+     <script>
+      function toggleFrame() {
+        const frame = document.getElementById("ai-frame");
+        frame.classList.toggle("show"); // Afficher ou masquer le cadre
+      }
+    </script> *@
+
+    <!-- *************
+			************ JavaScript Files *************
+		************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <script src="/template2/assets/js/jquery.min.js"></script> 
+    <script src="/template2/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/template2/assets/js/moment.min.js"></script> 
+
+    <!-- *************
+			************ Vendor Js Files *************
+		************* -->
+
+    <!-- Overlay Scroll JS -->
+    <script src="/template2/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
+    <script src="/template2/assets/vendor/overlay-scroll/custom-scrollbar.js"></script>
+
+@if (ViewData["chart"]!=null)
+{
+  <!-- Apex Charts -->
+    <script src="/template2/assets/vendor/apex/apexcharts.min.js"></script>
+    <script src="/template2/assets/vendor/apex/custom/home/patients.js"></script>
+    <script src="/template2/assets/vendor/apex/custom/home/treatment.js"></script>
+    <script src="/template2/assets/vendor/apex/custom/home/available-beds.js"></script>
+    <script src="/template2/assets/vendor/apex/custom/home/earnings.js"></script>
+    <script src="/template2/assets/vendor/apex/custom/home/gender-age.js"></script>
+    <script src="/template2/assets/vendor/apex/custom/home/claims.js"></script>
+}
+
+@if (ViewData["richtext"]!=null)
+  {
+     <script src="~/js/richtext.min.js"></script>
+     <script src="~/js/richtext.js"></script>
+  }
+    
+<script src="/js/site.js" ></script>
+  @if (ViewData["js_fact"]!=null)
+  {
+    <script src="/js/facture.js" ></script>
+  }
+  @if (ViewData["js_cumul"]!=null)
+  {
+    <script src="/js/cumul.js" ></script>
+  }
+  @if (ViewData["js_fact2"]!=null)
+  {
+    <script src="/js/facture2.js" ></script>
+  }
+  
+  @if (ViewData["proforma"]!=null)
+  {
+    <script src="/js/proforma.js" ></script>
+  }
+  @if (ViewData["details"]!=null)
+  {
+    <script src="/js/details.js" ></script>
+  }
+  @if (ViewData["js_dep"]!=null)
+  {
+    
+    <script src="/js/departement.js" ></script>
+    
+  }
+
+  @if (ViewData["inputimage"]!=null)
+  {
+    
+    <script src="/template/assets/vendor/dropify/js/dropify.min.js"></script>
+    <script src="/template/js/pages/forms/dropify.js"></script>
+    
+  }
+  
+  @if (ViewData["fasttable"]!=null)
+  {
+    <script src="/js/fasttable.js" ></script>
+  }
+  
+  
+
+
+  @if (ViewData["qrcode"]!=null)
+  {
+      <script src="/js/qrcode.min.js"></script>
+      <script src="/js/qrcode.js"></script>
+  }
+
+  @if (ViewData["multi"]!=null)
+  {
+    @* <script src="/js/jquery-2.2.4.min.js"></script> *@
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/multi.min.js"></script>
+    <script src="/js/multi.js" ></script>
+  }
+
+@if (ViewData["image"]!=null)
+  {
+    <script src="/js/input_image.js"></script>
+    
+  }
+  
+  <script src="/js/paiement.js"></script>
+  <script src="/js/resultat.js"></script>
+
+
+
+    @if(ViewData["table"]!=null){
+      <script src="/template2/table/jquery.dataTables.min.js"></script>
+      <script src="/template2/table/dataTables.bootstrap4.min.js"></script>
+      <script src="/template2/table/dataTables.buttons.min.js"></script>
+      <script src="/template2/table/buttons.bootstrap4.min.js"></script>
+      <script src="/template2/table/jszip.min.js"></script>
+      <script src="/template2/table/buttons.html5.min.js"></script>
+      <script src="/template2/table/buttons.colVis.min.js"></script>
+      <script src="/template2/table/dataTables.responsive.min.js"></script>
+      <script src="/template2/table/responsive.bootstrap4.min.js"></script>
+      <script src="/template2/table/js.js"></script>
+    }
+
+
+<script>
+let inputs = document.getElementsByClassName("monInput");
+
+// getElementsByClassName renvoie une "collection", il faut boucler
+for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("change", function () {
+        let input = this.value;
+        let datalist = document.getElementById(this.getAttribute("list"));
+        let options = datalist.getElementsByTagName("option");
+
+        let found = false;
+        for (let option of options) {
+            if (option.value === input) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            this.value = ""; // efface si la valeur n’existe pas
+        }
+    });
+}
+</script>
+
+
+
+ <script>
+ const buttons = document.querySelectorAll('button');
+      const sideBarMenu = document.querySelectorAll('a');
+const loader = document.querySelector("#loading-wrapper");
+
+// Écouteur sur chaque lien
+sideBarMenu.forEach(link => {
+  link.addEventListener("click", (e) => {
+    const href = link.getAttribute("href") || "";
+
+    if (
+      href.trim() !== "#" &&
+      !href.trim().startsWith("javascript:void") &&
+      href.trim() !== ""
+      && href.trim() !== "#!"
+      && !href.trim().includes("#")
+    ) {
+      loader.style.display = "block";
+    }
+  });
+});
+
+
+$(document).on('click', 'button', function(e) {
+  if(this.className.includes("await")){
+    loader.style.display = "block";
+  }
+});
+
+// Cacher le loader à l'affichage de la page
+window.addEventListener("pageshow", () => {
+  loader.style.display = "none";
+}); 
+
+
+// SCROLLING
+window.addEventListener("DOMContentLoaded", (e) => {
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  const activeLink = document.querySelector(".active");
+
+  if (activeLink) {
+    window.scrollTo(0, 0);
+
+    setTimeout(() => {
+      activeLink.scrollIntoView({ behavior: "smooth", block: "start" });
+      activeLink.focus();
+    }, 100);
+  }
+});
+
+ </script>
+
+ <script>
+    let inactivityTime = 0; 
+    const maxInactivity = 60 * 60 * 1000; // 5 minutes en ms
+
+    function resetTimer() {
+        inactivityTime = 0;
+    }
+
+    // Détecte les actions utilisateur
+    window.onload = resetTimer;
+    document.onmousemove = resetTimer;
+    document.onkeypress = resetTimer;
+    document.onclick = resetTimer;
+    document.onscroll = resetTimer;
+
+    // Vérifie l'inactivité
+    setInterval(function () {
+        inactivityTime += 1000; // ajoute 1 sec
+        if (inactivityTime >= maxInactivity) {
+             window.location.href = "/User/Disconnect"; // redirection vers ton action de déconnexion
+        }
+    }, 1000);
+</script>
+
+
+    <!-- Custom JS files -->
+    <script src="/template2/assets/js/custom.js"></script> 
+  </body>
+@RenderSection("Scripts", required: false)
+</html>
+

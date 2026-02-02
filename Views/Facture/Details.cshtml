@@ -1,0 +1,571 @@
+@model BANA.Models.Facture
+
+@{
+    ViewData["Title"] = "Facture - "+ @Model.Nom + @Model.Prenom;
+    int st=0;
+    int controla=0;
+}
+
+<input  type="hidden" id="target" asp-for="Type">
+<input  type="hidden" id="lf1" asp-for="Ligne_facturation1">
+<input  type="hidden" id="lf2" asp-for="Ligne_facturation2">
+<input  type="hidden" id="lf3" asp-for="Ligne_facturation3">
+<input  type="hidden" id="lf4" asp-for="Ligne_facturation4">
+
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">
+         Facture assurance
+      </li>
+    </ol>
+    <!-- Breadcrumb ends -->
+  </div>
+  <!-- App Hero header ends -->
+
+
+
+  <!-- App body start -->
+  <div class="app-body">
+
+    <div  style="margin-bottom: 20px;background-color: #126aef12;padding: 10px;border-radius: 10px;text-align: right;" class="">
+        <div class="">
+          @if (Model.Type.Contains("assurance"))
+          {
+            <button class="btn btn-primary theme-bg gradient" id="f1"  onclick="location.href='/Facture/Details4/@Model.Id';">
+                    Facture assurance</button>
+          }
+          @if(Model.Type.Contains("proforma")){
+            <button class="btn btn-warning  gradient" onclick="location.href='/Facture/transform1/@Model.Id';"  >
+                        <i class="fa fa-check"></i> Transformer en facture</button>
+          }
+            
+          <button class="btn btn-outline-secondary" id="closeButton"  onclick="history.back();">
+            <i class="fa fa-previous"></i> Fermer</button>
+
+            <button class="btn btn-outline-secondary" onclick="location.href='/Facture/Matricielle/@Model.Id';">
+              <i class="fa fa-previous"></i> Changer Format</button>
+          @if (Model.Etat_patient=="Cloturé" && (ViewBag.user.Type_de_compte=="administrateur" || ViewBag.user.Type_de_compte=="super-Admin"))
+          {
+          <button type="button" class="btn btn-outline-secondary" title="Manual Generate" id="manualgenerate">
+            <i class="fa fa-envelope"></i>
+          </button>
+          <button type="button" data-bs-toggle="modal" data-bs-target="#AddDepartments" class="btn btn-outline-secondary" title="Manual Honoraire" >
+            <i class="fa fa-file"></i>
+          </button>
+          }
+          
+          @if (Model.Etat_patient!="Cloturé" && Model.Net_a_payer_patient-Model.Montant_recu_patient==0)
+          {
+              <button class="btn btn-warning  gradient" id="Cloturebt" >
+              <i class="fa fa-check"></i> Valider la Cloture</button>
+          }
+          @if (Model.Etat_patient=="Cloturé" && Model.Net_a_payer_patient==0 && (ViewBag.user.Type_de_compte=="administrateur" || ViewBag.user.Type_de_compte=="super-Admin") )
+          {
+            <button class="btn btn-warning  gradient" id="decloturer" >
+              <i class="fa fa-check"></i> Décloturer</button>
+          }
+          
+
+          @if (Model.Etat_patient!="Cloturé" && Model.Intervenant=="" && Model.Ligne_facturation2!="λ" && (Model.Type=="examens_assurance" || Model.Type=="generique_assurance" ))
+          {
+            <button class="btn btn-danger  gradient" id="genererexamens" >
+              <i class="fa fa-check"></i> Générer les résultats</button>
+          }
+          @if (Model.Etat_patient=="Cloturé"){
+                <button class="btn btn-primary theme-bg gradient" id="printfact">
+                    <i class="fa fa-print"></i> Print</button>
+              }
+
+        </div>
+      </div>
+
+   
+
+    <div class="col-sm-12">
+
+          <div class="row clearfix">
+            
+            <div class="col-lg-12">
+              <div id="tdt1" style="min-height: 40cm;" class="card card2">
+                @if(!Model.Type.Contains("dentiste")){
+                   <img style="float: right;" id="img1" src="/img1/pppp.jpg" width="100%" data-toggle="tooltip" data-placement="top" title="" alt="Polyclinique de Poitiers"  data-original-title="Polyclinique de Poitiers">
+                }else{
+                   <img style="float: right;" id="img1" src="/img1/00pppp.jpg" width="100%" data-toggle="tooltip" data-placement="top" title="" alt="Cabinet dentaite"  data-original-title="Cabinet dentaite"><br><br>
+                }
+               
+                <div style="padding: 15px;margin-top: -125%;min-height: 32cm;"  id="printMe" class="body" >
+                  <br> <br>
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <table style="text-transform: uppercase;width: 100%;color: black;" >
+                        <tr>
+                          @if (Model.Type.Contains("caution"))
+                          {
+                            <th style="font-size: 17px;width: 140px; border: 1px solid;color: black;" >Reçu Caution Nº: </th>
+                          }else{
+                            @if(Model.Type.Contains("proforma")){
+                            <th style="width: 140px; border: 1px solid;color: black;" >Proforma Nº: </th>
+                            }else{
+                              <th style="width: 140px; border: 1px solid;color: black;" >Facture Nº: </th>
+                            }
+                          }
+                          
+                          <td style="font-weight: 600;font-size: 17px;width: 300px; border: 1px solid;" >@(Model.Numero_de_facture)</td>
+                          <td style="width: 100px;"></td>
+                          <td rowspan="3" style="width: 400px; border: 1px solid; color: black;padding: 0.3rem 0.3rem 0rem 0.3rem;" ><h6 style="margin:0;" >@Model.Nom @Model.Prenom</h6>
+                         <span style="font-weight: 600;font-size: 17px;">Téléphone: @Model.Phone <br>Adresse: @Model.Quartier</span>  
+                          </td>
+                        </tr>
+                        <tr>
+                          <th style="font-size: 17px; border: 1px solid;color: black;">Age Patient: </th>
+                          <td style="font-weight: 600;font-size: 17px;border: 1px solid;" >@((int)((DateTime.Now-Model.DateNaissance).TotalDays/365)) ans  @((int)(((DateTime.Now-Model.DateNaissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-Model.DateNaissance).TotalDays)%365)%30) jours ,Sexe: @Model.Genre</td>
+                         
+                          @* <td style="border-left: 1px solid;border-right: 1px solid;color: black;">@Model.Assur_NIU</td> *@
+                        </tr>
+                        
+                        <tr>
+                          <th style="font-size: 17px; border: 1px solid;color: black;">Numero dossier: </th>
+                          <td style="font-weight: 600;font-size: 17px;border: 1px solid;" >@Model.Numero_dossier</td>
+                          
+                          @* <td style="border-left: 1px solid;border-right: 1px solid;color: black;">@Model.Assur_BP</td> *@
+                        </tr>
+                        
+                        
+                      </table>
+                      <small style="font-weight: 600;font-size: 17px;color: black;">Prescripteur: @Model.Medecin , &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; &emsp;&emsp;&emsp; Date: @Model.Create_date</small>
+                    </div>
+                 
+                  </div>
+                  <br>
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <div class="table-responsive">
+
+                         <table  style="text-transform: uppercase;color: black; width: 100%;padding: 0rem;">
+                          <thead>
+                            <tr class="table1">
+                                <td style="border: 1px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="5"><strong class=""> <h6 style="margin: 5px;">@Model.Titre1</h6> </strong></td>
+                              </tr>
+                            <tr class="table1" >
+                              @* <th  style="width: 2px;padding: 0rem;"><strong>#</strong></th> *@
+                             <th style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Désignation</strong></th>
+                              <th class="text-center" style="color: black;width: 80px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Cote</strong></th>
+                              <th class="text-center" style="display:none; color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Assurance</strong></th>
+                              <th class="text-right" style="display:none;color: black;border: 1px solid;width: 120px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Plafond</strong></th>
+                              <th class="text-right" style="color: black;border: 1px solid;width: 120px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Montant</strong></th>
+                              <th class="hidden-sm-down" style="color: black;border: 1px solid;width: 80px;padding: 0rem 0.3rem 0rem 0.3rem;text-align: center;"><strong>Quantité</strong></th>
+                              <th style="color: black;border: 1px solid;width: 150px; text-align: right; padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Total</strong></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @{st=0;}
+                              @for (int i = 0; i < @ViewBag.Lignes1.Count-1; i+=7)
+                              {
+                                <tr class="table1" style="font-weight: 600;font-size: 17px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes1[i]</span></td>
+                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <span>@ViewBag.Lignes1[i+1]</span>
+                                  </td>
+                                  <td class="text-center" style="display:none;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@ViewBag.Lignes1[i+2] %</td>
+                                  <td class="text-right" style="display:none;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="hidden-sm-down text-right">@ViewBag.Lignes1[i+3]</td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">@ViewBag.Lignes1[i+4]</td>
+                                  <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes1[i+5]</td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes1[i+6]</td>
+                                </tr>
+                                st+=Int32.Parse(ViewBag.Lignes1[i+6].Replace(" ",""));
+                              }
+                              @{controla=st;}
+                              <tr class="table1" style="font-weight: 600;font-size: 17px;color: black;; padding: 0rem 0.3rem 0rem 0.3rem;">
+                                <td class="text-right" style="border: 1px solid;text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="4"><strong>Sous Total</strong> </td>
+                                <td class="text-right separateur" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@st</td>
+                              </tr>
+                            
+                            
+                              <tr style="color: black;;" class="table2">
+                            
+                              <td style="border: 1px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="5"><strong class=""> <h6 style="margin: 5px;">@Model.Titre2</h6> </strong></td>
+                              </tr>
+                              <tr class="table2" >
+                                @* <th  style="width: 2px;padding: 0rem;"><strong>#</strong></th> *@
+                                <th style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Désignation</strong></th>
+                              <th class="text-center" style="color: black;width: 80px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Cote</strong></th>
+                              <th class="text-center" style="display:none; color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Assurance</strong></th>
+                              <th class="text-right" style="display:none;color: black;border: 1px solid;width: 120px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Plafond</strong></th>
+                              <th class="text-right" style="color: black;border: 1px solid;width: 120px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Montant</strong></th>
+                              <th class="hidden-sm-down" style="color: black;border: 1px solid;width: 80px;padding: 0rem 0.3rem 0rem 0.3rem;text-align: center;"><strong>Quantité</strong></th>
+                              <th style="color: black;border: 1px solid;width: 150px; text-align: right; padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Total</strong></th>
+                              </tr>
+                              @{st=0;}
+                              @for (int i = 0; i < @ViewBag.Lignes2.Count-1; i+=7)
+                              {
+                                <tr class="table2" style="font-weight: 600;font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes2[i]</span></td>
+                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <span>@ViewBag.Lignes2[i+1]</span>
+                                  </td>
+                                  <td class="text-center" style="display:none;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@ViewBag.Lignes2[i+2] %</td>
+                                  <td class="text-right" style="display:none;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="hidden-sm-down text-right">@ViewBag.Lignes2[i+3]</td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">@ViewBag.Lignes2[i+4]</td>
+                                  <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes2[i+5]</td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes2[i+6]</td>
+                                </tr>
+                                st+=Int32.Parse(ViewBag.Lignes2[i+6].Replace(" ",""));
+                              }
+                              <tr class="table2" style="font-weight: 600;font-size: 17px;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                <td class="text-right" style="border: 1px solid;text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="4"><strong>Sous Total</strong></td>
+                                <td class="text-right separateur" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@st</td>
+                              </tr> 
+                              <tr class="table3">
+                                <td style="border: 1px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="5"><strong class=""> <h6 style="margin: 5px;">@Model.Titre3</h6> </strong> </td>
+                              </tr>
+                              <tr class="table3" >
+                                @* <th  style="width: 2px;padding: 0rem;"><strong>#</strong></th> *@
+                                <th style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Désignation</strong></th>
+                              <th class="text-center" style="color: black;width: 80px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Cote</strong></th>
+                              <th class="text-center" style="display:none; color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Assurance</strong></th>
+                              <th class="text-right" style="display:none;color: black;border: 1px solid;width: 120px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Plafond</strong></th>
+                              <th class="text-right" style="color: black;border: 1px solid;width: 120px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Montant</strong></th>
+                              <th class="hidden-sm-down" style="color: black;border: 1px solid;width: 80px;padding: 0rem 0.3rem 0rem 0.3rem;text-align: center;"><strong>Quantité</strong></th>
+                              <th style="color: black;border: 1px solid;width: 150px; text-align: right; padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Total</strong></th>
+                              </tr>
+                              @{st=0;}
+                              @for (int i = 0; i < @ViewBag.Lignes3.Count-1; i+=7)
+                              {
+                                <tr  class="table3" style="font-weight: 600;font-size: 17px;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes3[i]</span></td>
+                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <span>@ViewBag.Lignes3[i+1]</span>
+                                  </td>
+                                  <td class="text-center" style="display:none;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@ViewBag.Lignes3[i+2] %</td>
+                                  <td class="text-right" style="display:none;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="hidden-sm-down text-right">@ViewBag.Lignes3[i+3]</td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">@ViewBag.Lignes3[i+4]</td>
+                                  <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes3[i+5]</td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes3[i+6]</td>
+                                </tr>
+                                st+=Int32.Parse(ViewBag.Lignes3[i+6].Replace(" ",""));
+                              }  
+                              <tr  class="table3" style="font-weight: 600;font-size: 17px;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                <td class="text-right" style="border: 1px solid;text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="4"><strong>Sous Total</strong></td>
+                                <td class="text-right separateur" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@st</td>
+                              </tr>
+
+                              <tr class="table4">
+                                <td style="border: 1px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="5"><strong class=""> <h6 style="margin: 5px;">@Model.Titre4</h6> </strong> </td>
+                              </tr>
+                              <tr class="table4" >
+                                @* <th  style="width: 2px;padding: 0rem;"><strong>#</strong></th> *@
+                                <th style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Désignation</strong></th>
+                              <th class="text-center" style="color: black;width: 80px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Cote</strong></th>
+                              <th class="text-center" style="display:none; color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Assurance</strong></th>
+                              <th class="text-right" style="display:none;color: black;border: 1px solid;width: 120px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Plafond</strong></th>
+                              <th class="text-right" style="color: black;border: 1px solid;width: 120px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Montant</strong></th>
+                              <th class="hidden-sm-down" style="color: black;border: 1px solid;width: 80px;padding: 0rem 0.3rem 0rem 0.3rem;text-align: center;"><strong>Quantité</strong></th>
+                              <th style="color: black;border: 1px solid;width: 150px; text-align: right; padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Total</strong></th>
+                              </tr>
+                              @{st=0;}
+                              @for (int i = 0; i < @ViewBag.Lignes4.Count-1; i+=7)
+                              {
+                                <tr class="table4" style="font-weight: 600;font-size: 17px;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes4[i]</span></td>
+                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <span>@ViewBag.Lignes4[i+1]</span>
+                                  </td>
+                                  <td class="text-center" style="display:none;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@ViewBag.Lignes4[i+2] %</td>
+                                  <td class="text-right" style="display:none;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="hidden-sm-down text-right">@ViewBag.Lignes4[i+3]</td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">@ViewBag.Lignes4[i+4]</td>
+                                  <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes4[i+5]</td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes4[i+6]</td>
+                                </tr>
+                                st+=Int32.Parse(ViewBag.Lignes4[i+6].Replace(" ",""));
+                              } 
+                              <tr class="table4" style="font-weight: 600;font-size: 17px;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                <td class="text-right" style="border: 1px solid;text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="4"><strong>Sous Total</strong></td>
+                                <td class="text-right separateur" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@st</td>
+                              </tr> 
+                           
+                            
+
+                          </tbody>
+                          <tfoot>
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                 <td colspan="5"></td>
+                            </tr>
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                <td style="text-transform: capitalize;padding: 0rem 0.3rem 0rem 0.3rem;" rowspan="11" colspan="2">
+                                  <div style="border: 0;margin-top: 10px;" id="qrcode"><img style="float: right;transform: rotate(-10deg);" src="/img/duplicata.png" width="180px"></div>
+                                 <div style="position: absolute;margin-top: -100px;margin-left: 120px;max-width: 510px;">
+                                    Facture générée le @Model.Create_date.ToString("dd/MM/yyyy") @Model.Create_date.ToShortTimeString(), <br> 
+                                    Facturé par: @Model.Facture_par, <br>
+                                    @if(!Model.Type.Contains("proforma")){
+                                      <span>Encaissée par: @Model.Encaisse_par</span> <br/> 
+                                    }
+                                    
+                                    
+                                    <strong class="" id="montant_lettre">@Model.Montant_en_lettre_patient</strong><br/>
+                                    @if (controla>0){ <span>Date Validité Consultations: @(Model.Create_date.AddDays(14).ToString("dd/MM/yyyy")) @Model.Create_date.AddDays(14).ToShortTimeString()</span> }
+                                    <br> Nous vous souhaitons un prompt retablissement 
+                                 </div>
+
+                                </td>
+                                
+                                <td style="font-weight: 600;font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>TOTAL HT:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"> <strong class=""><span class="separateur">@(Model.Total_ht)</span> FCFA</strong></td>
+                            </tr>
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                               
+                                <td style="font-weight: 600;font-size: 17px;padding: 0rem 0.3rem 0rem 0.3rem;border: 1px solid;" colspan="2" class="text-right">
+                                <span>TVA:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class=""> Exonérée </strong></td>
+                            </tr>
+                             <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                               
+                                <td style="font-weight: 600;font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>TOTAl TTC:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class=""> <span class="separateur">@(Model.Total_ht)</span> FCFA</strong></td>
+                            </tr>
+                            @if (Model.Type!=null)
+                            {
+                              if (Model.Type.Contains("assurance"))
+                              {
+                                <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <td style="font-weight: 600;font-size: 15px;padding: 0rem 0.3rem 0rem 0.3rem;border: 1px solid;" colspan="2" class="text-right">
+                                    <span>Net à Payer Assurance:</span>
+                                    </td>
+                                    <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class=""> <span class="separateur">@(Model.Total_ht-Model.Net_a_payer_patient-Model.Remise)</span> FCFA</strong></td>
+                                </tr>
+                                if (Model.ticketmoderateur>0)
+                                {
+                                  <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                      <td style="font-weight: 600;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                      <span>Ticket Modérateur:&nbsp;&nbsp;</span>
+                                      </td>
+                                      <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class=""><span class="separateur">@(Model.ticketmoderateur)</span> FCFA</strong></td>
+                                  </tr>
+                                  <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                      
+                                      <td style="font-weight: 600;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                      <span>Complément patient:&nbsp;&nbsp;</span>
+                                      </td>
+                                      <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class=""><span class="separateur">@(Model.Net_a_payer_patient+Model.Remise-Model.ticketmoderateur)</span> FCFA</strong></td>
+                                  </tr>
+                                }
+                                
+                              }
+                              
+                            }
+                            @if (Model.Remise>0)
+                            {
+                              <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="font-weight: 600;font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Remise:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong ><span class="separateur">@(Model.Remise)</span> FCFA</strong></td>
+                            </tr>
+                            }
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="font-weight: 600;font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Net à Payer Patient:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class=""><span class="separateur">@(Model.Net_a_payer_patient)</span> FCFA</strong></td>
+                            </tr>
+                            
+                            
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="font-weight: 600;font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Montant payé:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class=""><span class="separateur">@(Model.Montant_recu_patient)</span> FCFA</strong></td>
+                            </tr>
+                            <tr style="font-weight: 600;font-size: 17px;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Reste à payé:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class=""><span class="separateur">@(Model.Net_a_payer_patient-Model.Montant_recu_patient)</span> FCFA</strong></td>
+                            </tr>
+                            
+                          </tfoot>
+                        </table>
+                     
+                        <br>
+                        
+                       
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      <span>
+                        <input  id="text" type="text" value="https://www.polycliniquedepoitiers.com/Resultat/Create" style="display: none;" />
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                      
+                      
+                          
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          
+            
+          </div>
+        </div>
+      </div>
+      <!-- App body end -->
+
+
+
+      <style>
+  /* Modale */
+      .modal1, .modal2{
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      }
+
+      .modal-header {
+      padding: 10px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      }
+
+      .modal-body {
+      flex: 1;
+      overflow: hidden;
+      }
+
+      .modal1 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .modal2 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      }
+</style>
+   
+    <!-- Modal -->
+        <div id="pdfModal" class="modal1">
+          <div class="modal-content">
+            <div class="modal-header">
+            <span>📄 Détails Facture </span>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+            <iframe id="target" src="/Facture/Pdf/@Model.Id?target=cash#navpanes=0"></iframe> <!-- Remplace par ton PDF -->
+            </div>
+          </div>
+        </div>
+  
+        
+        <div class="modal fade" id="AddDepartments" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h4" id="myLargeModalLabel">date de génération</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                            <input type="date" id="datecreat" class="form-control" placeholder="Montant">
+                            </div>
+                        </div>
+                       
+                        </div>
+                       
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button" id="manualgenerate2" class="btn  btn-primary">
+                              <i class="fa fa-save"></i> Enregistrer</button>
+                        <button type="button"  class="btn btn-round btn-default" data-dismiss="modal">Fermer</button>
+                    </div>
+                    </div>
+            </div>
+        </div>
+
+
+        <input type="hidden" asp-for="Id" id="identifiant_fact" />
+        <input type="hidden" asp-for="Numero_dossier" id="numerodossier" />
+        <input type="hidden" asp-for="Nom" id="nom" />
+        <input type="hidden" asp-for="Prenom" id="prenom"  />
+        <input type="hidden" asp-for="Numero_de_facture" id="numerofacture"  />
+        <input type="hidden" asp-for="Net_a_payer_patient" id="napp"  />
+        <input type="hidden" asp-for="Montant_recu_patient" id="mrp"  />
+        <input type="hidden" asp-for="Type" id="facture_tip"  />
+
+         <script>
+          const modal = document.getElementById('pdfModal');
+
+          function closeModal() {
+            modal.style.display = 'none';
+            document.getElementById("target").setAttribute("src", "");
+          }
+
+          // Fermer si on clique en dehors du contenu
+          window.onclick = event => {
+            if (event.target === modal) {
+              closeModal();
+            }
+          };
+      </script>
+   
+
+        
+
+        

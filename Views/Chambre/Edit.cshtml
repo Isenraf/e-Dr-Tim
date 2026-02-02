@@ -1,0 +1,131 @@
+@model BANA.Models.Chambre
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+       <div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+             <div class="col-lg-4 col-md-12 col-sm-12">
+                <h1>Policlinique de Poitiers</h1>
+                <span>Répartition des chambres,</span>
+              </div>
+              <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0 hidden-xs">
+                    <p class="text-muted mb-1">Aujourd'hui
+                      <span id="mini-bar-chart3" class="mini-bar-chart">
+                      </span>
+                    </p>
+                    <h5 class="mb-0">__ FCFA</h5>
+                  </div>
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                    <p class="text-muted mb-1">Semaine
+                      <span id="mini-bar-chart2" class="mini-bar-chart">
+                      </span>
+                    </p>
+                    <h5 class="mb-0">__ FCFA</h5>
+                  </div>
+                  <div class="mb-3 mb-xl-0">
+                    <p class="text-muted mb-1">Mois
+                      <span id="mini-bar-chart1" class="mini-bar-chart">
+                      </span>
+                    </p>
+                    <h5 class="mb-0">__ FCFA</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="body">
+                  <form asp-action="Edit">
+                    <input type="hidden" asp-for="Id" />
+                     <input type="hidden" asp-for="Create_date" />
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">N° de chambre</label>
+                      <div class="col-md-6 col-sm-10">
+                        <input asp-for="Numero_chambre" class="form-control"  placeholder="Entrez le numéro de chambre.">
+                        <span asp-validation-for="Numero_chambre" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Nom du patient</label>
+                      <div class="col-md-6 col-sm-10">
+                        <input asp-for="Patient" class="form-control"  placeholder="Entrez le nom du patient">
+                        <span asp-validation-for="Patient" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Type de chambre</label>
+                      <div class="col-md-6 col-sm-10">
+                        <select asp-for="TypeChambre" class="form-control input-height">
+                          <option asp-for="TypeChambre" value="">Sélectionner...</option>
+                          <option asp-for="TypeChambre" value="Simple">Simple</option>
+                          <option asp-for="TypeChambre" value="Standard">Standard</option>
+                          <option asp-for="TypeChambre" value="Vip">Vip</option>
+                          <option asp-for="TypeChambre" value="Vip ++">Vip ++</option>
+                        </select>
+                        <span asp-validation-for="TypeChambre" class="text-danger"></span>
+                      </div>
+                      
+                    </div>
+                    <div class="form-group row">
+                     <label class="col-sm-2 col-form-label">Date d'attribution</label>
+                      <div class="col-md-6 col-sm-10">
+                        <input asp-for="DateDebut" type="text" data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Date d'attribution">
+                        <span asp-validation-for="DateDebut" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Date de sortie</label>
+                      <div class="col-md-6 col-sm-10">
+                        <input asp-for="DateFin" type="text" data-provide="datepicker" data-date-autoclose="true" class="form-control" placeholder="Date de sortie">
+                        <span asp-validation-for="DateFin" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Montant journalier</label>
+                      <div class="col-md-6 col-sm-10">
+                        <input asp-for="Prix"  class="form-control" placeholder="Montant journalier">
+                        <span asp-validation-for="Prix" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                     <label class="col-sm-2 col-form-label">Photo du patient</label>
+                      <div class="col-md-6 col-sm-10">
+                        <input type="file" class="dropify">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input asp-for="Busy" style="accent-color: #82b540;" class="form-check-input"  /> Activer
+                                </label>
+                            </div>
+                        </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">
+                      </label>
+                      <div class="col-md-6 col-sm-10">
+                        <button type="submit" class="btn btn-primary">
+                              <i class="fa fa-save"></i> Enregistrer</button>
+                            </button>
+                        <button type="button" onclick="location.href='/Chambre/Delete/@Model.Id';" class="btn btn-danger">Supprimer</button>
+                        <button onclick="history.back()" type="button" class="btn btn-default">Annuler</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

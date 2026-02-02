@@ -1,0 +1,509 @@
+@model BANA.Models.Dmi
+
+@{
+    ViewData["Title"] = "Details";
+    Layout="_Layout3";
+}
+
+<style>
+    .feed-item {
+    display: none;
+    }
+    .btn-updated {
+    background-color: #95d9bb !important;
+    border-color: #95d9bb !important;
+    }
+</style>
+
+<!-- CSS page-->
+    <style>
+      ::selection {
+        background: rgba(187, 134, 252, 0.5);
+        color: #fff;
+      }
+
+      .container {
+        width: 100%;
+        padding: 50px 40px;
+        border-radius: 12px;
+        background: #ffffff;
+      }
+
+      .container .topic {
+        font-size: 30px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .content .list {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 25%;
+        margin-right: 20px;
+      }
+
+      .content .text-content {
+        width: 75%;
+        height: 100%;
+      }
+
+      .content .text {
+        display: none;
+      }
+
+      .content .text.active {
+        display: block;
+      }
+
+      .content .text .title {
+        font-size: 25px;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .container .text p {
+        text-align: justify;
+      }
+    </style>
+
+        <!-- App container starts -->
+        <div class="app-container">
+            <!-- App hero header starts -->
+            <div class="app-hero-header d-flex align-items-center">
+                <!-- Breadcrumb starts -->
+                
+                
+                <!-- Breadcrumb ends -->
+
+                <!-- Sales stats starts -->
+                <div class="d-lg-flex d-none flex-row">
+                    <div class="d-flex flex-row gap-1 day-sorting">
+                        
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                <i class="ri-account-circle-line fs-3"></i>
+                            </div>
+                                <div>
+                                    <p class="m-0">Nom du patient</p>
+                                    <h5 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    @if(ViewBag.patient.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                </div>
+                                <div>
+                                    <p class="m-0">Genre</p>
+                                    <h5 class="mb-1">@ViewBag.patient.Genre</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-arrow-right-up-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Âge du patient</p>
+                                    <h5 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-contrast-drop-2-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Groupe sanguin</p>
+                                    <h5 class="mb-1">@ViewBag.patient.GroupeSanguin</h5>
+                                    
+                                </div>
+                            </div>
+                                       
+                    </div>
+                </div>
+                <!-- Sales stats ends -->
+            </div>
+            <!-- App Hero header ends -->
+            <br>
+            <button type="button" style="margin-left: 18px;z-index: 2;" onclick="location.href='/Patient/Detailss/@ViewData["id"]'" class="btn btn-primary">
+                <i class="ri-folder-2-line"></i> Dossier patient
+            </button>
+            <button type="button" style="margin-left: 18px;z-index: 2;" onclick="imprimerDiv('zoneAImprimer')" class="btn btn-primary">
+                <i class="ri-printer-line"></i> Imprimer
+            </button>
+            <button type="button" style="margin-left: 18px;z-index: 2;" onclick="location.href='/Hospi/Create?nd=@Model.NumeroDossier'" class="btn btn-danger">
+                 Hospitalisation
+            </button>
+            
+                <br>
+              <div style="padding: 30px;" class="row">
+               
+
+        <div id="zoneAImprimer" class="container bg-white border shadow-sm">
+            <!-- Header -->
+            <div  class="d-flex justify-content-between align-items-center bg-primary text-white p-3 rounded-top">
+
+              <h6 class="m-0">RAPPORT MEDICAL INFORMATISÉ</h6>
+            </div>
+
+            <!-- Infos Patient -->
+            <div class="p-3">
+              <div class="bg-info bg-opacity-25 p-2 fw-bold">INFORMATIONS PATIENT</div>
+              <table class="table table-bordered mt-2">
+                <tr>
+                  <th class="table-light">Nom</th>
+                  <td>@ViewBag.patient.Nom @ViewBag.patient.Prenom</td>
+                  <th class="table-light">Sexe</th>
+                  <td>@ViewBag.patient.Genre</td>
+                </tr>
+                <tr>
+                  <th class="table-light">ÂGE</th>
+                  <td>@((int)((DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365)) ans  @((int)(((DateTime.Now-ViewBag.patient.DateNaissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays)%365)%30) jours</td>
+                  <th class="table-light">GROUPE SANGUIN</th>
+                  <td>@ViewBag.patient.GroupeSanguin</td>
+                </tr>
+                <tr>
+                  <th class="table-light">Numero de dossier</th>
+                  <td>@Model.NumeroDossier</td>
+                  <th class="table-light">Numero de facture</th>
+                  <td>@Model.NumeroDeFacture</td>
+                </tr>
+                <tr>
+                  <th class="table-light">Docteur consultant</th>
+                  <td>@ViewBag.facture.Medecin</td>
+                  <th class="table-light">Date</th>
+                  <td>@DateTime.Now</td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- Parametres du Patient -->
+            
+                <div>
+
+                   <div  class="row gx-3">
+                        @*
+                        <div style="width: 130px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        Poul: @Model.Pbd
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        *@
+                        <div style="width: 85px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                       @Model.Trumps[13]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 100px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        @Model.Trumps[14]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 110px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        @Model.Trumps[15]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 140px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                       @Model.Trumps[16]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="width: 170px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                       @Model.Trumps[17]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 210px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        @Model.Trumps[18]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 180px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        @Model.Trumps[19]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gx-3">
+                        <div style="width: 100px;font-size: 12px;">
+                            <div style="background-color: #2196f3;" class="card border-0 mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        Bras Gauche
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 160px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        @Model.Trumps[20]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 130px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                       @Model.Trumps[21]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 100px;font-size: 12px;">
+                            <div style="background-color: #2196f3;" class="card border-0 mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        Bras Droit
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 160px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        @Model.Trumps[22]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 130px;font-size: 12px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        @Model.Trumps[23]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    </div>
+
+                   
+
+
+
+            <!-- Motifs -->
+            <div id="motifcon" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[0])
+            </div>
+
+
+            <!-- Histoire -->
+            <div id="histoire" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[1])
+            </div>
+
+            <!-- Antécédents -->
+            <div id="antecedent" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[2])
+            </div>
+
+            <!-- Enquête systèmes -->
+            <div id="rapportEnqueteSysteme" class="p-3 d-none rapport-section">
+             @Html.Raw(Model.Trumps[3])
+            </div>
+
+            <!-- Examen physique -->
+            <div id="rapportExamphy" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[4])
+            </div>
+
+            <!-- Diagnostic hypothèses -->
+            <div id="diagnos1" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[5])
+            </div>
+
+            <!-- Complications -->
+            <div id="compli" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[6])
+            </div>
+
+            <!-- Examens complémentaires -->
+            <div id="examcom" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[7])
+            </div>
+
+            <!-- Diagnostic certitude -->
+            <div id="diagnos2" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[8])
+            </div>
+
+            <!-- Traitement -->
+            <div id="rapptraitement" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[9])
+            </div>
+
+            <!-- Suivi -->
+            <div id="suivi" class="p-3 d-none rapport-section">
+             @Html.Raw(Model.Trumps[10])
+            </div>
+
+            @* <!-- Conclusion -->
+            <div id="rappconclu" class="p-3 d-none rapport-section">
+              @Html.Raw(Model.Trumps[11])
+            </div> *@
+
+            <!-- Corps humain -->
+            <div class="p-3" id="body"></div>
+
+            <!-- Footer -->
+            <div class="p-3 border-top">
+              <p>
+                <strong>Signature:</strong>
+              </p>
+            </div>
+          </div>
+
+
+              </div>
+              
+            </div>
+            <!-- App body ends -->
+
+
+
+
+            <!-- JS pour affichage titre rapport -->
+    <script>
+      function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        let visible = false;
+
+        // Vérifier tous les spans
+        section.querySelectorAll("span").forEach((el) => {
+          if (el.textContent.trim() !== "") visible = true;
+        });
+
+        // Vérifier toutes les cellules de tableau
+        section.querySelectorAll("td").forEach((el) => {
+          if (el.textContent.trim() !== "") visible = true;
+        });
+
+        // Vérifier tous les divs qui contiennent du texte (pas les titres)
+        section.querySelectorAll("div").forEach((el) => {
+          if (!el.classList.contains("bg-info") && el.textContent.trim() !== "") visible = true;
+        });
+
+        // Afficher ou cacher la section
+        section.classList.toggle("d-none", !visible);
+      }
+
+      function updateAllSections() {
+        document.querySelectorAll(".rapport-section").forEach((sec) => {
+          toggleSection(sec.id);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", updateAllSections);
+
+      // Mise à jour à chaque saisie ou changement
+      document.addEventListener("input", updateAllSections);
+      document.addEventListener("change", updateAllSections);
+
+      // Observer les changements dynamiques
+      const observer = new MutationObserver(updateAllSections);
+      document.querySelectorAll(".rapport-section").forEach((sec) => {
+        observer.observe(sec, { childList: true, subtree: true });
+      });
+    </script>
+
+   
+   <script>
+function imprimerDiv(divId) {
+    // Taille de la fenêtre
+    var width = 800;
+    var height = 600;
+
+    // Calcul pour centrer la fenêtre
+    var left = (window.screen.width / 2) - (width / 2);
+    var top = (window.screen.height / 2) - (height / 2);
+
+    // Ouvre la fenêtre centrée
+    var fenetreImpression = window.open(
+        '',
+        '',
+        `width=${width},height=${height},top=${top},left=${left}`
+    );
+
+    // Contenu à imprimer
+    var contenu = document.getElementById(divId).innerHTML;
+
+    // Copie le CSS de la page
+    var styles = "";
+    document.querySelectorAll("link[rel='stylesheet'], style").forEach((node) => {
+        styles += node.outerHTML;
+    });
+
+    // Ajoute un padding pour l'impression
+    styles += `<style>body { padding: 20px; }</style>`;
+
+    // Écrit la page avec le CSS + padding
+    fenetreImpression.document.write('<html><head><title>Impression</title>');
+    fenetreImpression.document.write(styles);
+    fenetreImpression.document.write('</head><body>');
+    fenetreImpression.document.write(contenu);
+    fenetreImpression.document.write('</body></html>');
+
+    fenetreImpression.document.close();
+    fenetreImpression.print();
+}
+</script>

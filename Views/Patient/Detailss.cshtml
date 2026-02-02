@@ -1,0 +1,466 @@
+@model BANA.Models.Patient
+
+@{
+    ViewData["Title"] = "Details";
+     Layout="_Layout3";
+}
+
+
+<style>
+    
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        bottom: 100%; /* place le menu au-dessus */
+        left: -20px; /* décale un peu vers la gauche */
+        background-color: #fff;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 10px;
+        z-index: 1;
+      }
+
+      .dropdown-content button {
+        display: block;
+        margin: 5px 0;
+        text-align: left;
+        padding: 8px;
+        border: none;
+        background-color: #eee;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .dropdown-content button:hover {
+        background-color: #ddd;
+      }
+
+      .dropdown.show .dropdown-content {
+        display: block;
+      }
+
+      button.main-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    </style>
+<link href="/css/stock2.css" rel="stylesheet">
+<input type="hidden" id="dossier" value="@Model.Numero_dossier">
+<input type="hidden" id="date_naissance" value="@Model.DateNaissance">
+<input type="hidden" id="genre" value="@Model.Genre">
+<!-- App container starts -->
+        <div class="app-container">
+            <!-- App hero header starts -->
+            <div class="app-hero-header d-flex align-items-center">
+                <!-- Breadcrumb starts -->
+                
+                
+                <!-- Breadcrumb ends -->
+
+                <!-- Sales stats starts -->
+                <div class="d-lg-flex d-none flex-row">
+                    <div class="d-flex flex-row gap-1 day-sorting">
+                        
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                <i class="ri-account-circle-line fs-3"></i>
+                            </div>
+                                <div>
+                                    <p class="m-0">Nom du patient</p>
+                                    <h5 class="mb-1">@Model.Nom @Model.Prenom</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    @if(Model.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                </div>
+                                <div>
+                                    <p class="m-0">Genre</p>
+                                    <h5 class="mb-1">@Model.Genre</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-arrow-right-up-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Âge du patient</p>
+                                    <h5 class="mb-1">@((int)(DateTime.Now-Model.DateNaissance).TotalDays/365) ans</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-contrast-drop-2-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Groupe sanguin</p>
+                                    <h5 class="mb-1">@Model.GroupeSanguin</h5>
+                                    
+                                </div>
+                            </div>
+                            @if(Model.Genre=="M"){
+                                <img style="width: 60px;height: 60px;" src="/template2/assets/images/patient2.png" class="ms-auto" alt="@Model.Nom @Model.Prenom" />
+                            }else{
+                                <img style="width: 60px;height: 60px;" src="/template2/assets/images/patient1.jpg" class="ms-auto" alt="@Model.Nom @Model.Prenom" />
+                            }
+                                       
+                    </div>
+                </div>
+                <!-- Sales stats ends -->
+            </div>
+            <!-- App Hero header ends -->
+            <input type="hidden" id="nd" value="@Model.Numero_dossier">
+
+        <div style="padding: 20px;">
+            <div class="d-flex justify-content-end gap-2 my-2">
+                <!-- Example Dropdown Button -->
+                <div class="btn-group">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" style="padding: 10px;" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Fiche Médicale
+                        </button>
+                        <ul  class="dropdown-menu">
+                                @foreach(var item in ViewBag.fiches){
+                                <li><a class="dropdown-item editFiche2" href="#"><span style="display: none;">@item.Id</span>✎ @item.Nom</a></li>
+                                }
+                        
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" style="padding: 10px;" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Certificats Médicaux
+                        </button>
+                        <ul  class="dropdown-menu">
+                                @foreach(var item in ViewBag.cartificats){
+                                <li><a class="dropdown-item editFiche2" href="#"><span style="display: none;">@item.Id</span>✎ @item.Nom</a></li>
+                                }
+                        
+                        </ul>
+                    </div>
+                </div>
+
+                <a class="btn btn-light" onclick="history.back()" href="#">Retour</a>
+            </div> 
+            </div>
+
+                
+                
+                
+               <div class="row gx-3 px-2">
+                  <div class="wrapper">
+                    <div id="testfiltre"  class="grid">
+                        
+                           
+                            <div   class="item montest">
+                              <a asp-controller="FinalFiche" asp-action="Index1" asp-route-nd="@Model.Numero_dossier" asp-route-target="Fiche Médicale" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/dossier_medical.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Fiches médicales</h6>
+                                </div>
+                                </a>
+                            </div>
+
+
+
+                            <div   class="item montest">
+                              <a asp-controller="FinalFiche" asp-action="Index1" asp-route-nd="@Model.Numero_dossier" asp-route-target="Certificat Médical" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/dossier_medical.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Certificats médicaux</h6>
+                                </div>
+                                </a>
+                            </div>
+
+
+                            <div   class="item montest">
+                              <a asp-action="Vaccination" asp-route-Id="@Model.Id" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/vac.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Vaccinations</h6>
+                                </div>
+                                </a>
+                            </div>
+
+
+                            <div   class="item montest">
+                              <a asp-controller="Resultat" asp-action="IndexDmiLabo" asp-route-target="@Model.Numero_dossier"  class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/rex.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Examens LABO</h6>
+                                </div>
+                                </a>
+                            </div>
+
+
+                            <div   class="item montest">
+                              <a  asp-controller="Resultat" asp-action="IndexDmiAnapath" asp-route-target="@Model.Numero_dossier" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/ana.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Examens Anapath</h6>
+                                </div>
+                                </a>
+                            </div>
+
+
+                            <div   class="item montest">
+                              <a  asp-controller="Resultat" asp-action="IndexDmiOphta" asp-route-target="@Model.Numero_dossier"   class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/oph.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Examens Ophtalmologie</h6>
+                                </div>
+                                </a>
+                            </div>
+
+
+
+                            <div   class="item montest">
+                              <a  asp-controller="Resultat" asp-action="IndexDmiImagerie" asp-route-target="@Model.Numero_dossier" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/rx.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Examens Imagerie</h6>
+                                </div>
+                                </a>
+
+                            </div>
+
+
+                            <div   class="item montest">
+                              <a asp-action="FicheCroissance" asp-route-Id="@Model.Id" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/dossier_medical.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Fiche de Croissance</h6>
+                                </div>
+                                </a>
+                            </div>
+
+                            <div   class="item montest">
+                              <a asp-controller="Hospi" asp-action="Index00" asp-route-target="@Model.Numero_dossier" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/patient.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Hospitalisations</h6>
+                                </div>
+                                </a>
+                            </div>
+
+
+                             <div   class="item montest">
+                              <a asp-controller="Dmi" asp-action="Consultations" asp-route-nd="@Model.Numero_dossier" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/cst.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Consultations</h6>
+                                </div>
+                                </a>
+                            </div>
+
+                            <div   class="item montest">
+                              <a asp-controller="Fiche5" asp-action="Index" asp-route-nd="@Model.Numero_dossier" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/ophta.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">prescription de lunettes</h6>
+                                </div>
+                                </a>
+                            </div>
+
+                            <div   class="item montest">
+                              <a asp-controller="Dmi" asp-action="Indexx" asp-route-nd="@Model.Numero_dossier" class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/ordo.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Ordonnances</h6>
+                                </div>
+                                </a>
+                            </div>
+
+                            <div   class="item montest">
+                              <a asp-controller="Archive" asp-action="Index" asp-route-ndossier="@Model.Numero_dossier"  class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/archiver.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Archives</h6>
+                                </div>
+                                </a>
+                            </div>
+
+                            <div   class="item montest">
+                              <a asp-controller="Parametre" asp-action="Patient" asp-route-ndossier="@Model.Numero_dossier"  class="details_stock"> 
+                                  <div>
+                                      <img  width="100px" height="100px" src="/template2/assets/images/para.png" alt=""> 
+                                  </div>
+                                  
+                                <div class="media-body blog-std" style="padding-top: -15px;">
+                                <h6 class="cl11 badge bg-primary" style="margin-bottom: 0px;margin-bottom: 0px;">Paramètres vitaux</h6>
+                                </div>
+                                </a>
+                            </div>
+
+
+                       
+                        
+                    </div>
+                </div> 
+            </div>
+            <!-- Row starts -->
+        </div>
+        <!-- App body ends -->
+    </div>
+</div>
+
+
+<style>
+  /* Modale */
+      .modal, .modal2{
+      display: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      }
+
+      .modal-header {
+      padding: 10px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      }
+
+      .modal-body {
+      flex: 1;
+      overflow: hidden;
+      }
+
+      .modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .modal2 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      }
+</style>
+
+<!-- Modal -->
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+    <div style="margin-left: 20px;" class="btn-group">
+      <button type="button" class="btn btn-primary">Enregistrer</button>
+        <button type="button" class="btn btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="visually-hidden">Enregistrer</span>
+        </button>
+        <ul class="dropdown-menu" style="">
+        <li><a class="dropdown-item" id="signature" href="#">Signez le document</a></li>
+        <li><a class="dropdown-item" id="signature2" href="#">Signez et envoyer</a></li>
+        </ul>
+    </div>
+    
+    
+    <button class="close-btn" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+    <iframe id="target" src=""></iframe> <!-- Remplace par ton PDF -->
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    const modal = document.getElementById('pdfModal');
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.getElementById("target").setAttribute("src", "");
+    }
+
+    // Fermer si on clique en dehors du contenu
+    window.onclick = event => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+</script>

@@ -1,0 +1,198 @@
+@model BANA.Models.Examen
+
+@{
+    ViewData["Title"] = "Details";
+}
+<style>
+  
+
+    .card{
+      margin: auto;
+      width: 21cm;
+      height: 29.7cm; 
+      background-image: url('/img1/pppp2.jpg');
+      background-repeat: round;
+
+      }
+</style>
+
+
+<link rel="stylesheet" media="print" href="/css/print.css">
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">
+        Création Facture assurance
+      </li>
+    </ol>
+    <!-- Breadcrumb ends -->
+  </div>
+  <!-- App Hero header ends -->
+<input type="hidden" value="@Model.Id" id="identifiant"/>
+
+
+  <!-- App body start -->
+  <div class="app-body">
+
+    <div  style="margin-bottom: 20px;background-color: #126aef12;padding: 10px;border-radius: 10px;text-align: right;" class="">
+        <div class="">
+
+        
+          <button class="btn btn-outline-secondary" id="closeButton"  onclick="history.back()">
+            <i class="fa fa-previous"></i> Fermer</button>
+
+
+              <button class="btn btn-primary theme-bg gradient"  id="printResultat0">
+                  <i class="fa fa-print"></i> Print</button>
+
+        </div>
+      </div>
+
+
+
+    <div class="col-sm-12">
+
+          <div class="row clearfix">
+            
+            <div class="col-lg-12">
+              <div id="tdt1" class="card card2">
+                
+                  <div style="padding: 15px;margin-top: 21%;">
+                 
+
+                  <div class="row clearfix">
+                   @Html.Raw(Model.Contenu)
+
+                
+                  </div> 
+                  <br>
+                  
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      <span>
+                        <input  id="text" type="text" value="https://www.polycliniquedepoitiers.com/Resultat/Create" style="display: none;" />
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+        </div>
+
+      <!-- App body end -->
+
+
+       @if(Model.Categorie=="Analyse Médicale"){
+          <a id="editbt" style="position: fixed;right: 50px;bottom: 45px;" asp-action="Edit2" asp-route-Id="@Model.Id" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-edit"></i></a>
+
+        }else{
+           <a id="editbt" style="position: fixed;right: 50px;bottom: 45px;" asp-action="Edit3" asp-route-Id="@Model.Id" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-edit"></i></a>
+        }
+   
+
+
+
+       
+
+<style>
+  /* Modale */
+      .modal, .modal2{
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      }
+
+      .modal-header {
+      padding: 10px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      }
+
+      .modal-body {
+      flex: 1;
+      overflow: hidden;
+      }
+
+      .modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .modal2 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      }
+</style>
+
+<!-- Modal -->
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+    <span>📄 Détails Facture </span>
+    <button class="close-btn" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+    <iframe id="target" src=""></iframe> <!-- Remplace par ton PDF -->
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    const modal = document.getElementById('pdfModal');
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.getElementById("target").setAttribute("src", "");
+    }
+
+    // Fermer si on clique en dehors du contenu
+    window.onclick = event => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+</script>
+

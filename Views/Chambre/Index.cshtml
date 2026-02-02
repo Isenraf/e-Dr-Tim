@@ -1,0 +1,190 @@
+@model IEnumerable<BANA.Models.Chambre>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+             <div class="col-lg-4 col-md-12 col-sm-12">
+                <h1>Policlinique de Poitiers</h1>
+                <span>Répartition des chambres,</span>
+              </div>
+              <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0 hidden-xs">
+                    <p class="text-muted mb-1">Aujourd'hui
+                      <span id="mini-bar-chart3" class="mini-bar-chart">
+                      </span>
+                    </p>
+                    <h5 class="mb-0">__ FCFA</h5>
+                  </div>
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                    <p class="text-muted mb-1">Semaine
+                      <span id="mini-bar-chart2" class="mini-bar-chart">
+                      </span>
+                    </p>
+                    <h5 class="mb-0">__ FCFA</h5>
+                  </div>
+                  <div class="mb-3 mb-xl-0">
+                    <p class="text-muted mb-1">Mois
+                      <span id="mini-bar-chart1" class="mini-bar-chart">
+                      </span>
+                    </p>
+                    <h5 class="mb-0">__ FCFA</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="body">
+                  <form>
+                    <div class="input-group">
+                      <input type="search" id="search" class="form-control" placeholder="Barre de recherche...">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="search-mail">
+                          <i class="icon-magnifier"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table id="testfiltre" class="table table-hover table-custom spacing5">
+                  <thead>
+                    <tr>
+                      <th>
+                      </th>
+                     <th>Chambre n°</th>
+                     <th>Montant/j</th>
+                      <th>Patient</th>
+                      <th>Attribution</th>
+                      <th>Décharge</th>
+                      <th>Type de chambre</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  @foreach (var item in Model) {
+                    if (item.Busy==true && item.DateFin<DateTime.Now)
+                    {
+                        <tr class="montest" style="background: #f5d0d46b;">
+                            <td class="w60">
+                                <img src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="" alt="Avatar" class="avatar rounded-circle" data-original-title="Polyclinique de Poitiers">
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Numero_chambre)</td>
+                            <td>@item.Prix</td>
+                            <td>@Html.DisplayFor(modelItem => item.Patient)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DateDebut)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DateFin)</td>
+                            <td>
+                                @if (item.TypeChambre=="Simple")
+                                {<span class="badge border border-success text-success">@item.TypeChambre</span>
+                                }else if(item.TypeChambre=="Standard"){
+                                <span class="badge badge-primary">@item.TypeChambre</span>
+                                }else if(item.TypeChambre=="Vip"){
+                                <span class="badge border border-danger text-danger">@item.TypeChambre</span>
+                                }else if(item.TypeChambre=="Vip ++"){
+                                <span class="badge border border-warning text-warning">@item.TypeChambre</span> 
+                                }
+                                
+                            </td>
+                            <td>
+                                <button type="button" onclick="location.href='/Chambre/Edit/@item.Id';" class="btn btn-outline-secondary" title="Edit">
+                                <i class="fa fa-pencil"></i>
+                                </button>
+                                <button type="button" onclick="location.href='/Chambre/Delete/@item.Id';" class="btn btn-outline-secondary" title="Delete">
+                                <i class="fa fa-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }else if(item.Busy==true && item.DateFin>DateTime.Now)
+                    {
+                        <tr style="background: #d0f5d96b;">
+                            <td class="w60">
+                                <img src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="" alt="Avatar" class="avatar rounded-circle" data-original-title="Polyclinique de Poitiers">
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Numero_chambre)</td>
+                             <td>@item.Prix</td>
+                            <td>@Html.DisplayFor(modelItem => item.Patient)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DateDebut)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DateFin)</td>
+                            <td>
+                               @if (item.TypeChambre=="Simple")
+                                {<span class="badge border border-success text-success">@item.TypeChambre</span>
+                                }else if(item.TypeChambre=="Standard"){
+                                <span class="badge badge-primary">@item.TypeChambre</span>
+                                }else if(item.TypeChambre=="Vip"){
+                                <span class="badge border border-danger text-danger">@item.TypeChambre</span>
+                                }else if(item.TypeChambre=="Vip ++"){
+                                <span class="badge border border-warning text-warning">@item.TypeChambre</span> 
+                                }
+                            </td>
+                            <td>
+                                <button type="button" onclick="location.href='/Chambre/Edit/@item.Id';" class="btn btn-outline-secondary" title="Edit">
+                                <i class="fa fa-pencil"></i>
+                                </button>
+                                <button type="button" onclick="location.href='/Chambre/Delete/@item.Id';" class="btn btn-outline-secondary" title="Delete">
+                                <i class="fa fa-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                    }else
+                    {
+                        <tr>
+                            <td class="w60">
+                                <img src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="" alt="Avatar" class="avatar rounded-circle" data-original-title="Polyclinique de Poitiers">
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Numero_chambre)</td>
+                             <td>@item.Prix</td>
+                            <td>@Html.DisplayFor(modelItem => item.Patient)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DateDebut)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DateFin)</td>
+                            <td>
+                                @if (item.TypeChambre=="Simple")
+                                {<span class="badge border border-success text-success">@item.TypeChambre</span>
+                                }else if(item.TypeChambre=="Standard"){
+                                <span class="badge badge-primary">@item.TypeChambre</span>
+                                }else if(item.TypeChambre=="Vip"){
+                                <span class="badge border border-danger text-danger">@item.TypeChambre</span>
+                                }else if(item.TypeChambre=="Vip ++"){
+                                <span class="badge border border-warning text-warning">@item.TypeChambre</span> 
+                                }
+                            </td>
+                            <td>
+                                <button type="button" onclick="location.href='/Chambre/Edit/@item.Id';" class="btn btn-outline-secondary" title="Edit">
+                                <i class="fa fa-pencil"></i>
+                                </button>
+                                <button type="button" onclick="location.href='/Chambre/Delete/@item.Id';" class="btn btn-outline-secondary" title="Delete">
+                                <i class="fa fa-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    
+                  }
+                  </tbody>
+                </table>
+              </div>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">Previous</a>
+                  </li>
+                  
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+         <a  style="position: fixed;right: 50px;bottom: 45px;" href="/Chambre/Create" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-plus"></i></a>
+

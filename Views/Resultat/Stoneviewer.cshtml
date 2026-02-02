@@ -1,0 +1,146 @@
+@model BANA.Models.Resultat
+
+@{
+    ViewData["Title"] = "Details";
+}
+<style>
+  .card{
+  margin: auto;
+  width: 21cm;
+  height: 29.7cm; 
+  background-image: url('/img1/pppp2.jpg');
+  background-repeat: round;
+
+  }
+</style>
+
+<link rel="stylesheet" media="print" href="/css/print.css">
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">
+        Détails Résultat
+      </li>
+    </ol>
+    <!-- Breadcrumb ends -->
+  </div>
+  <!-- App Hero header ends -->
+<input type="hidden" value="@Model.Id" id="identifiant"/>
+
+
+  <!-- App body start -->
+  <div class="app-body">
+
+    <div  style="margin-bottom: 20px;background-color: #126aef12;padding: 10px;border-radius: 10px;text-align: right;" class="">
+        <div class="">
+                  @if (Model.Categorie=="Analyse Médicale")
+                    {
+                      <button class="btn btn-outline-secondary" onclick="location.href='/Resultat/Stoneviewer';">
+                        <i class="fa fa-previous"></i>Couverture</button>
+                    
+                    }
+                    <button class="btn btn-outline-secondary" onclick="location.href='/Resultat/Couverture/@Model.Id';">
+                        <i class="fa fa-previous"></i>Couverture</button>
+                    <button type="button" class="btn btn-outline-secondary" id="actualiser_resultat" title="Actualiser le patient">
+                      <i class="fa fa-refresh"></i>
+                    </button>
+                    @* <button type="button" class="btn btn-outline-secondary" title="Download">
+                      <i class="fa fa-file-pdf-o"></i>
+                    </button>
+                    <button type="button" onclick="printDiv('printMe')" class="btn btn-outline-secondary" title="Print">
+                      <i class="fa fa-print"></i>
+                    </button> *@
+                    @if (Model.valide_par==null)
+                    {
+
+                      <!-- Example Dropdown Button -->
+                      <div class="btn-group">
+                          <div class="dropdown">
+                              <button class="btn btn-warning  dropdown-toggle mx-2 my-2" type="button" data-bs-toggle="dropdown"
+                              aria-expanded="false">
+                              Valider
+                              </button>
+                              <ul style="padding: 10px;width: max-content;" class="dropdown-menu" id="mlist">
+                                  
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                <select id="result"  class="form-control show-tick">
+                                                  <option  value="">- Selectionner Resultat -</option>
+                                                  <option  value="Positif">Positif</option>
+                                                  <option  value="Négatif">Négatif</option>
+                                                  <option  value="Autre">Autre</option>
+                                                </select>
+                                              </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button style="display: none;" type="button" id="valider_result" class="btn  btn-primary">
+                                                      <i class="fa fa-save"></i> Enregistrer</button>
+                                            </div>
+                                          
+                                      
+                              </ul>
+                          </div>
+                      </div>
+                      
+
+
+                        
+
+
+                    }
+                    @if (Model.Categorie=="Imagerie Médicale")
+                    {
+                      <button class="btn btn-primary theme-bg gradient"  id="printResultat">
+                              <i class="fa fa-print"></i> Print</button>
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Imagerie?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }else if(Model.Categorie=="Anapath"){
+                       <button class="btn btn-primary theme-bg gradient"  id="printResultat">
+                              <i class="fa fa-print"></i> Print</button>
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Anapath?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }else if(Model.Categorie=="Ophtalmologie"){
+                      <button class="btn btn-primary theme-bg gradient"  id="printResultat">
+                              <i class="fa fa-print"></i> Print</button>
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Ophtalmologie?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }
+                    else{
+                      //@if(Model.valide_par!=null || Model.Nom=="HP AG" ){
+                        <button class="btn btn-primary theme-bg gradient"  id="printResultat">
+                                <i class="fa fa-print"></i> Print</button>
+                      //}
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Labo?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }
+                    
+                          
+
+        </div>
+      </div>
+
+
+
+    <div class="col-sm-12">
+
+      <div class="row clearfix">
+        
+        <iframe src="https://orthanc.uclouvain.be/demo/stone-webviewer/index.html?study=2.16.840.1.113669.632.20.1211.10000357775" frameborder="0" height="700px"></iframe>
+      </div>
+
+      </div>
+    </div>
+
+   
+
+
+
+

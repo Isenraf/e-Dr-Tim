@@ -1,0 +1,485 @@
+@model IEnumerable<BANA.Models.Parametre>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout="_Layout3";
+}
+<style>
+      @@media print {
+        body * {
+          visibility: hidden;
+        }
+
+        .card,
+        .card * {
+          visibility: visible;
+        }
+
+        .card {
+          position: absolute;
+          left: 0;
+          top: 0;
+          box-shadow: none;
+        }
+
+        /* Hide buttons */
+        .card button,
+        .custom-daterange {
+          visibility: hidden !important;
+        }
+
+        /* Force hide the last column header & cells */
+        .card table th:last-child[rowspan="2"],
+        .card table td:last-child {
+          display: none !important;
+          visibility: hidden !important;
+        }
+      }
+    </style>
+
+<script src="/template2/assets/js/chart.js"></script>
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">Paramètres vitaux patient</li>
+        </ol>
+        <!-- Breadcrumb ends -->
+    </div>
+    <!-- App Hero header ends -->
+
+
+    <!-- App body starts -->
+    <div class="app-body">
+
+        <div class="col-sm-12">
+            <!-- Card starts -->
+            <div class="card mb-3">
+                <div class="card-body">
+                <div class="d-flex flex-wrap gap-2">
+                    <button type="button" onclick="location.href='/Parametre/Create?dossier=@ViewData["dossier"]'" class="btn btn-primary">
+                    <i class="ri-add-fill"></i>
+                    Nouveau paramètre</button>
+                </div>
+                </div>
+            </div>
+            <!-- Card ends -->
+        </div>
+
+       <!-- Row starts -->
+                <div class="row gx-3">
+                    <div class="col-sm-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <!-- Stats starts -->
+                                    <div class="d-flex align-items-center flex-wrap gap-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-account-circle-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                                <p class="m-0">Nom du patient</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                @if(ViewBag.patient.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                            </div>
+                                            <div>
+                                                 <p class="m-0">Genre</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Genre</h4>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-arrow-right-up-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                                <p class="m-0">Âge du patient</p>
+                                                <h4 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h4>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-contrast-drop-2-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                                <p class="m-0">Groupe sanguin</p>
+                                                <h4 class="mb-1">@ViewBag.patient.GroupeSanguin</h4>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-secondary rounded-5 me-2">
+                                                <i class="ri-stethoscope-line fs-3 text-body"></i>
+                                            </div>
+                                            <div>
+                                                <p class="m-0"> Médecin</p>
+                                                <h4 class="mb-1"></h4>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Stats ends -->
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient.png" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row ends -->
+
+
+
+
+
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="">
+
+                            <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+                                        <div>
+                                            <h6>Température (Adulte & Bébé)</h6>
+                                            <canvas id="tempChart" width="400" height="200"></canvas>
+                                        </div>
+
+                                        <div>
+                                            <h6>Tension Bras Gauche (Systolique & Diastolique)</h6>
+                                            <canvas id="tensionChartBG" width="400" height="200"></canvas>
+                                        </div>
+
+                                        <div>
+                                            <h6>Tension Bras Droit (Systolique & Diastolique)</h6>
+                                            <canvas id="tensionChartBD" width="400" height="200"></canvas>
+                                        </div>
+
+                                        <div>
+                                            <h6>Pouls (Gauche & Droit)</h6>
+                                            <canvas id="poulsChart" width="400" height="200"></canvas>
+                                        </div>
+                                    </div>
+
+                                    <br><br>
+                                <h5 class="card-title mb-0">
+                                    PARAMÈTRES VITAUX
+                                </h5>
+                                <div class="table-responsive mb-3">
+                                <table class="table table-bordered  m-0 text-center table1">
+                                  <caption class="small text-center" style="caption-side: top; font-weight: bold;"></caption>
+                                  <thead>
+                                      <tr>
+                                          <th rowspan="2">Heure</th>
+                                          <th rowspan="2">
+                                              Température <br />
+                                              Adulte
+                                          </th>
+                                          <th rowspan="2">
+                                              Température <br />
+                                              Bébé
+                                          </th>
+                                          <th colspan="3">Bras Gauche</th>
+                                          <th colspan="3">Bras Droit</th>
+                                          <th rowspan="2">Infirmier</th>
+                                      </tr>
+
+                                      <tr>
+                                          <th>Systolique</th>
+                                          <th>Diastolique</th>
+                                          <th>Pouls</th>
+                                          <th>Systolique</th>
+                                          <th>Diastolique</th>
+                                          <th>Pouls</th>
+                                      </tr>
+                                  </thead>
+
+                                  
+                                      <tbody>
+                                          @foreach(var item in Model){
+                                              <tr>
+                                                  <td>@item.Create_date</td>
+                                                  <td>@item.Temperature</td>
+                                                  <td>@item.Temperature</td>
+                                                  <td>@item.Tsysbg</td>
+                                                  <td>@item.Tdiasbg</td>
+                                                  <td>@item.Pbg</td>
+                                                  <td>@item.Tsysbd</td>
+                                                  <td>@item.Tdiasbd</td>
+                                                  <td>@item.Pbd</td>
+                                                  <td>@item.Infirmier</td>
+                                              </tr>
+                                          }
+                                        </tbody> 
+                                    
+                            </table>
+
+                                     
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <br>
+
+    </div>
+    <!-- App body ends -->
+</div>
+
+<button type="button" style="position:fixed;right: 45px;bottom: 45px;" onclick="window.location.href='/Patient/Detailss/@ViewBag.patient.Id'" class="btn btn-primary">
+  <i class="ri-corner-up-left-line"></i>
+</button>
+
+
+<!-- My script -->
+    <script>
+      let state = [];
+
+      const caption = document.querySelector("caption");
+      //const tableBody = document.querySelector(".table1 tbody");
+      //const form = document.querySelector("#myForm");
+      @* const cancelBtn = document.querySelector(
+        '.modal-footer button[type="button"]'
+      ); *@
+      //const closeBtn = document.querySelector(".btn-close");
+      //const addButton = document.querySelector(".add-modal");
+      const todaysDate = new Date().toLocaleString().split(",")[0];
+
+      // Initialisation des graphs
+      const tempCtx = document.getElementById("tempChart").getContext("2d");
+      const poulsCtx = document.getElementById("poulsChart").getContext("2d");
+      const tensionBGCtx = document
+        .getElementById("tensionChartBG")
+        .getContext("2d");
+      const tensionBDCtx = document
+        .getElementById("tensionChartBD")
+        .getContext("2d");
+
+      const tempChart = new Chart(tempCtx, {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "Température Adulte",
+              data: [],
+              borderColor: "#e74c3c",
+              backgroundColor: "#e74c3c",
+              fill: false,
+            },
+            {
+              label: "Température Bébé",
+              data: [],
+              borderColor: "#f39c12",
+              backgroundColor: "#f39c12",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              title: { display: true, text: "Date & Heure" },
+            },
+            y: {
+              title: { display: true, text: "Température (°C)" },
+              min: 30,
+              max: 42,
+            },
+          },
+        },
+      });
+
+      const poulsChart = new Chart(poulsCtx, {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "Pouls Gauche",
+              data: [],
+              borderColor: "#27ae60",
+              backgroundColor: "#27ae60",
+              fill: false,
+            },
+            {
+              label: "Pouls Droit",
+              data: [],
+              borderColor: "#f1c40f",
+              backgroundColor: "#f1c40f",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              title: { display: true, text: "Heure" },
+            },
+            y: {
+              title: { display: true, text: "BPM" },
+              min: 30,
+              max: 150,
+            },
+          },
+        },
+      });
+
+      const tensionBGChart = new Chart(tensionBGCtx, {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "Systolique",
+              data: [],
+              borderColor: "#2980b9",
+              backgroundColor: "#2980b9",
+              fill: false,
+            },
+            {
+              label: "Diastolique",
+              data: [],
+              borderColor: "#8e44ad",
+              backgroundColor: "#8e44ad",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              title: { display: true, text: "Heure" },
+            },
+            y: {
+              title: { display: true, text: "Pression (mmHg)" },
+              min: 40,
+              max: 300,
+            },
+          },
+        },
+      });
+
+      const tensionBDChart = new Chart(tensionBDCtx, {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "Systolique",
+              data: [],
+              borderColor: "#2980b9",
+              backgroundColor: "#2980b9",
+              fill: false,
+            },
+            {
+              label: "Diastolique",
+              data: [],
+              borderColor: "#8e44ad",
+              backgroundColor: "#8e44ad",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              title: { display: true, text: "Heure" },
+            },
+            y: {
+              title: { display: true, text: "Pression (mmHg)" },
+              min: 40,
+              max: 300,
+            },
+          },
+        },
+      });
+
+      function render() {
+        const rows = document.querySelectorAll(".table1 tbody tr");
+        rows.forEach(tr => {
+          // Sélectionne toutes les cellules (qu'elles soient <td> ou <th>)
+          const cells = tr.querySelectorAll("td");
+
+          // Vérifie qu’il y a au moins 10 cellules (comme ton tableau)
+          if (cells.length >= 10) {
+            const rowData = {
+              time: cells[0].textContent.trim(),                  // Heure
+              adultTemperature: parseFloat(cells[1].textContent), // Température adulte
+              babeTemperature: parseFloat(cells[2].textContent),  // Température bébé
+              tensionSBG: parseFloat(cells[3].textContent),       // Systolique BG
+              tensionDBG: parseFloat(cells[4].textContent),       // Diastolique BG
+              poulBG: parseFloat(cells[5].textContent),           // Pouls BG
+              tensionSBD: parseFloat(cells[6].textContent),       // Systolique BD
+              tensionDBD: parseFloat(cells[7].textContent),       // Diastolique BD
+              poulBD: parseFloat(cells[8].textContent),           // Pouls BD
+              infirmier: cells[9].textContent.trim(),             // Infirmier
+            };
+
+            state.push(rowData);
+          }
+        });
+
+        state.forEach((row, index) => {
+          const {
+            time,
+            adultTemperature,
+            babeTemperature,
+            tensionSBG,
+            tensionDBG,
+            poulBG,
+            tensionSBD,
+            tensionDBD,
+            poulBD,
+            infirmier,
+          } = row;
+          
+
+          // temperature
+          tempChart.data.labels.push(time);
+          tempChart.data.datasets[0].data.push(parseFloat(adultTemperature));
+          tempChart.data.datasets[1].data.push(parseFloat(babeTemperature));
+          tempChart.update();
+
+          tensionBGChart.data.labels.push(time);
+          tensionBGChart.data.datasets[0].data.push(parseFloat(tensionSBG));
+          tensionBGChart.data.datasets[1].data.push(parseFloat(tensionDBG));
+          tensionBGChart.update();
+
+          tensionBDChart.data.labels.push(time);
+          tensionBDChart.data.datasets[0].data.push(parseFloat(tensionSBD));
+          tensionBDChart.data.datasets[1].data.push(parseFloat(tensionDBD));
+          tensionBDChart.update();
+
+          poulsChart.data.labels.push(time);
+          poulsChart.data.datasets[0].data.push(parseFloat(poulBG));
+          poulsChart.data.datasets[1].data.push(parseFloat(poulBD));
+          poulsChart.update();
+        });
+
+       console.log(state)
+      }
+
+
+      caption.textContent = todaysDate;
+       
+      window.addEventListener("DOMContentLoaded", () => {
+        render();
+      });
+    </script>

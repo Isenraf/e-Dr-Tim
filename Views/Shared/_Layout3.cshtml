@@ -1,0 +1,602 @@
+﻿
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>e-Dr Tim | @ViewData["Title"]s</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Logiciel de gestion Hospitalère"/>
+    <meta property="og:title" content="e-Dr Tim Hospital Management" />
+    <meta property="og:description" content="Logiciel de gestion Hospitalère"/>
+    <meta property="og:type" content="Website" />
+    <link rel="shortcut icon" href="/template2/assets/images/favicon2.png" />
+
+    <!-- *************
+            ************ CSS Files *************
+        ************* -->
+    <link rel="stylesheet" href="/template2/assets/fonts/remix/remixicon.css" />
+    <link rel="stylesheet" href="/template2/assets/css/main2.min.css" />
+
+    <!-- *************
+            ************ Vendor Css Files *************
+        ************ -->
+
+   <!-- Scrollbar CSS -->
+    <link
+      rel="stylesheet"
+      href="/template2/assets/vendor/overlay-scroll/OverlayScrollbars.min.css"
+    />
+    <link rel="stylesheet" href="/template/assets/vendor/font-awesome/css/font-awesome.min.css">
+
+    <!-- Date Range CSS -->
+    <link rel="stylesheet" href="/template2/assets/vendor/daterange/daterange.css" />
+
+    <style>
+      .feed-item {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Page wrapper starts -->
+   <div class="page-wrapper">
+    <!-- App header starts -->
+    <div class="app-header d-flex align-items-center">
+        <!-- Toggle buttons starts -->
+        <div class="d-flex">
+            <button class="toggle-sidebar">
+                <i class="ri-menu-line"></i>
+            </button>
+            <button class="pin-sidebar">
+                <i class="ri-menu-line"></i>
+            </button>
+        </div>
+        <!-- Toggle buttons ends -->
+
+         <!-- App brand starts -->
+        <div class="app-brand ms-3">
+          <a href="/template2/index.html" class="d-lg-block d-none">
+            <img src="/template2/assets/images/favicon2.png" style=" width: 41px; font-size: 23px;box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);border: 1px solid #70a2ed;" class="logo" alt="e-Dr Tim DMI"/>
+            <span style="position: absolute;color: white;font-family: Arial, sans-serif;top: 25%;">
+              <p style="font-size: 18px;font-weight: bold;margin: 0;line-height: 1;display: block;">&nbsp;&nbsp;Dr TIM</p>
+              <p style="font-size: 8px;margin: 0;padding: 0;line-height: 1;display: block;">&nbsp;&nbsp;&nbsp;Dossier médical Informatisé</p>
+            </span>
+          </a>
+          <a href="/template2/index.html" class="d-lg-none d-md-block">
+            <img src="/template2/assets/images/favicon2.png" style=" width: 41px;" class="logo" alt="e-Dr Tim DMI"/>
+          </a>
+        </div>
+        <!-- App brand ends -->
+
+        <!-- App header actions starts -->
+        <div class="header-actions">
+            <!-- Search container starts -->
+            <div class="search-container d-lg-block d-none mx-3">
+              <form asp-controller="Patient" asp-action="Indexx"  method="get">
+                <input type="text" class="form-control" name="SearchString2" id="searchId" placeholder="Recherche" />
+                <i class="ri-search-line"></i>
+              </form>
+                
+            </div>
+            <!-- Search container ends -->
+
+            <!-- Header actions starts -->
+            <div class="d-lg-flex d-none gap-2">
+                <!-- Select country dropdown starts -->
+                <div class="dropdown">
+                    <a class="dropdown-toggle header-icon" href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/template2/assets/images/flags/1x1/cmr.png" class="header-country-flag" alt="Cameroun" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-mini">
+                        <div class="country-container">
+                            <a href="index.html" class="py-2">
+                                <img src="/template2/assets/images/flags/1x1/us.svg" alt="Admin Panel" />
+                            </a>
+                            <a href="index.html" class="py-2">
+                                <img src="/template2/assets/images/flags/1x1/in.svg" alt="Admin Panels" />
+                            </a>
+                            <a href="index.html" class="py-2">
+                                <img src="/template2/assets/images/flags/1x1/br.svg" alt="Admin Dashboards" />
+                            </a>
+                            <a href="index.html" class="py-2">
+                                <img src="/template2/assets/images/flags/1x1/tr.svg" alt="Admin Templatess" />
+                            </a>
+                            <a href="index.html" class="py-2">
+                                <img src="/template2/assets/images/flags/1x1/gb.svg" alt="Google Admin" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Select country dropdown ends -->
+
+               
+            </div>
+            <!-- Header actions ends -->
+
+            <!-- Header user settings starts -->
+             <div class="dropdown ms-2">
+              <a id="userSettings" class="dropdown-toggle d-flex align-items-center" href="/template2/#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="avatar-box">@ViewBag.user.Initial<span class="status busy"></span></div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                  <div class="px-3 py-2">
+                      <span class="small">@ViewBag.user.Departement</span>
+                      <h6 class="m-0">@ViewBag.user.nom</h6>
+                  </div>
+                  <div class="mx-3 my-2 d-grid">
+                      <a asp-action="Disconnect2" asp-controller="User" class="btn btn-danger">Déconnexion</a>
+                  </div>
+              </div>
+          </div>
+            <!-- Header user settings ends -->
+        </div>
+        <!-- App header actions ends -->
+    </div>
+    <!-- App header ends -->
+
+    <!-- Main container starts -->
+    <div class="main-container">
+        <!-- Sidebar wrapper starts -->
+        <nav id="sidebar" class="sidebar-wrapper">
+            <!-- Sidebar profile starts -->
+            <div class="sidebar-profile">
+                @if(ViewBag.user.Genre=="Homme"){
+                <img src="/template2/assets/images/uss2.png" class="img-shadow img-3x me-3 rounded-5" alt="e-Dr Tim Hospital management" />
+                }else{
+                    <img src="/template2/assets/images/uss1.webp" class="img-shadow img-3x me-3 rounded-5" alt="e-Dr Tim Hospital management" />
+                }
+                <div class="m-0">
+                    <h5 class="mb-1 profile-name text-nowrap text-truncate">
+                        @ViewBag.user.nom
+                    </h5>
+                    <p class="m-0 small profile-name text-nowrap text-truncate">
+                        @ViewBag.user.Departement
+                    </p>
+                </div>
+            </div>
+            <!-- Sidebar profile ends -->
+
+            <!-- Sidebar menu starts -->
+            <div class="sidebarMenuScroll">
+                <ul class="sidebar-menu">
+                 
+                    <li class="@ViewData["xx1"]">
+                        <a asp-controller="Doctor" asp-action="Dashboard">
+                            <i class="ri-home-smile-2-line"></i>
+                            <span class="menu-text">Tableau de bord médical</span>
+                        </a>
+                    </li>
+                   <li class="treeview @ViewData["xx2"]">
+                        <a href="#!">
+                            <i class="ri-heart-pulse-line"></i>
+                            <span class="menu-text">Paramètres patients</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a asp-controller="Parametre" asp-action="Index1">Encours</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Parametre" asp-action="Index0">Terminés</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                     <li class="treeview @ViewData["xxx2"]">
+                        <a href="#!">
+                            <i class="ri-heart-pulse-line"></i>
+                            <span class="menu-text">Mes Consultations</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            
+                            <li>
+                                <a asp-controller="Doctor" asp-action="Index2">Consultations en attente</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Dmi" asp-action="Index0" class="active-sub">Dossiers Consultattions</a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                   
+                    <li class="treeview @ViewData["xxxx2"]">
+                        <a href="#!">
+                            <i class="ri-heart-pulse-line"></i>
+                            <span class="menu-text">Patients</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            
+                            <li>
+                                <a asp-controller="Patient" asp-action="Indexx" class="active-sub">Tous les patients</a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+
+                    @* <li class="treeview">
+                        <a href="#!">
+                            <i class="ri-dossier-line"></i>
+                            <span class="menu-text">Rendez-vous</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a asp-action="Index0" asp-controller="Appointment">Rendez-vous</a>
+                            </li>
+                            <li>
+                                <a  asp-action="Index" asp-controller="Appointment">Liste des rendez-vous</a>
+                            </li>
+                        </ul>
+                    </li> *@
+
+                    <li class="treeview">
+                        <a href="#!">
+                            <i class="ri-dossier-line"></i>
+                            <span class="menu-text">Hospitalisation</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a asp-controller="Hospi" asp-action="Index00">En cours</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Hospi" asp-action="Index0">Toutes les Hospi</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a asp-action="Index0" asp-controller="FicheAssurance">
+                            <i class="ri-dossier-line"></i>
+                            <span class="menu-text">Assurance</span>
+                        </a>
+                        
+                    </li>
+
+                    <li>
+                        <a asp-action="Index0" asp-controller="Vaccination">
+                            <i class="ri-dossier-line"></i>
+                            <span class="menu-text">Vaccinations</span>
+                        </a>
+                        
+                    </li>
+
+
+                    <li class="treeview @ViewData["xx3"]">
+                        <a href="#!">
+                            <i class="ri-dossier-line"></i>
+                            <span class="menu-text">Honoraires</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a asp-action="Index00" asp-controller="Honoraire">Péridique</a>
+                            </li>
+
+                            <li>
+                                <a asp-action="Rapport3" asp-controller="Honoraire">Etat</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a asp-action="Index00" asp-controller="Cim">
+                            <i class="ri-news-line"></i>
+                            <span class="menu-text">CIM-11</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-action="Index00" asp-controller="LNME">
+                            <i class="ri-news-line"></i>
+                            <span class="menu-text">Médicaments (LNME)</span>
+                        </a>
+                    </li>
+
+                    
+                </ul>
+            </div>
+            <!-- Sidebar menu ends -->
+
+            <!-- Sidebar contact starts -->
+            <div class="sidebar-contact">
+                <p class="fw-light mb-1 text-nowrap text-truncate">
+                    Contact sécrétariat
+                </p>
+                <h5 class="m-0 lh-1 text-nowrap text-truncate">6 90 07 34 67</h5>
+                <i class="ri-phone-line"></i>
+            </div>
+            <!-- Sidebar contact ends -->
+        </nav>
+        <!-- Sidebar wrapper ends -->
+
+        @RenderBody()
+
+        </div>
+    <!-- Main container ends -->
+</div>
+
+    <!-- Page wrapper ends -->
+
+    <!-- *************
+			************ JavaScript Files *************
+		************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <script src="/template2/assets/js/jquery.min.js"></script>
+    <script src="/template2/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/template2/assets/js/moment.min.js"></script>
+
+    <!-- Overlay Scroll JS -->
+    <script src="/template2/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
+    <script src="/template2/assets/vendor/overlay-scroll/custom-scrollbar.js"></script>
+
+    <!-- Date Range JS -->
+    <script src="/template2/assets/vendor/daterange/daterange.js"></script>
+    <script src="/template2/assets/vendor/daterange/custom-daterange.js"></script>
+
+    <!-- Custom JS files -->
+    <script src="/template2/assets/js/custom.js"></script>
+    <script src="/js/site.js" ></script>
+     <script src="/js/dmi.js" ></script>
+
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    @* <script src="assets/js/jquery.min.js"></script> *@
+    @* <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/moment.min.js"></script> *@
+
+    <!-- *************
+			************ Vendor Js Files *************
+		************* -->
+
+  
+
+     <!-- Apex Charts -->
+    @* <script src="/template2/assets/vendor/apex/apexcharts.min.js"></script>
+    <script src="/template2/assets/vendor/apex/custom/home/patients.js"></script> *@
+
+    @* <script src="/template2/assets/vendor/apex/custom/home/treatment.js"></script>
+    <!-- <script src="assets/vendor/apex/custom/home/available-beds.js"></script> -->
+    <script src="/template2/assets/vendor/apex/custom/home/earnings.js"></script>
+    <script src="/template2/assets/vendor/apex/custom/home/gender-age.js"></script>
+    <script src="/template2/assets/vendor/apex/custom/home/claims.js"></script> *@
+
+    <!-- Custom JS files -->
+     @* <script src="/template2/assets/js/custom.js"></script>  *@
+
+
+
+
+    @if (ViewData["multi"]!=null)
+  {
+    @* <script src="/js/jquery-2.2.4.min.js"></script> *@
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/multi.min.js"></script>
+    <script src="/js/multi.js" ></script>
+  }
+
+  @if(ViewData["table"]!=null){
+      <script src="/template2/table/jquery.dataTables.min.js"></script>
+      <script src="/template2/table/dataTables.bootstrap4.min.js"></script>
+      <script src="/template2/table/dataTables.buttons.min.js"></script>
+      <script src="/template2/table/buttons.bootstrap4.min.js"></script>
+      <script src="/template2/table/jszip.min.js"></script>
+      <script src="/template2/table/buttons.html5.min.js"></script>
+      <script src="/template2/table/buttons.colVis.min.js"></script>
+      <script src="/template2/table/dataTables.responsive.min.js"></script>
+      <script src="/template2/table/responsive.bootstrap4.min.js"></script>
+      <script src="/template2/table/js.js"></script>
+    }
+
+@if(ViewData["dmip"]!=null){
+   <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const dropdownItems = document.querySelectorAll(".dropdown-item");
+        const recapContainer = document.getElementById("recapIdentification");
+
+        // Attache les listeners de tous les modals présents (visibles ou non)
+        function attachTextareaListeners(modal, button) {
+          const allFields = modal.querySelectorAll("textarea, input[type='text'], input[type='number'], select, input[type='checkbox']");
+
+          allFields.forEach((field) => {
+            if (!field.classList.contains("listener-added")) {
+              const eventType = field.tagName === "SELECT" || field.type === "checkbox" ? "change" : "input";
+
+              field.addEventListener(eventType, () => {
+                let shouldUpdate = false;
+
+                // Vérifie si au moins un champ du modal a une valeur ou est coché
+                const hasContent = Array.from(allFields).some((el) => {
+                  if (el.type === "checkbox") return el.checked;
+                  return el.value.trim() !== "";
+                });
+
+                if (hasContent) {
+                  button.classList.add("btn-updated");
+                } else {
+                  button.classList.remove("btn-updated");
+                }
+
+                updateRecap();
+              });
+
+              field.classList.add("listener-added");
+            }
+          });
+        }
+
+        // Pour les boutons déclenchés depuis le menu déroulant
+        dropdownItems.forEach((item) => {
+          item.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const type = item.getAttribute("data-type");
+            const buttonId = `btn-${type}`;
+            const button = document.getElementById(buttonId);
+            const modalId = button?.getAttribute("data-bs-target")?.replace("#", "");
+            const modal = document.getElementById(modalId);
+
+            if (!button || !modal) return;
+
+            // Cacher tous les autres boutons générés par le dropdown
+            /*document.querySelectorAll(".specialty-section").forEach((btn) => {
+              if (btn.tagName === "BUTTON") btn.classList.add("d-none");
+            });*/
+
+            button.classList.remove("d-none");
+            attachTextareaListeners(modal, button);
+            updateRecap();
+          });
+        });
+
+        // Pour tous les boutons visibles dès le début (hors dropdown)
+        const alwaysVisibleButtons = document.querySelectorAll("button[data-bs-toggle='modal']:not(.specialty-section)");
+        alwaysVisibleButtons.forEach((button) => {
+          const modalId = button.getAttribute("data-bs-target")?.replace("#", "");
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            attachTextareaListeners(modal, button);
+          }
+        });
+
+        // Génère le récapitulatif global
+        function updateRecap() {
+          recapContainer.innerHTML = ""; // Réinitialiser
+
+          const modals = document.querySelectorAll(".modal");
+
+          modals.forEach((modal) => {
+            const title = modal.querySelector(".modal-title")?.textContent.trim();
+            const contents = [];
+
+            // === TEXTAREAS ===
+            modal.querySelectorAll("textarea").forEach((textarea) => {
+              const label = modal.querySelector(`label[for="${textarea.id}"]`) || textarea.closest(".mb-3")?.querySelector("label");
+              const labelText = label ? label.textContent.trim() : "";
+              const value = textarea.value.trim();
+              if (value) {
+                contents.push({ label: labelText, value });
+              }
+            });
+
+            // === INPUT TEXT, NUMBER, ETC. ===
+            modal.querySelectorAll('input:not([type="checkbox"]):not([type="radio"])').forEach((input) => {
+              const label = modal.querySelector(`label[for="${input.id}"]`) || input.closest(".mb-3")?.querySelector("label");
+              const labelText = label ? label.textContent.trim() : "";
+              const value = input.value.trim();
+              if (value) {
+                contents.push({ label: labelText, value });
+              }
+            });
+
+            // === SELECT ===
+            modal.querySelectorAll("select").forEach((select) => {
+              const label = modal.querySelector(`label[for="${select.id}"]`) || select.closest(".mb-3")?.querySelector("label");
+              const labelText = label ? label.textContent.trim() : "";
+              const value = select.value.trim();
+              if (value && !select.querySelector("option:checked").disabled) {
+                contents.push({ label: labelText, value });
+              }
+            });
+
+            // === CHECKBOX GROUPES ===
+            modal.querySelectorAll(".mb-3").forEach((group) => {
+              const checkboxes = group.querySelectorAll('input[type="checkbox"]:checked');
+              if (checkboxes.length > 0) {
+                const groupLabel = group.querySelector("label.form-label")?.textContent.trim() || "Options sélectionnées";
+
+                const checkedValues = Array.from(checkboxes).map((checkbox) => {
+                  const label = group.querySelector(`label[for="${checkbox.id}"]`);
+                  return label ? label.textContent.trim() : checkbox.value;
+                });
+
+                contents.push({
+                  label: groupLabel,
+                  value: checkedValues.join(", "),
+                });
+              }
+            });
+
+            // === AFFICHAGE ===
+            if (contents.length > 0) {
+              const block = document.createElement("div");
+              block.className = "mb-3 border rounded p-2 bg-light";
+
+              block.innerHTML = `
+        <div class="fw-bold text-primary mb-2">${title}</div>
+        ${contents
+          .map(
+            (item) => `
+              <div class="mb-2">
+                <strong>${item.label}</strong><br>
+                <div class="text-muted">${item.value}</div>
+              </div>
+            `
+          )
+          .join("<hr class='my-2'>")}
+      `;
+
+              recapContainer.appendChild(block);
+            }
+          });
+        }
+
+        function attachRecapListeners() {
+          const modals = document.querySelectorAll(".modal");
+
+          modals.forEach((modal) => {
+            // textarea
+            modal.querySelectorAll("textarea").forEach((el) => {
+              el.addEventListener("input", updateRecap);
+            });
+
+            // input text, number, etc.
+            modal.querySelectorAll('input:not([type="checkbox"]):not([type="radio"])').forEach((el) => {
+              el.addEventListener("input", updateRecap);
+            });
+
+            // checkbox
+            modal.querySelectorAll('input[type="checkbox"]').forEach((el) => {
+              el.addEventListener("change", updateRecap);
+            });
+
+            // select
+            modal.querySelectorAll("select").forEach((el) => {
+              el.addEventListener("change", updateRecap);
+            });
+          });
+        }
+
+        updateRecap();
+      });
+    </script>
+}
+    
+
+<script>
+    let inactivityTime = 0; 
+    const maxInactivity = 60 * 60 * 1000; // 60 minutes en ms
+
+    function resetTimer() {
+        inactivityTime = 0;
+    }
+
+    // Détecte les actions utilisateur
+    window.onload = resetTimer;
+    document.onmousemove = resetTimer;
+    document.onkeypress = resetTimer;
+    document.onclick = resetTimer;
+    document.onscroll = resetTimer;
+
+    // Vérifie l'inactivité
+    setInterval(function () {
+        inactivityTime += 1000; // ajoute 1 sec
+        if (inactivityTime >= maxInactivity) {
+            window.location.href = "/User/Disconnect2"; // redirection vers ton action de déconnexion
+        }
+    }, 1000);
+</script>
+
+   @RenderSection("Scripts", required: false)
+  </body>
+</html>

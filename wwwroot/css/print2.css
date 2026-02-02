@@ -1,0 +1,135 @@
+﻿@media print { 
+    button{
+        display: none;
+    }
+    .theme_btn{
+        display: none;
+    }
+    
+    #left-sidebar{
+        width: 0px;
+        display: none;
+    }
+    #main-content{
+        width: 100%;
+        margin-top: 0px;
+        height: auto;
+        color: black;
+    }
+   .body{
+    width: 0;
+    margin-left: -50px;
+   }
+    .block-header{
+        display: none;
+    }
+    
+      @page {
+          size: 5in;
+        margin: 0;  
+        
+    }  
+}
+
+
+/* .pos-receipt-print {
+    width: 320px;
+    text-align: left;
+    direction: ltr;
+    font-size: 27px;
+    color: #000000;
+    border: 1px solid #888;
+    margin: 20px auto;
+    padding: 10px;
+    background: #FFF;
+}
+
+.pos-receipt .pos-receipt-right-align {
+    float: right;
+    color: #000000;
+}
+
+.pos-receipt .pos-receipt-center-align {
+    text-align: center;
+    color: #000000;
+}
+
+.pos-receipt .pos-receipt-left-padding {
+    padding-left: 2em;
+    color: #000000;
+}
+
+.pos-receipt .pos-receipt-logo {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+    color: #000000;
+}
+
+.pos-receipt .pos-receipt-contact {
+    text-align: center;
+    font-size: 75%;
+    color: #000000;
+}
+
+.pos-receipt .pos-receipt-order-data {
+    text-align: center;
+    font-size: 75%;
+    color: #000000;
+}
+
+.pos-receipt .pos-receipt-amount {
+    font-size: 125%;
+    padding-left: 6em;
+    color: #000000;
+}
+
+.pos-receipt .pos-receipt-title {
+    font-weight: bold;
+    font-size: 125%;
+    text-align: center;
+    color: #000000;
+}
+
+.pos-receipt .pos-receipt-header {
+    font-size: 125%;
+    text-align: center;
+    color: #000000;
+}
+
+.pos-receipt .pos-order-receipt-cancel {
+    color: red;
+    color: #000000;
+}
+
+.pos-receipt .pos-receipt-customer-note {
+    word-break: break-all;
+    color: #000000;
+}
+
+.pos-payment-terminal-receipt {
+    text-align: center;
+    font-size: 75%;
+    color: #000000;
+}
+
+.responsive-price {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    color: #000000;
+}
+
+.responsive-price > .pos-receipt-right-align {
+    margin-left: auto;
+    color: #000000;
+}
+
+@page {
+    size: 2in auto;
+    margin: 0;
+    
+} */
+
+/* .pos-receipt {
+} */

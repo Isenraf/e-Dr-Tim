@@ -1,0 +1,353 @@
+@model IEnumerable<BANA.Models.Facture>
+@{
+  int i=1;
+  int somme1=0;
+  int compteur=0;
+}
+<link rel="stylesheet"  href="/css/select2.min.css">
+  <link rel="stylesheet" media="print" href="/css/print4.css">
+   <link rel="stylesheet"  href="/css/select2.css">
+        <div class="container-fluid">
+          <div class="block-header">
+              <div class="row clearfix">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                  <h1>Salut, bienvenue !</h1>
+                  <span>Recap des factures</span>
+                </div>
+                <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                  <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                      <div class="border-right pr-4 mr-4 mb-2 mb-xl-0 hidden-xs">
+                        <p class="text-muted mb-1">Nombre de factures</p>
+                        <h5 class="mb-0"><span class="separateur">@ViewBag.nf</span> </h5>
+                      </div>
+                      @* <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                        <p class="text-muted mb-1">Cette Semaine</p>
+                        <h5 class="mb-0"><span class="separateur"></span> FCFA</h5>
+                      </div> *@
+                      <div class="pr-4 mb-2 mb-xl-0">
+                        <p class="text-muted mb-1">Montant total</p>
+                        <h5 class="mb-0"><span class="separateur">@ViewBag.mt</span> FCFA</h5>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-12">
+              <nav class="navbar navbar-expand-lg page_menu">Facture du: 
+                <a class="navbar-brand" href="javascript:void(0);"> @ViewBag.date1 au  @ViewBag.date2</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <i class="fa fa-bars text-muted"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item vivify swoopInTop delay-150 active">
+                      
+                    </li>
+                  </ul>
+                  <div class="ml-auto">
+                    
+                    <button class="btn btn-primary theme-bg gradient" id="printButton" onclick="printDiv('printMe')">
+                              <i class="fa fa-print"></i> Print</button>
+
+                     <button class="btn btn-outline-secondary" id="masquerdetails" >
+                        <i class="fa fa-previous"></i> Masquer détails</button>
+
+                 
+                    
+                    
+                    
+                  </div>
+                </div>
+              </nav>
+            </div>
+            <div class="col-lg-12">
+
+
+              <div id="tdt1" style="padding: 20px;" class="card card2">
+                <div id='printMe' class="body" >
+
+                  <div class="filtre" id="filtre">
+                    <form asp-action="CumulFacture" method="get" >
+
+                      <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="content">
+                                  @{
+                                    List<string> listedesassurances = new();
+                                      @foreach(var item in ViewBag.select){
+                                        listedesassurances.Add(item.Replace(" ",""));
+                                      }
+
+                                  }
+                                    <div class="row">
+                                        <div class="col-md-6"><label>Select Multiple</label></div>
+                                        <div class="col-md-6 text-right"><label>Select All</label><input id="checkbox" type="checkbox" /></div>
+                                    </div>
+                                  <select name="assurances" class="js-select2-multi">
+                                    @foreach(var item in ViewBag.assurance){
+                                        if(listedesassurances.Contains(item.Replace(" ",""))){
+                                          <option selected>@item</option>
+                                        }else{
+                                          <option>@item</option>
+                                        }
+                                    }
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="body filtre">
+                      
+                      <div class="row clearfix filtre">
+                        <div class="col-sm-6">
+                          <div class="form-group c_form_group">
+                            <label>Date de début
+                              <span class="text-danger">*</span>
+                            </label>
+                            <input name="datedebut" type="datetime-local" class="form-control" value="@ViewData["debut"]" >
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group c_form_group">
+                            <label>Date de Fin
+                              <span class="text-danger"></span>
+                            </label>
+                            <input  name="datefin" type="datetime-local" class="form-control" value="@ViewData["fin"]" >
+                          </div>
+                        </div>
+                      </div>
+                    <div class="col-sm-12">
+                      
+                        <button type="submit" class="btn btn-primary">
+                              <i class="fa fa-save"></i> Valider</button>
+                          </button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                @if(ViewBag.fact!=null){
+                  <table id="printed" style="text-transform: uppercase;width: 100%;color: black;" >
+                    <tr>
+                      <td contenteditable="">@DateTime.Now.ToLongDateString()</td>
+                      <td  style="width: 400px; border: 1px solid; color: black;padding: 0rem 0.3rem 0rem 0.3rem;" ><h4 style="margin:0;" >@ViewBag.fact.Assureur</h4>
+                      @ViewBag.fact.Assur_NIU <br>@ViewBag.fact.Assur_Rc <br>@ViewBag.fact.Assur_BP <br> @ViewBag.fact.Assur_Tel  <br>@ViewBag.fact.Assur_Adresse
+                      </td>
+                    </tr> 
+                  </table>
+                }
+                 
+                  <p style="color: black;" contenteditable="">Nos réf.: 01/PP/V/DAF/FF/@DateTime.Now.Month/@DateTime.Now.Year</p>
+                  <div class="row clearfix" >
+
+                    <div class="col-md-12">
+                      <div class="table-responsive">
+                        <table id="tbl_exporttable_to_xls" style="text-transform: uppercase;color: black; width: 100%;padding: 0rem;font-size: 12px;white-space: nowrap;">
+                          <tr>
+                            <td style="border: 1px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="7"><strong class=""> <h6 style="margin: 5px;"><span contenteditable="">Facture Ref.../PP/DAF/FF/@DateTime.Now.Month/@DateTime.Now.Year,</span></h6> </strong></td>
+                          </tr>
+                          <th style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Nº</strong></th>
+                            <th style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Date</strong></th>
+                              <th class="text-center" style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;text-align: center;"><strong>Nºfacure</strong></th>
+                              <th class="text-left" style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;text-align: right;width: 290px;"><strong>Nombre et Prénom</strong></th>
+                              <th class="text-left" style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;text-align: center;width: 290px;"><strong>Désignation</strong></th>
+                              <th class="hidden-sm-down" style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;text-align: right;"><strong>Montant</strong></th>
+                              <th class="hidden-sm-down" style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;text-align: center;"><strong>Observation</strong></th>
+                            </tr>
+                              @foreach(var item in Model){
+                                List<string> liste_de_facturation1 = new List<string>();
+                                List<string> liste_de_facturation2 = new List<string>();
+                                List<string> liste_de_facturation3 = new List<string>();
+                                    int k=0;
+                                    string result="";
+                                    foreach(char c in item.Ligne_facturation1) {
+                                    
+                                    if(c.Equals('λ')){
+                                        if(k!=0){
+                                            liste_de_facturation1.Add(result);
+                                            result="";
+                                        }
+                                        
+                                    }else{
+                                        result+=c.ToString();
+                                    }
+                                    k++;
+                                    //Console.WriteLine(i+"-"+result);
+                                    }
+
+
+                                    k=0;
+                                    result="";
+                                    foreach(char c in item.Ligne_facturation2) {
+                                    
+                                    if(c.Equals('λ')){
+                                        if(k!=0){
+                                            liste_de_facturation2.Add(result);
+                                            result="";
+                                        }
+                                        
+                                    }else{
+                                        result+=c.ToString();
+                                    }
+                                    k++;
+                                    //Console.WriteLine(i+"-"+result);
+                                    }
+
+                                    k=0;
+                                    result="";
+                                    foreach(char c in item.Ligne_facturation3) {
+                                    
+                                    if(c.Equals('λ')){
+                                        if(k!=0){
+                                            liste_de_facturation3.Add(result);
+                                            result="";
+                                        }
+                                        
+                                    }else{
+                                        result+=c.ToString();
+                                    }
+                                    k++;
+                                    //Console.WriteLine(i+"-"+result);
+                                    }
+
+                                   
+                                  k=i;
+
+                                @for (int j = 0; j < liste_de_facturation1.Count-1; j+=7)
+                                {
+                                    <tr class="table1" style="font-weight: 600;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                      @if(k==i){
+                                        <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@i</span></td>
+                                        <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@item.Derniere_modification.ToShortDateString()</span></td>
+                                      }else{
+                                        <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span></span></td>
+                                        <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span></span></td>
+                                      }
+                                      
+
+                                      <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@item.Numero_de_facture</span></td>
+                                      <td class="text-left" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@item.Nom</td>
+                                      <td class="text-left" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" >@liste_de_facturation1[j]</td>
+                                      <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@liste_de_facturation1[j+6]</td>
+                                      <td class="text-left separateur" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" ></td>
+                                    </tr>
+                                    somme1+=int.Parse(liste_de_facturation1[j+6].Replace(" ",""));
+                                    k++;
+                                    compteur++;
+                                  }
+
+                                  @for (int j = 0; j < liste_de_facturation2.Count-1; j+=7)
+                                {
+                                    <tr class="table1" style="font-weight: 600;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                     @if(k==i){
+                                        <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@i</span></td>
+                                        <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@item.Derniere_modification.ToShortDateString()</span></td>
+                                      }else{
+                                        <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span></span></td>
+                                        <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span></span></td>
+                                      }
+                                      <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@item.Numero_de_facture</span></td>
+                                      <td class="text-left" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@item.Nom</td>
+                                      <td class="text-left" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" >@liste_de_facturation2[j]</td>
+                                      <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" >@liste_de_facturation2[j+6]</td>
+                                      <td class="text-left separateur" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" ></td>
+                                    </tr>
+                                    somme1+=int.Parse(liste_de_facturation2[j+6].Replace(" ",""));
+                                    k++;
+                                    compteur++;
+                                  }
+
+                                  @for (int j = 0; j < liste_de_facturation3.Count-1; j+=7)
+                                {
+                                    <tr class="table1" style="font-weight: 600;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                      @if(k==i){
+                                        <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@i</span></td>
+                                        <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@item.Derniere_modification.ToShortDateString()</span></td>
+                                      }else{
+                                        <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span></span></td>
+                                        <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span></span></td>
+                                      }
+                                      <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@item.Numero_de_facture</span></td>
+                                      <td class="text-left" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@item.Nom</td>
+                                      <td class="text-left" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" >@liste_de_facturation3[j]</td>
+                                      <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" >@liste_de_facturation3[j+6]</td>
+                                      <td class="text-left separateur" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" ></td>
+                                    </tr>
+                                    somme1+=int.Parse(liste_de_facturation3[j+6].Replace(" ",""));
+                                    k++;
+                                    compteur++;
+                                  }
+
+                                   if(compteur%44==0 ){
+                                    <tr class="table1">
+                                        <td style="height: 550px;border: 0px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="14"></td>
+                                    </tr>
+                                    
+                                  }
+                                  i++;
+                              }
+
+                              <tr class="table1" style="font-weight: 600;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span></span></td>
+                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span></span></td>
+                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span></span></td>
+                                  <td class="text-left" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"></td>
+                                  <td class="text-left" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" ></td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" ><strong class="separateur">@somme1</strong></td>
+                                  <td class="text-left" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" ></td>
+                                  
+                                </tr>
+                          </div>   
+                          </tfoot>
+                        </table>
+                        <input type="hidden" id="tot" value="@somme1">
+                        <p style="color: black;">Arrêté la présente factures à la somme de: <strong id="montant_lettre"></strong> </p>
+                        <br>
+                        <table style="width: 100%;color: black;" >
+                          <td style="font-weight: 600;text-align: left;"><u></u></td>
+                          <td style="font-weight: 600;text-align: right;"><u><strong>Pour label polyclinique de poitiers</strong></u></td>
+                        </table>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+<a  style="color: white;position: fixed;right: 50px;bottom: 45px;" onclick="ExportToExcel('xlsx')" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-file-excel-o"></i></a>
+<script type="text/javascript" src="/lib/xlsx.full.min.js"></script>
+<script>
+  function ExportToExcel(type, fn, dl) {
+       var elt = document.getElementById('tbl_exporttable_to_xls');
+       var wb = XLSX.utils.table_to_book(elt, { sheet: "Feuille1" });
+       return dl ?
+         XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+         XLSX.writeFile(wb, fn || ('FACTURE_CUMUL.' + (type || 'xlsx')));
+    }
+</script>
+ 
+        
+
+        
+  <script>
+      function printDiv(divName){
+        $(".filtre").hide();
+        $(".filtre").show();
+        $(".filtre").hide();
+        window.print();
+        $(".filtre").show();
+      }
+	</script>
+

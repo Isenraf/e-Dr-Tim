@@ -1,0 +1,96 @@
+@model BANA.Models.User
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<!-- Form Start -->
+<form asp-action="Create">
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Informations utilisateur</h6>
+                           <hr>
+                            <dl class="row">
+                            <dt class = "col-sm6">
+                                @Html.DisplayNameFor(model => model.Activate) :
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.Activate) 
+                            </dd>
+                            <dt class = "col-sm-6">
+                                @Html.DisplayNameFor(model => model.nom) :
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.nom)
+                            </dd>
+                            <dt class = "col-sm-6">
+                                @Html.DisplayNameFor(model => model.Email) :
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
+                            <dt class = "col-sm-6">
+                                @Html.DisplayNameFor(model => model.Genre) :
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Html.DisplayFor(model => model.Genre)
+                            </dd>
+                            <dt class = "col-sm-6">
+                                @Html.DisplayNameFor(model => model.Create_date) :
+                            </dt>
+                            <dd class = "col-sm-10">
+                                @Model.Create_date
+                            </dd>
+                            
+                        </dl>
+                        </div>
+                    </div>
+                      <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4"></h6>
+                            <hr>
+                            <dl class="row">
+                                <dt class = "col-sm-6">
+                                    @Html.DisplayNameFor(model => model.Password) :
+                                </dt>
+                                <dd class = "col-sm-10">
+                                    @Html.DisplayFor(model => model.Password)
+                                </dd>
+                                
+                                <dt class = "col-sm-6">
+                                    @Html.DisplayNameFor(model => model.Type_de_compte) :
+                                </dt>
+                                <dd class = "col-sm-10">
+                                    @Html.DisplayFor(model => model.Type_de_compte)
+                                </dd>
+                                <dt class = "col-sm-6">
+                                    @Html.DisplayNameFor(model => model.Access_module) :
+                                </dt>
+                                <dd class = "col-sm-10">
+                                    @Html.DisplayFor(model => model.Access_module)
+                                </dd>
+                                <dt class = "col-sm-6">
+                                    @Html.DisplayNameFor(model => model.Img) :
+                                </dt>
+                                <dd class = "col-sm-10">
+                                    @Html.DisplayFor(model => model.Img)
+                                </dd>
+                                
+                                <dt class = "col-sm-6">
+                                    @Html.DisplayNameFor(model => model.Lastconnetion) :
+                                </dt>
+                                <dd class = "col-sm-10">
+                                    @Model.Lastconnetion
+                                </dd>
+                            </dl>
+                            <button type="button" onclick="history.back()" class="btn btn-secondary m-2">Retour</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</form>
+            <!-- Form End -->
+

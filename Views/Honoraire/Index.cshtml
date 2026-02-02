@@ -1,0 +1,473 @@
+@model IEnumerable<BANA.Models.Honoraire>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+ <!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Honoraires
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+            <div class="card py-3 px-3">
+              <div
+                class="d-flex align-items-center justify-content-between mt-2"
+              >
+                <h5 class="card-title">
+                  Polyclinique de Poitiers<br /><h7
+                    style="font-size: 12px; color: #4c545e"
+                    >Honoraires des medecins</h7
+                  >
+                </h5>
+               
+                  @* <button type="button" class="btn btn-success await" onclick="rien()" id="calculauto">Calcul automatique</button> *@
+                
+                
+
+              </div>
+              <br />
+
+              <div class="row gx-3 gy-3">
+                <div class="card">
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                    "
+                  >
+                    <div>
+                      <a href="" style="margin-right: 10px">M.</a>
+                      <a href="" style="margin-right: 10px"
+                        >Honoraires des medecins</a
+                      >
+                      
+                    </div>
+
+                    <div style="display: flex; gap: 10px">
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="row gx-3 gy-3">
+                  <form asp-action="Index"  method="get">
+                    <div class="card">
+                      <div class="card-body">
+                        <input type="hidden" name="tipe" id="tippe" value="@ViewData["tipe"]">
+                        <input type="hidden" name="Etat" value="@ViewData["Etat"]">
+                        @{
+                            int mois=ViewBag.date.Month;
+                            int jour=ViewBag.date.Day;
+                            int annee=ViewBag.date.Year;
+                            
+
+                            string mois_str="";
+                            string jour_str="";
+                            if(mois<10){mois_str="0"+mois;}else{mois_str+=mois;}
+                            if(jour<10){jour_str="0"+jour;}else{jour_str+=jour;}
+                            
+                            string date=ViewBag.date.Year+"-"+mois_str+"-"+jour_str;
+                            if(jour<=20){mois--;}
+                            if(mois==0){mois=12; annee--;}
+                            //if(mois==12 && jour>20){mois=12;annee}
+                            <a style="position: fixed;right: 50px;bottom: 50px;"  class="btn btn-lg btn-primary btn-lg-square" href="/Honoraire/Index1?mois=@mois&annee=@annee"><i class="fa fa-close"></i></a>
+
+                          }
+                        <input
+                          type="search" id="search" class="form-control" name="numerofacture" value="@ViewData["numerofacture"]"
+                          placeholder="Numéro de facture"
+                        />
+                      </div>
+
+                      <div class="card-body">
+                        <div class="m-0">
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-calendar-todo-line"></i>
+                            </span>
+                            <input
+                              type="date" name="date" id="dateconcernee"  value="@date"
+                              class="form-control datepicker"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  </div>
+
+                  <br />
+                  <br />
+                  <div class="table-responsive">
+                    <table
+                      class="table truncate m-0"
+                      style="width: 100%; border-collapse: collapse"
+                    >
+                      <thead>
+                        <tr>
+                          <th>ACTION</th>
+                          <th>ACTE</th>
+                          <th>N°FACTURE</th>
+                          <th>MONTANT</th>
+                          <th>POURCENTAGE</th>
+                          <th>A PAYER</th>
+                          <th>ASSURANCE</th>
+                          <th>PATIENT</th>
+                          <th>SECRETAIRE</th>
+                        </tr>
+                      </thead>
+                      <tbody id="testfiltre">
+                        @{
+
+                        int i=0;
+                         foreach (var item in Model)
+                          {
+                            if(item.Etat=="Cloturé"){
+                              <tr  class="montest">
+                                <td style="background-color: #8bc34a3b;">
+                                  
+                                  <span style="position: absolute;margin-top: 33px;color: #126aef;" class="badge badge-pill">@item.Mode_paiement</span>
+                                    @if(ViewBag.user.nom=="NGAH ARLETTE" || ViewBag.user.nom=="Adrien Tientcheu" || ViewBag.user.nom=="NYUNAI CHRISTINE" || ViewBag.user.nom=="MARIE SILIKI"){
+                                      <a href="#" style="background-color: white;" class="btn btn-outline-secondary delete" title="supprimer"><i class="fa fa-trash"></i></a>
+                                    }
+
+                                    @if(item.Etat=="Cloturé" &&  (item.Montant_paye<=0 || item.Montant_paye==null) &&  item.Mode_paiement=="assurance" && item.Paid_date.Year==0001){
+                                      <a href="#" style="background-color: white;" class="btn btn-outline-secondary paid" data-bs-toggle="modal" data-bs-target="#reg-modal"><i class="ri-cash-line"></i></a>
+                                    } 
+                                    @if(item.Montant_paye==null ||  item.Montant_paye<=0){
+                                      @if(item.Observation==ViewBag.user.nom || ViewBag.user.nom=="NGAH ARLETTE" || ViewBag.user.nom=="Adrien Tientcheu" || ViewBag.user.nom=="MARIE SILIKI" || ViewBag.user.nom=="MARIE SILIKI"  || ViewBag.user.nom=="NYUNAI CHRISTINE" ){
+                                         <button data-bs-toggle="modal" data-bs-target="#addtodo" type="button" class="btn btn-outline-secondary modifierhono" title="Modifier">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                      }
+                                      
+                                      <a href="#" style="background-color: white;" class="btn btn-outline-secondary ajouterhono" data-bs-toggle="modal" data-bs-target="#reg-modal2"><i class="ri-add-line"></i></a>
+                                    }
+                                    
+                                    </td>
+                                    <td  style="display: none;background-color: #8bc34a3b;" class="id">@item.Id</td>
+                                    
+                                    <td style="background-color: #8bc34a3b;">
+                                    <a href="javascript:void(0);" title="" class="nomacte">@item.Nom</a>
+                                    @if(ViewBag.interne[i]==true){<div style="color: #04952d;" class="medecin">@item.Medecin</div>}else{<div style="color: rgb(211, 5, 15);;" class="medecin">@item.Medecin</div>}
+                                    
+
+                                    </td>
+                                    <td style="background-color: #8bc34a3b;">@item.Numerofacture</td>
+                                    
+                                    @* <td>@item.Create_date</td> *@
+                                    @if(item.Montant!=null){<td style="background-color: #8bc34a3b;" class="separateur montant">@((int)item.Montant)</td>}else{<td style="background-color: #8bc34a3b;" class="separateur montant"></td>}
+                                    
+                                    <td style="background-color: #8bc34a3b;" class="pourcentage">@item.Pourcentage</td>
+                                    <td style="background-color: #8bc34a3b;" class="montantmedecin">@item.Montant_medecin</td>
+                                    <td style="background-color: #8bc34a3b;" class="montantpaye">@item.Assurance</td>
+                                    <td style="background-color: #8bc34a3b;">@item.Patient</td>
+                                    <td style="background-color: #8bc34a3b;">@item.Observation</td>
+                                    
+                                </tr>
+                            }else{
+                              <tr class="montest">
+                                <td>
+                                  <span style="position: absolute;margin-top: 33px;color: #126aef;" class="badge badge-pill">@item.Mode_paiement</span>
+                                  @if(item.Etat=="Cloturé" &&  (item.Montant_paye<=0 || item.Montant_paye==null) &&  item.Mode_paiement=="assurance" && item.Paid_date.Year==0001){
+                                    <a href="#" style="background-color: white;" class="btn btn-outline-secondary paid" data-bs-toggle="modal" data-bs-target="#reg-modal"><i class="ri-cash-line"></i></a>
+                                  } 
+                                 @if(item.Montant_paye==null ||  item.Montant_paye<=0){
+                                  <button data-bs-toggle="modal" data-bs-target="#addtodo" type="button" class="btn btn-outline-secondary modifierhono" title="Modifier">
+                                      <i class="fa fa-pencil"></i>
+                                  </button>
+                     
+                                  }
+                                  
+                                  </td>
+                                  <td style="display: none;" class="id">@item.Id</td>
+                                  
+                                  <td>
+                                  <a href="javascript:void(0);" title="" class="nomacte">@item.Nom</a>
+                                  @if(ViewBag.interne[i]==true){<div style="color: #04952d;" class="medecin">@item.Medecin</div>}else{<div style="color: rgb(211, 5, 15);;" class="medecin">@item.Medecin</div>}
+                                  </td>
+                                  <td>@item.Numerofacture</td>
+                                  
+                                  @* <td>@item.Create_date</td> *@
+                                  @if(item.Montant!=null){<td class="separateur montant">@((int)item.Montant)</td>}else{<td class="separateur montant"></td>}
+                                  
+                                  <td class="pourcentage">@item.Pourcentage</td>
+                                  <td class="montantmedecin">@item.Montant_medecin</td>
+                                  <td class="montantpaye">@item.Assurance</td>
+                                  <td>@item.Patient</td>
+                                  
+                              </tr>
+                            }
+                            i++;
+                          }
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- body body end -->
+                  
+                </div>
+              </div>
+              <!-- App body ends -->
+            </div>
+          
+
+
+
+ <!-- modal itself -->
+
+      <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="defaultModalLabel">Date du paiement</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <input type="hidden" type="number" id="identifiant">
+
+            <div class="modal-body">
+              <div>
+                <div class="card mb-3">
+                  <div class="form-control">
+                    <label class="form-label" for="a2">Date du paiement</label>
+                    <input type="hidden" id="ident">
+                    <input
+                      id="date_paid" type="date"
+                      value="@ViewBag.date2"
+                      class="form-control"
+                      style="height: 50px; border: #c3dff1"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="savepaid" class="btn btn-primary">VAlider</button>
+              <button
+                type="reset"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+              >
+                Annuler
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+  <div class="modal fade" id="addtodo" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Consultation dentiste</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <input type="hidden" type="number" id="identifiant">
+            <div class="modal-body">
+                <div class="card mb-3">
+                    <div class="form-control">
+                        <label class="form-label" for="a2">Médecin</label>
+                        <input id="recept_medecin" type="text" class="form-control edh" list="brow" style="height: 50px; border: #c3dff1" />
+                        <datalist id="brow">
+                            @foreach(var item in ViewBag.doctors){
+                            <option value="@item.Nom">@item.Specialite</option>
+                            }
+                        </datalist>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="form-control">
+                        <label class="form-label" for="a2">Montant acte</label>
+                        <input id="recept_montant" type="number" class="form-control" style="height: 50px; border: #c3dff1" />
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="form-control">
+                        <label class="form-label" for="a2">Pourcentage</label>
+                        <input id="recept_pourcentage" type="number"  max="100" class="form-control edh" class="form-control" style="height: 50px; border: #c3dff1" />
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="form-control">
+                        <label class="form-label" for="a2">Montant a payer</label>
+                        <input id="recept_apayer" type="number" class="form-control edh1" class="form-control" style="height: 50px; border: #c3dff1" />
+                    </div>
+                </div>
+                <div id="ident_doublons" style="display: none;" class="alert bg-danger text-white alert-dismissible align-items-center fade show" role="alert">
+                    <i class="ri-checkbox-circle-line fs-3 me-2 lh-1"></i>Alerte: doublons detectés.
+                </div>
+
+                <div id="ident_medecin" style="display: none;" class="alert bg-danger text-white alert-dismissible  align-items-center fade show" role="alert">
+                    <i class="ri-checkbox-circle-line fs-3 me-2 lh-1"></i>Alerte: Médécin inexistant.
+                </div>
+
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">
+                        Annuler
+                    </button>
+                    <button type="button" id="savehono" class="btn btn-primary">Cloturer</button>
+
+                </div>
+            </div>
+            <div style="display: none;" class="form-group c_form_group"></div>
+            <label style="display: none;">Montant Payé</label>
+            <div style="display: none;" class="form-line">
+                <input style="display: none;" id="recept_paye" type="number" class="form-control" placeholder="Titre de la tâche">
+            </div>
+        </div>
+        <div style="display: none;" class="form-group c_form_group">
+            <label style="display: none;">Observation</label>
+            <div style="display: none;" class="form-line">
+                <textarea style="display: none;" id="recept_obs" rows="2" class="form-control no-resize" placeholder="Écrire une observation..."></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+      <div
+        class="modal fade"
+        id="reg-modal2"
+        tabindex="-1"
+        aria-labelledby="modal-title"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="defaultModalLabel2">
+                Consultation dentiste
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <input type="hidden" type="number" id="identifiant2">
+            <div class="modal-body">
+              <div class="card mb-3">
+                <div class="form-control">
+                  <label class="form-label" for="a2">Médecin</label>
+                  <input
+                    id="recept_medecin2" type="text" class="form-control edh" list="brow"
+                    style="height: 50px; border: #c3dff1"
+                  />
+                </div>
+              </div>
+              <div class="card mb-3">
+                <div class="form-control">
+                  <label class="form-label" for="a2">Montant acte</label>
+                  <input
+                    id="recept_montant2" type="number"
+                    class="form-control"
+                    style="height: 50px; border: #c3dff1"
+                  />
+                </div>
+              </div>
+              <div class="card mb-3">
+                <div class="form-control">
+                  <label class="form-label" for="a2">Pourcentage</label>
+                  <input
+                    id="recept_pourcentage2" type="number"  max="100" class="form-control edh"
+                    style="height: 50px; border: #c3dff1"
+                  />
+                </div>
+              </div>
+              <div class="card mb-3">
+                <div class="form-control">
+                  <label class="form-label" for="a2">Montant à payer</label>
+                  <input
+                    id="recept_apayer2" type="number" class="form-control edh1"
+                    style="height: 50px; border: #c3dff1"
+                  />
+                </div>
+              </div>
+
+              <div id="ident_doublons2" style="display: none;" class="alert bg-danger text-white alert-dismissible  align-items-center fade show"
+                role="alert">
+                <i class="ri-checkbox-circle-line fs-3 me-2 lh-1"></i>Alerte: doublons detectés.
+                </div>
+
+                <div id="ident_medecin2" style="display: none;" class="alert bg-danger text-white alert-dismissible  align-items-center fade show"
+                role="alert">
+                <i class="ri-checkbox-circle-line fs-3 me-2 lh-1"></i>Alerte: Médécin inexistant.
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    type="reset"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal" >
+                    Annuler
+                  </button>
+                  <button type="button" id="savehono2" class="btn btn-primary">Cloturer</button>
+                  
+                </div>
+
+
+              </div>
+                <div style="display: none;" class="form-group c_form_group"></div>
+                  <label style="display: none;">Montant Payé</label>
+                  <div style="display: none;" class="form-line">
+                    <input style="display: none;" id="recept_paye2" type="number" class="form-control" placeholder="Titre de la tâche">
+                  </div>
+                </div>
+                <div style="display: none;" class="form-group c_form_group">
+                  <label style="display: none;">Observation</label>
+                  <div style="display: none;" class="form-line">
+                    <textarea style="display: none;"  id="recept_obs2" rows="2" class="form-control no-resize" placeholder="Écrire une observation..."></textarea>
+                  </div>
+                </div>
+
+            
+          </div>
+        </div>
+      </div>
+   
+
+  <script>
+
+  // À la fin du rechargement, on restaure la position
+  window.addEventListener('load', () => {
+    const scrollY = localStorage.getItem('scrollY');
+    if (scrollY !== null) {
+      window.scrollTo(0, parseInt(scrollY));
+      localStorage.removeItem('scrollY'); // Nettoyage après usage
+    }
+  });
+</script>

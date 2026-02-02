@@ -1,0 +1,294 @@
+@model BANA.Models.Doctor
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">Ajouter médecin</li>
+    </ol>
+    <!-- Breadcrumb ends -->
+  </div>
+  <!-- App Hero header ends -->
+
+  <!-- app body start -->
+  <div class="app-body">
+    <!-- Row starts -->
+    <div class="row gx-3">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-body">
+            <!-- Custom tabs starts -->
+            <div class="custom-tabs-container">
+              <!-- Nav tabs starts -->
+              <ul class="nav nav-tabs" id="customTab2" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#oneA" role="tab" aria-controls="oneA" aria-selected="true">
+                    <i class="ri-briefcase-4-line"></i>
+                    Informations personnelles
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="tab-twoA" data-bs-toggle="tab" href="#twoA" role="tab" aria-controls="twoA" aria-selected="false">
+                    <i class="ri-account-pin-circle-line"></i>
+                    Profil et biographie
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="tab-fourA" data-bs-toggle="tab" href="#fourA" role="tab" aria-controls="fourA" aria-selected="false">
+                    <i class="ri-lock-password-line"></i>
+                    Détails du compte
+                  </a>
+                </li>
+              </ul>
+              <!-- Nav tabs ends -->
+
+              <!-- Tab content starts -->
+              <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="CreateDate" />
+                <input type="hidden" asp-for="Departement" />
+                <div class="tab-content h-350">
+                  <div class="tab-pane fade show active" id="oneA" role="tabpanel">
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                       <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a2">
+                            Nom
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-account-circle-line"></i>
+                            </span>
+                            <input asp-for="Nom" type="text" class="form-control"  placeholder="Entrez le nom de famille" disabled />
+                          </div>
+                          <span asp-validation-for="Nom" class="text-danger"></span>
+                        </div>
+                      </div>
+
+                      <div style="display: none;" class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">
+                            Prénom
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-account-circle-line"></i>
+                            </span>
+                            <input asp-for="Prenom" type="text" class="form-control" id="a1" placeholder="Entrez le prénom" disabled/>
+                          </div>
+                          <span asp-validation-for="Prenom" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a3">
+                            Date de naissance
+                            <span class="text-danger"></span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-calendar-todo-line"></i>
+                            </span>
+                            <input asp-for="Date_De_Naissance" type="date" id="a3" class="form-control datepicker" disabled/>
+                          </div>
+                          <span asp-validation-for="Date_De_Naissance" class="text-danger"></span>
+                        </div>
+                      </div>
+
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a7">Type de Contrat</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-vip-crown-2-line"></i>
+                            </span>
+                            <select asp-for="contrat" class="form-select" id="a7" disabled>
+                              <option asp-for="contrat" value="">--Select--</option>
+                              <option asp-for="contrat" value="Permanent">Permanent</option>
+                              <option asp-for="contrat" value="Contractual">Contractuel</option>
+                            </select>
+                            <span asp-validation-for="contrat" class="text-danger"></span>
+                          </div>
+                          
+                        </div>
+                      </div>
+
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="selectGender1">
+                            Genre
+                            <span class="text-danger">*</span>
+                          </label>
+                           <select asp-for="Genre" class="form-select"  disabled>
+                              <option asp-for="Genre" value="">--Select--</option>
+                              <option asp-for="Genre" value="Masculin">Masculin</option>
+                              <option asp-for="Genre" value="Féminin">Féminin</option>
+                            </select>
+                            <span asp-validation-for="Genre" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="">
+                            Spécialité
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-vip-crown-2-line"></i>
+                            </span>
+                            <select asp-for="Specialite" class="form-select"  disabled>
+                              <option value="">--Sélectionner--</option>
+                              @foreach (var item in ViewBag.departements) {
+                              <option asp-for="Specialite" value="@item.Nom">@item.Nom</option>
+                              }
+                            </select>
+                          </div>
+                          <span asp-validation-for="Specialite" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a5">
+                            Adresse e-mail
+                            <span class="text-danger"></span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-mail-open-line"></i>
+                            </span>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="Entrez l'adresse e-mail" disabled/>
+                          </div>
+                          <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a6">
+                            Numéro de téléphone
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-phone-line"></i>
+                            </span>
+                            <input asp-for="Telephone" type="text" class="form-control"  placeholder="Entrez le numéro de téléphone portable" disabled/>
+                          </div>
+                          <span asp-validation-for="Telephone" class="text-danger"></span>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- Row ends -->
+                  </div>
+                  <div class="tab-pane fade" id="twoA" role="tabpanel">
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                      <div class="col-xxl-4 col-md-6 col-sm-12">
+                        <div id="dropzone" class="mb-3">
+                          <label class="form-label">Télécharger la photo profil</label>
+                            <div class="dz-message">
+                              <button type="button" class="dz-button">Cliquez ici pour télécharger la photo.</button>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xxl-4 col-md-6 col-sm-12">
+                        <div id="dropzone" class="mb-3">
+                          <label class="form-label">Télécharger la signature</label>
+                            <div class="dz-message">
+                              <button type="button" class="dz-button">Cliquez ici pour télécharger la signature.</button>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12">
+                        <label class="form-label">Écrire une biographie</label>
+                        <textarea class="form-control" placeholder="Enterz une note" name="" id=""></textarea>
+                      </div>
+                    </div>
+                    <!-- Row ends -->
+                  </div>
+                  <div class="tab-pane fade" id="fourA" role="tabpanel">
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="">Nom d'utilisateur</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-account-pin-circle-line"></i>
+                            </span>
+                            <input type="text" id="" placeholder="Entrez votre nom d'utilisateur" class="form-control" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="u2">Mot de passe</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-lock-password-line"></i>
+                            </span>
+                            <input type="password" id="u2" class="form-control" placeholder="Le mot de passe doit comporter entre 8 et 20 caractères." />
+                            <button class="btn btn-outline-secondary" type="button">
+                              <i class="ri-eye-line"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="u3">Confirmez le mot de passe</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-lock-password-line"></i>
+                            </span>
+                            <input type="password" id="u3" placeholder="Confirmer le nouveau mot de passe" class="form-control" />
+                            <button class="btn btn-outline-secondary" type="button">
+                              <i class="ri-eye-off-line"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Row ends -->
+                  </div>
+                </div>
+                <!-- Card acrions starts -->
+                <div class="d-flex gap-2 justify-content-between al mt-4">
+                  <div class="form-check">
+                    <input class="form-check-input" asp-for="Interne" id="flexCheckDefault" />
+                    <label class="form-check-label" for="flexCheckDefault">Interne</label>
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-danger">Confirmer la suppression définitive</button>
+                    <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+                  </div>
+                </div>
+                <!-- Card acrions ends -->
+              </form>
+              <!-- Tab content ends -->
+            </div>
+            <!-- Custom tabs ends -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Row ends -->
+  </div>
+  <!-- App body ends -->
+</div>
+

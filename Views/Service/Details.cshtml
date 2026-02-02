@@ -1,0 +1,193 @@
+@model BANA.Models.Service
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row clearfix">
+        <div class="col-lg-4 col-md-12 col-sm-12">
+          <h1>Salut, bienvenue !</h1>
+          <span>@Model.Nom,</span>
+        </div>
+        <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+          <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+            <div class="mb-3 mb-xl-0">
+              <a onclick="history.back()"  class="btn btn-outline-secondary">Retour</a>
+              <a asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-primary">Modifier le service</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-4 col-md-12">
+        <div class="card profile-header">
+          <div class="body text-center">
+            <img  width="100px" src="/template/assets/images/xs/d1.png" class="rounded-circle" alt="">
+            <div class="mt-3">
+              <h5 class="mb-0">
+                <strong>@Model.Nom</strong></h5>
+              <span>@Model.Departement</span>
+            </div>
+             <div class="m-t-15">
+              <button onclick="location.href='/Service/Edit/@Model.Id';" class="btn btn-primary">Modifier</button>
+              <button onclick="history.back()" class="btn btn-outline-secondary">Retour</button>
+            </div> 
+          </div>
+        </div>
+        <div class="card">
+          <div class="header">
+            <h2>À propos du service</h2>
+            <ul class="header-dropdown">
+              <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li>
+                    <a href="javascript:void(0);">Action</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);">Another Action</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);">Something else</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+            <small class="text-muted">Nom:</small>
+            <p>@Model.Nom</p>
+            <small class="text-muted">Cote:</small>
+            <p>@Model.Cote</p>
+            <small class="text-muted">Département:</small>
+            <p>@Model.Departement</p>
+            <small class="text-muted">Montant Ht:</small>
+            <p><span class="separateur">@((int)Model.Montant)</span> FCFA</p>
+            <hr>
+            <small class="text-muted">Service Actif?</small>
+            <p>
+             @Model.Actif</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-12">
+        <div class="card">
+          <div class="row profile_state">
+            <div class="col-lg-4 col-md-12">
+              <div class="body">
+                <div class="form-group">
+                  <label class="d-block">Total Services
+                    <span class="float-right">@ViewData["total"] </span>
+                  </label>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100" style="width: 77%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+              <div class="body">
+                <div class="form-group">
+                  <label class="d-block">Min
+                    <span class="float-right"><span class="separateur">@ViewData["min"]</span> FCFA</span>
+                  </label>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+              <div class="body">
+                <div class="form-group">
+                  <label class="d-block">Max
+                    <span class="float-right"> <span class="separateur">@ViewData["max"]</span> FCFA</span>
+                  </label>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100" style="width: 23%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul class="nav nav-tabs3">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#Basic">Service Médical </a>
+            </li>
+          </ul>
+        </div>
+        <div class="tab-content padding-0">
+          <div class="tab-pane active" id="Basic">
+            <div class="card">
+              <div class="header">
+                <h2>Informations générales</h2>
+                <ul class="header-dropdown dropdown">
+                  <li>
+                    <a href="javascript:void(0);" class="full-screen">
+                      <i class="fa fa-expand"></i>
+                    </a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    <ul class="dropdown-menu theme-bg gradient">
+                      <li>
+                        <a asp-action="Edit" asp-route-Id="@Model.Id">
+                          <i class="dropdown-icon fa fa-share-alt"></i>Modifier</a>
+                      </li>
+                      <li>
+                        <a asp-action="Delete" asp-route-Id="@Model.Id">
+                          <i class="dropdown-icon fa fa-copy"></i>Supprimer</a>
+                      </li>
+                      <li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="body">
+                <p style="font-weight: bold; color:#82b440;">@Model.Nom.</p>
+                <div class="rating mb-4">
+                  <div class="d-flex align-items-end">
+                    <h2 class="mb-0"><span class="separateur">@((int)Model.Montant)</span> FCFA</h2>
+                    <div class="ml-2 mr-2">
+                      @* <i class="fa fa-money"></i> *@
+                      @* <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-o"></i> *@
+                    </div>
+                  </div>
+                  <div class="avatar-list avatar-list-stacked mt-3">
+                    @* <img class="avatar avatar sm" src="/template/assets/images/xs/avatar5.jpg" data-toggle="tooltip" title="" data-original-title="Avatar">
+                    <img class="avatar avatar sm" src="/template/assets/images/xs/avatar6.jpg" data-toggle="tooltip" title="" data-original-title="Avatar">
+                    <img class="avatar avatar sm" src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" title="" data-original-title="Avatar">
+                    <img class="avatar avatar sm" src="/template/assets/images/xs/avatar4.jpg" data-toggle="tooltip" title="" data-original-title="Avatar"> *@
+                  </div>
+                  <ul class="list-group list-group-flush ratings font-13 mt-3">
+                    <small class="text-muted">Description:</small>
+                    <p>
+                      @Model.Description
+                    </p>
+                  </ul>
+                  <ul class="list-group list-group-flush ratings font-13 mt-3">
+                    <small class="text-muted">Catégorie:</small>
+                    <p>
+                      @Model.Categorie
+                    </p>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+

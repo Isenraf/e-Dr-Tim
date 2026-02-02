@@ -1,0 +1,211 @@
+@model IEnumerable<BANA.Models.Paid>
+
+
+
+
+  <link rel="stylesheet" media="print" href="/css/print.css">
+
+        <div class="container-fluid">
+          <div class="block-header">
+              <div class="row clearfix">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                  <h1>Salut, bienvenue !</h1>
+                  <span>Rapport de caisse</span>
+                </div>
+                <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                  <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                      <div class="border-right pr-4 mr-4 mb-2 mb-xl-0 hidden-xs">
+                        <p class="text-muted mb-1">Nombre de factures</p>
+                        <h5 class="mb-0"><span class="separateur">@ViewBag.nf</span> </h5>
+                      </div>
+                      @* <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                        <p class="text-muted mb-1">Cette Semaine</p>
+                        <h5 class="mb-0"><span class="separateur"></span> FCFA</h5>
+                      </div> *@
+                      <div class="pr-4 mb-2 mb-xl-0">
+                        <p class="text-muted mb-1">Montant total</p>
+                        <h5 class="mb-0"><span class="separateur">@ViewBag.mt</span> FCFA</h5>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-12">
+              <nav class="navbar navbar-expand-lg page_menu">Rapport de caisse Du mois de: 
+                <a class="navbar-brand" href="javascript:void(0);"> @DateTime.Parse(ViewBag.date).ToString( "MMMM" )  @DateTime.Parse(ViewBag.date).Year</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <i class="fa fa-bars text-muted"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item vivify swoopInTop delay-150 active">
+                      
+                    </li>
+                  </ul>
+                  <div class="ml-auto">
+                    
+                    <button class="btn btn-primary theme-bg gradient" id="printButton" onclick="printDiv('printMe')">
+                              <i class="fa fa-print"></i> Print</button>
+
+                     <button class="btn btn-outline-secondary" id="masquerdetails" >
+                        <i class="fa fa-previous"></i> Masquer détails</button>
+
+                  <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Paid/Tb';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    
+                    
+                    
+                  </div>
+                </div>
+              </nav>
+            </div>
+            <div class="col-lg-12">
+              <div id="tdt1" class="card card2">
+                <div id='printMe' class="body" >
+                  
+                  <div class="d-flex align-items-center">
+                    <img style="float: right;" id="img1" src="/img1/entetepoitiers.png" width="100%" data-toggle="tooltip" data-placement="top" title="" alt="Polyclinique de Poitiers"  data-original-title="Polyclinique de Poitiers">
+                  </div>
+                  <div id="tdt" style="line-height: 1.2em;text-align: center;margin-top: -190px;color:#28a745;font-weight: 600;">
+                    <h2 style="margin:0;" >POLYCLINIQUE DE POITIERS</h2>
+                    <p style="font-size: 13.5px;">Sise à vallé Trois Boutiques ( entre Feu Rouge BESSENGUE et rond point Deido<br>
+                    Tél: 233410151/690073467/675018191/656238323/680586697/677459997<br>
+                    B.P. 15422 Douala-Cameroun<br>
+                    Email:info@polycliniquedepoitiers.com / polycliniquedepoitiers@yahoo.fr <br>
+                    Site web: www.polycliniquedepoitiers.com <br>
+                    RC DOUALA/2008/B/2014 NIU: M110800026452Z <br><i>arrêté nº3897/A/MINSANTE/SG/DOSTS/SFSP</i>
+                    </p>
+                  </div>
+                  <br> <br>
+                
+                  @{
+                    List<int> caisses = new List<int>();
+                    int i=0;
+                  }
+                  
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <div class="table-responsive">
+                        <table  style="text-transform: uppercase;color: black; width: 100%;padding: 0rem;">
+                          
+                         <tr>
+                            <td style="border: 1px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="7"><strong class=""> <h6 style="margin: 5px;"><span>Rapport de caisse Du mois de  @DateTime.Parse(ViewBag.date).ToString( "MMMM" )  @DateTime.Parse(ViewBag.date).Year,</span></h6> </strong></td>
+                          </tr>
+                          <tr class="table1">
+                                <td style="height: 30px;;border: 0px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="7"></td>
+                          </tr>
+                         
+                            @foreach(var item in ViewBag.caisses){
+                              int somme=0;
+                                <tr class="table1">
+                                    <td style="border: 1px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="7"><strong class=""> <h6 style="margin: 5px;"><span>@item</span></h6> </strong></td>
+                                  </tr>
+                                <tr class="table1" style="font-size: 13px;" >
+                                <th style="color: black;border: 1px solid;width: 80px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Facture</strong></th>
+                                  <th class="text-center" style="color: black;width: 80px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Dossier</strong></th>
+                                  <th class="text-center" style=" color: black;width: 250px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Patient</strong></th>
+                                  <th class="text-right" style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Montant</strong></th>
+                                  <th class="text-right" style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Mode de Paiement</strong></th>
+                                  <th class="hidden-sm-down" style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;text-align: center;"><strong>Caissière</strong></th>
+                                  <th style="color: black;border: 1px solid;width: 150px; text-align: right; padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Observation</strong></th>
+                                </tr>
+
+                              
+
+                              @foreach(var item2 in Model){
+                                if(item2.caisse==item){
+                                  <div>
+                                  <tr class="table1" style="font-weight: 600;font-size: 13px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                      <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@item2.Numero_facture</span></td>
+                                      <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                        <span>@item2.Numero_dossier</span>
+                                      </td>
+                                      <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@item2.Patient</td>
+                                      <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="hidden-sm-down text-right">@item2.Montant</td>
+                                      <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">@item2.Moyen_paiement</td>
+                                      <td class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@item2.Caissier</td>
+                                      <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@item2.Observation</td>
+                                    </tr>
+                                  </div>
+                                  somme+=item2.Montant;
+                                }
+                              }
+                              
+                              caisses.Add(somme);
+                              
+                              <tr class="table1" style="font-weight: 600;font-size: 13px;color: black;; padding: 0rem 0.3rem 0rem 0.3rem;">
+                                <td class="text-right" style="border: 1px solid;text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="6"><strong>TOTAL</strong> </td>
+                                <td class="text-right separateur" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@somme</td>
+                              </tr>
+
+                              <tr class="table1">
+                                    <td style="height: 30px;;border: 0px solid; text-align: center;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="7"></td>
+                              </tr>
+                              
+                            }
+                            </div>
+                                
+                            
+                            
+                             
+                           
+                            
+
+                         
+                          <tfoot>
+                            
+                            @foreach(var item in ViewBag.caisses){
+                              <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                               
+                                  <td style="font-weight: 600;font-size: 13px;padding: 0rem 0.3rem 0rem 0.3rem;border: 1px solid;" colspan="6" class="text-left">
+                                  <span>@item:&nbsp;&nbsp;</span>
+                                  </td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class="separateur">@caisses[i]</strong></td>
+                              </tr>
+                              i++;
+                            }
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                               
+                                  <td style="font-weight: 600;font-size: 13px;padding: 0rem 0.3rem 0rem 0.3rem;border: 1px solid;" colspan="6" class="text-left">
+                                  <span><Strong>TOTAL GÉNÉRAL:</Strong>&nbsp;&nbsp;</span>
+                                  </td>
+                                  <td class="text-right" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong class="separateur">@caisses.Sum()</strong></td>
+                              </tr>
+                            
+                             
+                             
+                          </tfoot>
+                        </table>
+                        <br>
+                        <table style="width: 100%;color: black;" >
+                          <td style="font-weight: 600;text-align: left;"><u><strong>Signatures caissières</strong></u></td>
+                          <td style="font-weight: 600;text-align: right;"><u><strong>Direction administrative et financière</strong></u></td>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+ 
+        
+
+        
+  <script>
+      function printDiv(divName){
+
+        window.print();
+
+      }
+	</script>
+

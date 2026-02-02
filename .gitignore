@@ -1,0 +1,25 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+
+# IDE
+.vs/
+.vscode/
+*.user
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# SQLite Database files - DO NOT TRACK (local data)
+*.db
+*.db-shm
+*.db-wal

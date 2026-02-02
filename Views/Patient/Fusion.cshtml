@@ -1,0 +1,280 @@
+@model BANA.Models.Patient
+
+@{
+    ViewData["Title"] = "Fusion";
+}
+
+<!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Fusion des factures,
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+            <div class="card px-3 py-3">
+              <div class="mt-2 d-flex align-items-center justify-content-between">
+                <h5 class="card-body">
+                  Polyclinique de Poitiers<br />
+                  <h7 style="font-size: 12px; color: #4c545e">Fusion des factures,</h7>
+                </h5>
+
+                <div class="d-flex flex-wrap gap-1">
+                  <div
+                    class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                  >
+                    <i class="ri-pie-chart-2-fill text-success fs-4"></i>
+                    <span class="me-1 fw-semibold ps-1"><span class="separateur">@ViewData["ca"]</span> FCFA</span>
+                    <span class="text-success">Total Facture</span>
+                  </div>
+                  @* <div
+                    class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                  >
+                    <i class="ri-pie-chart-2-fill text-success fs-4"></i>
+                    <span class="me-1 fw-semibold ps-1"><span class="separateur">@ViewData["ca"]</span>FCFA</span>
+                    <span class="text-success">Chiffre d'affaire</span>
+                  </div>
+                  <div
+                    class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                  >
+                    <i class="ri-pie-chart-2-fill text-danger fs-4"></i>
+                    <span class="me-1 fw-semibold ps-1"><span class="separateur">@ViewData["ca"]</span>FCFA</span>
+                    <span class="text-danger">Chiffre d'affaire</span>
+                  </div> *@
+                </div>
+              </div>
+
+             <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <!-- Stats starts -->
+                                <div class="d-flex align-items-center flex-wrap gap-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-box lg bg-primary rounded-5 me-2">
+                                            <i class="ri-account-circle-line fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1">@Model.Nom</h4>
+                                            <p class="m-0">Nom du patient</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-box lg bg-primary rounded-5 me-2">
+                                            <i class="ri-women-line fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1">@Model.Genre</h4>
+                                            <p class="m-0">Genre</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-box lg bg-primary rounded-5 me-2">
+                                            <i class="ri-arrow-right-up-line fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-1">@((int)((DateTime.Now-Model.DateNaissance).TotalDays/365)) ans  @((int)(((DateTime.Now-Model.DateNaissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-Model.DateNaissance).TotalDays)%365)%30) jours</h4>
+                                            <p class="m-0">Âge du patient</p>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <!-- Stats ends -->
+                                 @if(Model.Genre=="M"){
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient2.png" class="ms-auto" alt="@Model.Nom @Model.Prenom" />
+                                    }else{
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient1.jpg" class="ms-auto" alt="@Model.Nom @Model.Prenom" />
+                                    }
+                               
+                                     
+                            </div>
+                        </div>
+                    </div>
+              <div class="card mb-3">
+                <div class="card-body">
+                @if(ViewData["nombrefcature"].ToString()=="2"){
+                  <button type="button" class="btn btn-info" id="print_fusion">
+                    <i class="ri-save-3-line"></i> Fusionner
+                  </button>
+                }else if(ViewData["nombrefcature"].ToString()=="1"){
+                  <button type="button" class="btn btn-info" id="print_fusion">
+                    <i class="ri-save-3-line"></i> Imprimer
+                  </button>
+                }else{
+
+                }
+                  
+
+                  <button type="button" onclick="history.back()" class="btn btn-secondary">
+                    <i class="ri-back-3-line"></i> retour
+                  </button>
+
+                </div>
+              </div>
+              @if (ViewData["error"]!=null)
+                {
+                <div class="alert alert-danger" role="alert">
+                Aucune Facture (Cloturée) trouvée entre ces deux dates
+                </div>
+                }
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h5 class="card-title">Toutes les Factures du patient</h5>
+                </div>
+                <div class="card-body">
+                  <div class="table-outer">
+                    <div class="table-responsive">
+                      <table id="monTableau" class="table align-middle truncate m-0">
+                        <thead>
+                          <tr>
+                            <th style="text-align: center;">Selectionner</th>
+                            <th>Action</th>
+                            <th>Facture</th>
+                            <th>Montant</th>
+                            <th>Docteur</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in ViewBag.factures)
+                        {
+                          <tr>
+                            <td style="text-align: center;"><input type="checkbox" value="@item.Id" class="form-check-input facture" /></td>
+                            <td>
+                              
+                              @if(item.Type.Contains("medicament")){
+                                <button type="button" style="background-color: #e5e64782;" onclick="location.href='/Facture/Details3/@item.Id';" class="btn btn-outline-secondary">
+                                  <input type="hidden" value="assurance">
+                                  <i class="fa fa-eye"></i>
+                                </button>
+                              }else if(item.Type.Contains("assurance")){
+                                <button onclick="location.href='/Facture/Details4/@item.Id';" type="button" style="background-color: #0ebb134f;" class="btn btn-outline-secondary " title="afficher la facture">
+                                  <i class="fa fa-eye"></i>
+                                </button>
+                              }else{
+                                <button onclick="location.href='/Facture/Details/@item.Id';" class="btn btn-secondary">
+                                  <i class="ri-eye-fill"></i>
+                                </button>
+                              }
+                              
+                            </td>
+                            <td>@item.Numero_de_facture</td>
+                            <td><span class="separateur">@(item.Net_a_payer_patient+item.Net_a_payer_assurance)</span> FCFA</td>
+                            <td>@item.Medecin</td>
+                            <td>@item.Create_date</td>
+                          </tr>
+                        }
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- App body ends -->
+          </div>
+
+
+  
+      <style>
+  /* Modale */
+      .modal1, .modal2{
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      }
+
+      .modal-header {
+      padding: 10px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      }
+
+      .modal-body {
+      flex: 1;
+      overflow: hidden;
+      }
+
+      .modal1 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .modal2 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      }
+</style>
+   
+    <!-- Modal -->
+        <div id="pdfModal" class="modal1">
+          <div class="modal-content">
+            <div class="modal-header">
+            <span>📄 Détails Facture </span>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+            <iframe id="target" src=""></iframe> <!-- Remplace par ton PDF -->
+            </div>
+          </div>
+        </div>
+        
+      <script>
+          const modal = document.getElementById('pdfModal');
+
+          function closeModal() {
+            modal.style.display = 'none';
+            document.getElementById("target").setAttribute("src", "");
+          }
+
+          // Fermer si on clique en dehors du contenu
+          window.onclick = event => {
+            if (event.target === modal) {
+              closeModal();
+            }
+          };
+      </script>
+
+        

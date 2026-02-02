@@ -1,0 +1,602 @@
+@model BANA.Models.Doctor
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">Ajouter médecin</li>
+    </ol>
+    <!-- Breadcrumb ends -->
+  </div>
+  <!-- App Hero header ends -->
+
+  <!-- app body start -->
+  <div class="app-body">
+    <!-- Row starts -->
+    <div class="row gx-3">
+      <div class="col-xl-12">
+
+        @if(ViewBag.doublons!=null){
+                    <div class="row gx-3">
+                      <div class="col-xl-12 col-lg-12">
+                        <div class="card mb-3">
+                          <div class="card-header">
+                            <h5 class="card-title">Alerte !</h5>
+                          </div>
+
+                          <div class="card-body">
+                            <div class="alert alert-primary d-flex align-items-center justify-content-between fade show" role="alert">
+                              <div class="d-flex align-items-center">
+                                <i class="ri-alert-line fs-3 me-2 lh-1"></i> Attention Risque de
+                                doublons.
+                              </div>
+                              
+                            </div>
+                          @foreach(var item in ViewBag.doublons){
+                            <div class="alert alert-danger d-flex align-items-center justify-content-between fade show" role="alert">
+                              <div class="d-flex align-items-center">
+                                <i class="ri-checkbox-circle-line fs-3 me-2 lh-1"></i>
+                                <strong> |@item.Nom @item.Prenom  |</strong>
+                                <strong> |@item.Telephone |</strong>
+                                <strong> |#@item.Specialite |</strong>
+                              </div>
+                              <button type="button" onclick="location.href='/Doctor/Details/@item.Id';" class="btn btn-info">Ouvrir</button>
+                            </div>
+                          }
+                          
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  }
+
+
+        <div class="card">
+          <div class="card-body">
+            <!-- Custom tabs starts -->
+            <div class="custom-tabs-container">
+              <!-- Nav tabs starts -->
+              <ul class="nav nav-tabs" id="customTab2" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#oneA" role="tab" aria-controls="oneA" aria-selected="true">
+                    <i class="ri-briefcase-4-line"></i>
+                    Informations personnelles
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="tab-twoA" data-bs-toggle="tab" href="#twoA" role="tab" aria-controls="twoA" aria-selected="false">
+                    <i class="ri-account-pin-circle-line"></i>
+                    Profil et biographie
+                  </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="tab-fourA" data-bs-toggle="tab" href="#fourA" role="tab" aria-controls="fourA" aria-selected="false">
+                    <i class="ri-lock-password-line"></i>
+                    Détails du compte
+                  </a>
+                </li>
+              </ul>
+              <!-- Nav tabs ends -->
+
+              <!-- Tab content starts -->
+              <form asp-action="Create" enctype="multipart/form-data">
+                <div class="tab-content h-350">
+                  <div class="tab-pane fade show active" id="oneA" role="tabpanel">
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                       <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a2">
+                            Nom
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-account-circle-line"></i>
+                            </span>
+                            <input asp-for="Nom" type="text" class="form-control" id="" placeholder="Entrez le nom de famille" />
+                          </div>
+                          <span asp-validation-for="Nom" class="text-danger"></span>
+                        </div>
+                      </div>
+
+                      <div style="display: none;" class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a1">
+                            Prénom
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-account-circle-line"></i>
+                            </span>
+                            <input asp-for="Prenom" type="text" class="form-control" id="a1" placeholder="Entrez le prénom" />
+                          </div>
+                          <span asp-validation-for="Prenom" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a3">
+                            Date de naissance
+                            <span class="text-danger"></span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-calendar-todo-line"></i>
+                            </span>
+                            <input asp-for="Date_De_Naissance" type="date" id="a3" class="form-control datepicker" />
+                          </div>
+                          <span asp-validation-for="Date_De_Naissance" class="text-danger"></span>
+                        </div>
+                      </div>
+
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a7">Type de Contrat</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-vip-crown-2-line"></i>
+                            </span>
+                            <select asp-for="contrat" class="form-select" id="a7">
+                              <option asp-for="contrat" value="">--Select--</option>
+                              <option asp-for="contrat" value="Permanent">Permanent</option>
+                              <option asp-for="contrat" value="Contractual">Contractuel</option>
+                            </select>
+                            <span asp-validation-for="contrat" class="text-danger"></span>
+                          </div>
+                          
+                        </div>
+                      </div>
+
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="selectGender1">
+                            Genre
+                            <span class="text-danger">*</span>
+                          </label>
+                           <select asp-for="Genre" class="form-select" id="a7">
+                              <option asp-for="Genre" value="">--Select--</option>
+                              <option asp-for="Genre" value="Masculin">Masculin</option>
+                              <option asp-for="Genre" value="Féminin">Féminin</option>
+                            </select>
+                            <span asp-validation-for="Genre" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="">
+                            Spécialité
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-vip-crown-2-line"></i>
+                            </span>
+                            <select asp-for="Specialite" class="form-select" id="a7">
+                              <option value="">--Sélectionner--</option>
+                              @foreach (var item in ViewBag.departements) {
+                              <option asp-for="Specialite" value="@item.Nom">@item.Nom</option>
+                              }
+                            </select>
+                          </div>
+                          <span asp-validation-for="Specialite" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a5">
+                            Adresse e-mail
+                            <span class="text-danger"></span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-mail-open-line"></i>
+                            </span>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="Entrez l'adresse e-mail" />
+                          </div>
+                          <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="a6">
+                            Numéro de téléphone
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-phone-line"></i>
+                            </span>
+                            <input asp-for="Telephone" type="number" class="form-control"  placeholder="Entrez le numéro de téléphone portable" />
+                          </div>
+                          <span asp-validation-for="Telephone" class="text-danger"></span>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- Row ends -->
+                  </div>
+                  <div class="tab-pane fade" id="twoA" role="tabpanel">
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                      <div class="col-xxl-4 col-md-6 col-sm-12">
+                        <div id="dropzone" class="mb-3">
+                          <div class="m-0">
+                            <label for="formFile" class="form-label">Télécharger la photo profil</label>
+                            <input class="form-control" placeholder="Cliquez ici pour télécharger la photo." type="file" asp-for="ImageFile1">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xxl-4 col-md-6 col-sm-12">
+                        <div id="dropzone" class="mb-3">
+                          <div class="m-0">
+                            <label for="formFile" class="form-label">Télécharger la signature</label>
+                            <input class="form-control" placeholder="Cliquez ici pour télécharger la signature." type="file"  asp-for="ImageFile2">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12">
+                        <label class="form-label">Écrire une biographie</label>
+                        <textarea class="form-control" placeholder="Enterz une note" name="" id=""></textarea>
+                      </div>
+                    </div>
+                    <!-- Row ends -->
+                  </div>
+                  <div class="tab-pane fade" id="fourA" role="tabpanel">
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="">Nom d'utilisateur</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-account-pin-circle-line"></i>
+                            </span>
+                            <input asp-for="User_Name"  list="user" placeholder="Entrez votre nom d'utilisateur" class="form-control" />
+                            <datalist id=user>
+                              @foreach(var item in ViewBag.users){
+                                <option value="@item.nom">@item.Departement</option>
+                              }
+                            </datalist>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="u2">Mot de passe</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-lock-password-line"></i>
+                            </span>
+                            <input asp-for="Password" class="form-control" placeholder="Le mot de passe doit comporter entre 4 et 20 caractères." />
+                            <button class="btn btn-outline-secondary" type="button">
+                              <i class="ri-eye-line"></i>
+                            </button>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xxl-3 col-lg-4 col-sm-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="u3">Confirmez le mot de passe</label>
+                          <div class="input-group">
+                            <span class="input-group-text">
+                              <i class="ri-lock-password-line"></i>
+                            </span>
+                            <input asp-for="PasswordConfirm" placeholder="Confirmer le nouveau mot de passe" class="form-control" />
+                            <button class="btn btn-outline-secondary" type="button">
+                              <i class="ri-eye-off-line"></i>
+                            </button>
+                             <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Row ends -->
+                  </div>
+                </div>
+                <!-- Card acrions starts -->
+                <div class="d-flex gap-2 justify-content-between al mt-4">
+                  <div class="form-check">
+                    <input class="form-check-input" asp-for="Interne" id="flexCheckDefault" />
+                    <label class="form-check-label" for="flexCheckDefault">Interne</label>
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Créer un profil de médecin</button>
+                    <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+                  </div>
+                </div>
+                <!-- Card acrions ends -->
+              </form>
+              <!-- Tab content ends -->
+            </div>
+            <!-- Custom tabs ends -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Row ends -->
+  </div>
+  <!-- App body ends -->
+</div>
+
+
+
+
+
+@* 
+
+<form asp-action="Create">
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+              <div class="col-lg-4 col-md-12 col-sm-12">
+               <h1>Policlinique de Poitiers</h1>
+                <span>Il suffit d'ajouter des médecins,</span>
+              </div>
+              <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                  <div class="mb-3 mb-xl-0">
+                   <button type="submit" class="btn btn-primary">
+                              <i class="fa fa-save"></i> Enregistrer</button>
+                            </button>
+                    <button type="button" onclick="history.back()" class="btn btn-outline-secondary">Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="card">
+                <div class="body">
+                  <div class="row clearfix">
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Noms
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Nom" class="form-control" >
+                        <span asp-validation-for="Nom" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Prénoms
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Prenom" class="form-control"  >
+                        <span asp-validation-for="Prenom" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-sm-3">
+                      <div class="form-group c_form_group">
+                        <label>Date de Naissance
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Date_De_Naissance" type="text" data-provide="datepicker" data-date-autoclose="true" class="form-control" >
+                        <span asp-validation-for="Date_De_Naissance" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group c_form_group">
+                        <label>Genre
+                          <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="Genre" class="form-control show-tick">
+                          <option asp-for="Genre" value="">- Genre -</option>
+                          <option asp-for="Genre" value="Masculin">Masculin</option>
+                          <option asp-for="Genre" value="Féminin">Féminin</option>
+                        </select>
+                        <span asp-validation-for="Genre" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group c_form_group">
+                        <label>Spécialité
+                          <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="Specialite" class="form-control show-tick">
+                          <option asp-for="Specialite" value="">- Choisir -</option>
+                          @foreach (var item in ViewBag.departements)
+                          {
+                            <option asp-for="Specialite" value="@item.Nom">@item.Nom</option>
+                          }
+                          
+                        </select>
+                        <span asp-validation-for="Specialite" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group c_form_group">
+                        <label>Téléphone
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Telephone" class="form-control" >
+                        <span asp-validation-for="Telephone" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Adresse Email
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Email" class="form-control" >
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Site web
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Site_web" class="form-control" type="text" >
+                        <span asp-validation-for="Site_web" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="form-group c_form_group">
+                        <label>Type de Contrat
+                          <span class="text-danger"></span>
+                        </label>
+                        <select asp-for="contrat" class="form-control show-tick">
+                          <option asp-for="contrat" value="">- Choisir -</option>
+                            <option asp-for="contrat" value="Permanent">Permanent</option>
+                            <option asp-for="contrat" value="Permanent">Contractuel</option>
+                        </select>
+                        <span asp-validation-for="Specialite" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <input type="file" class="dropify">
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="form-group mt-3">
+                        <textarea asp-for="Note" rows="4" class="form-control no-resize" placeholder="Entrez une note..">
+                        </textarea>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="header">
+                  <h2>Doctor's Account Information</h3>
+                </div>
+                <div class="body">
+                  <div class="row clearfix">
+                    <div class="col-sm-12">
+                      <div class="form-group c_form_group">
+                        <label>User Name
+                          <span class="text-danger"></span>
+                        </label>
+                        <input class="form-control" type="text" value="">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Password
+                          <span class="text-danger"></span>
+                        </label>
+                        <input class="form-control" type="password" value="">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Confirm Password
+                          <span class="text-danger"></span>
+                        </label>
+                        <input class="form-control" type="password" value="">
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="header">
+                  <h2>Doctor Social Media Info</h3>
+                </div>
+                <div class="body">
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      <div class="form-group c_form_group">
+                        <label>Facebook</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fa fa-facebook"></i>
+                            </span>
+                          </div>
+                          <input asp-for="social1"  class="form-control" placeholder="">
+                           <span asp-validation-for="social1" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group c_form_group">
+                        <label>Twitter</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fa fa-twitter"></i>
+                            </span>
+                          </div>
+                          <input asp-for="social2" class="form-control" placeholder="">
+                          <span asp-validation-for="social2" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group c_form_group">
+                        <label>Linkedin</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fa fa-linkedin"></i>
+                            </span>
+                          </div>
+                          <input asp-for="social3" class="form-control" placeholder="">
+                          <span asp-validation-for="social3" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group c_form_group">
+                        <label>Instagram</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fa fa-instagram"></i>
+                            </span>
+                          </div>
+                          <input asp-for="social4" class="form-control" placeholder="">
+                          <span asp-validation-for="social4" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input asp-for="Interne" style="accent-color: #82b540;" class="form-check-input"  /> Interne
+                                </label>
+                            </div>
+                        </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</form> *@
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,757 @@
+@model BANA.Models.Patient
+
+@{
+    ViewData["Title"] = "Details";
+    Layout=null;
+
+    decimal taille = 0, poids = 0;
+
+    var tailleStr = ViewBag.parametre?.Taille?.ToString() ?? "0";
+    var poidsStr  = ViewBag.parametre?.Poids?.ToString() ?? "0";
+
+    tailleStr = tailleStr.Replace('.', ','); 
+    poidsStr = poidsStr.Replace('.', ','); 
+
+    decimal.TryParse(tailleStr, out taille);
+    decimal.TryParse(poidsStr, out poids);
+}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+    <link rel="stylesheet" href="/template2/assets/css/main2.min.css" />
+    <!-- Meta -->
+    <meta name="description" content="edr Tim Hospital Management" />
+    <meta property="og:title" content="edr Tim Hospital Management" />
+    <meta property="og:description" content="edr Tim Hospital Management" />
+    <meta property="og:type" content="Website" />
+    <link rel="shortcut icon" href="assets/images/favicon.svg" />
+
+    <!-- *************
+            ************ CSS Files *************
+        ************* -->
+    <link rel="stylesheet" href="/template2/assets/fonts/remix/remixicon.css" />
+    <link rel="stylesheet" href="/template2/assets/css/main.min.css" />
+
+    <!-- *************
+            ************ Vendor Css Files *************
+        ************ -->
+
+    <!-- Scrollbar CSS -->
+    <link rel="stylesheet" href="/template2/assets/vendor/overlay-scroll/OverlayScrollbars.min.css" />
+
+    <!-- Date Range CSS -->
+    <link rel="stylesheet" href="/template2/assets/vendor/daterange/daterange.css" />
+
+
+    <style>
+      :root {
+        --bs-primary: #0b8fac;
+        --bs-primary-rgb: 11, 143, 172;
+        --bs-link-color: var(--bs-primary);
+        --bs-link-hover-color: #087c96;
+      }
+
+      .btn-primary {
+        --bs-btn-bg: #0b8fac;
+        --bs-btn-border-color: #0b8fac;
+        --bs-btn-hover-bg: #087c96;
+        --bs-btn-hover-border-color: #087c96;
+        --bs-btn-active-bg: #066b80;
+        --bs-btn-active-border-color: #066b80;
+      }
+    </style>
+  </head>
+  <input type="hidden" id="identifiant" value="0"/>
+  <input type="hidden" id="Numero_dossier" value="@Model.Numero_dossier"/>
+  <input type="hidden" id="Numero_de_facture" value="@ViewBag.facture.Numero_de_facture"/>
+  <input type="hidden" id="Medecin" value="@ViewBag.facture.Medecin"/>
+  <body>
+    <div class="container my-5">
+        <!-- Motif de consultation -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Motif de consultation</h5>
+          </div>
+          <div class="card-body">
+            <textarea id="motifConsult" name="motifConsult" rows="3" class="form-control" placeholder="Décrire le motif..."></textarea>
+          </div>
+        </div>
+
+        <!-- Histoire de la maladie -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Histoire de la maladie</h5>
+          </div>
+          <div class="card-body">
+            <textarea id="histoiremaladie" name="histoiremaladie" rows="3" class="form-control" placeholder="Raconte l'histoire..."></textarea>
+          </div>
+        </div>
+
+        <!-- Antécédents -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Antécédents</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="antecedentsPerso" class="form-label">Antécédents personnels</label>
+              <textarea id="antecedentsPerso" name="antecedentsPerso" rows="3" class="form-control"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="antecedentsFam" class="form-label">Antécédents familiaux</label>
+              <textarea id="antecedentsFam" name="antecedentsFam" rows="3" class="form-control"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enquête des systèmes -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Enquête des systèmes</h5>
+          </div>
+          <div class="card-body">
+            <textarea id="enqueteSysteme" name="enqueteSysteme" rows="3" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <!-- Examen physique -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Examen physique</h5>
+          </div>
+          <div class="card-body">
+            <textarea id="examenPhysique" name="examenPhysique" rows="3" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <!-- Diagnostique d'hypothèses -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Diagnostique d'hypothèses</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <input class="form-control" type="text" name="diagnostiqueHypothese" list="diagnostic-hypothese" id="diagnostiqueHypothese" autocomplete="off" />
+            
+                  <datalist id="diagnostic-hypothese">
+                  @foreach(var item in ViewBag.cim){
+                     <option value="@item.Code - @item.Nom">@item.Code @item.Nom</option>
+                  }
+                  </datalist>
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control mb-3" id="descriphypo" rows="3" placeholder="Description..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Complications -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Complications</h5>
+          </div>
+          <div class="card-body">
+            <textarea id="complications" name="complications" rows="3" class="form-control" placeholder="complications..."></textarea>
+          </div>
+        </div>
+
+        <!-- Examens complémentaires -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Examens complémentaires</h5>
+          </div>
+          <div class="card-body">
+            <textarea id="examensComplementaires" name="examensComplementaires" rows="4" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <!-- Diagnostique de certitude -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Diagnostique de certitude</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <input class="form-control" type="text" name="diagnostiqueCertitude" list="diagnostic-certitude" id="diagnostiqueCertitude" />
+              <datalist id="diagnostic-certitude">
+                  @foreach(var item in ViewBag.cim){
+                     <option value="@item.Code - @item.Nom">@item.Code @item.Nom</option>
+                  }
+                  </datalist>
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control mb-3" id="descripcerti" rows="3" placeholder="Description..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Traitement -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Traitement</h5>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-lg-6 mb-3">
+                <label class="form-label" for="prescription">Prescription</label>
+                <input class="form-control" id="prescription" type="text" />
+              </div>
+              <div class="col-lg-6 mb-3">
+                <label class="form-label" for="posologie">Posologie</label>
+                <input class="form-control" id="posologie" type="text" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Suivi et rendez-vous -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Suivi et rendez-vous</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="prochainRDV" class="form-label">Prochain rendez-vous</label>
+              <input type="date" id="prochainRDV" name="prochainRDV" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label for="recommandations" class="form-label">Recommandations</label>
+              <textarea id="recommandations" name="recommandations" rows="3" class="form-control"></textarea>
+            </div>
+          </div>
+        </div>
+        
+     
+    </div>
+
+    <div class="container rapport my-4 bg-white border shadow-sm">
+      <!-- Header -->
+      <br>
+            <div class="d-flex justify-content-between align-items-center bg-primary text-white p-3 rounded-top">
+
+              <h6 class="m-0">RAPPORT MEDICAL INFORMATISÉ</h6>
+            </div>
+
+            <!-- Infos Patient -->
+            <div class="p-3">
+              <div class="bg-info bg-opacity-25 p-2 fw-bold">INFORMATIONS PATIENT</div>
+              <table class="table table-bordered mt-2">
+                <tr>
+                  <th class="table-light">Nom</th>
+                  <td>@Model.Nom @Model.Prenom</td>
+                  <th class="table-light">Sexe</th>
+                  <td>@Model.Genre</td>
+                </tr>
+                <tr>
+                  <th class="table-light">ÂGE</th>
+                  <td>@((int)((DateTime.Now-Model.DateNaissance).TotalDays/365)) ans  @((int)(((DateTime.Now-Model.DateNaissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-Model.DateNaissance).TotalDays)%365)%30) jours</td>
+                  <th class="table-light">GROUPE SANGUIN</th>
+                  <td>@Model.GroupeSanguin</td>
+                </tr>
+                <tr>
+                  <th class="table-light">Numero de dossier</th>
+                  <td>@Model.Numero_dossier</td>
+                  <th class="table-light">Numero de facture</th>
+                  <td>@ViewBag.facture.Numero_de_facture</td>
+                </tr>
+                <tr>
+                  <th class="table-light">Docteur consultant</th>
+                  <td>@ViewBag.facture.Medecin</td>
+                  <th class="table-light">Date</th>
+                  <td>@DateTime.Now</td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- Parametres du Patient -->
+            
+                <div>
+
+                   <div  class="row gx-3">
+                        @*
+                        <div style="width: 130px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        Poul: @ViewBag.parametre.Pbd
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        *@
+                        <div style="width: 110px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump1">
+                                        T (Cº): @ViewBag.parametre.Temperature
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 130px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump2">
+                                        Taille (m): @ViewBag.parametre.Taille
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 140px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump3">
+                                        Poids (kg): @ViewBag.parametre.Poids
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 140px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                  @if(taille==0 || poids==0){
+                                    <p style="margin: 0;" id="trump4">
+                                        IMC (kg/m²):
+                                    </p>
+                                    }else{
+                                    <p style="margin: 0;" id="trump4">
+                                        IMC (kg/m²):@((poids/taille*taille).ToString("0.0"))
+                                    </p>
+                                    }
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="width: 200px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump5">
+                                        Saturation en O₂(%): @ViewBag.parametre.Saturation
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 260px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump6">
+                                        Fréquence respiratoire(Cpm): @ViewBag.parametre.Rpm
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 220px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump7">
+                                        Périmètre crânien (Cm): @ViewBag.parametre.Pc
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gx-3">
+                        <div style="width: 120px;">
+                            <div style="background-color: #2196f3;" class="card border-0 mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" >
+                                        Bras Gauche
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 160px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump8">
+                                        TA (mmHg): @ViewBag.parametre.Tsysbg/@ViewBag.parametre.Tdiasbg
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 130px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump9">
+                                        Pouls(Bpm): @ViewBag.parametre.Pbg
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 120px;">
+                            <div style="background-color: #2196f3;" class="card border-0 mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;">
+                                        Bras Droit
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 160px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump10">
+                                        TA (mmHg):@ViewBag.parametre.Tsysbd/@ViewBag.parametre.Tdiasbd
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 130px;">
+                            <div class="card border-0 bg-primary mb-3">
+                                <div style="padding: 5px;" class="text-white">
+                                    <p style="margin: 0;" id="trump11">
+                                        Pouls (Bpm):@ViewBag.parametre.Pbd
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+              </div>
+
+      <!-- Motifs -->
+      <div id="motifcon" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">MOTIFS DE CONSULTATION</div>
+        <table class="table table-bordered mt-2">
+          <tr>
+            <td><span data-key="motifConsult"></span></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Histoire -->
+      <div id="histoire" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">HISTOIRE DE LA MALADIE</div>
+        <table class="table table-bordered mt-2">
+          <tr>
+            <td><span data-key="histoiremaladie"></span></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Antécédents -->
+      <div id="antecedent" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">ANTECEDENTS</div>
+        <div class="row">
+          <div class="col-lg-6">
+            <table class="table table-bordered mt-2">
+              <thead class="table-light">
+                <tr>
+                  <th>Antécédents personnels</th>
+                </tr>
+              </thead>
+              <tbody id="antecedents-personnels-body">
+                <tr>
+                  <td><span data-key="antecedentsPerso"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-lg-6">
+            <table class="table table-bordered mt-2">
+              <thead class="table-light">
+                <tr>
+                  <th>Antécédents Familiaux</th>
+                </tr>
+              </thead>
+              <tbody id="antecedents-familiaux-body">
+                <tr>
+                  <td><span data-key="antecedentsFam"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enquête systèmes -->
+      <div id="enquete" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">ENQUETE SYSTEMES</div>
+        <table class="table table-bordered mt-2">
+          <tr>
+            <td><span data-key="enqueteSysteme"></span></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Examen physique -->
+      <div id="examphy" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">EXAMEN PHYSIQUE</div>
+        <table class="table table-bordered mt-2">
+          <tr>
+            <td><span data-key="examenPhysique"></span></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Diagnostic hypothèses -->
+      <div id="diagnos1" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">DIAGNOSTIQUE D'HYPOTHÈSES</div>
+        <table class="table table-bordered mt-2">
+          <thead class="table-light">
+            <tr>
+              <th>Hypothèse</th>
+              <th>Observation</th>
+            </tr>
+          </thead>
+          <tbody id="diagTableBody">
+            <tr>
+              <td><span data-key="diagnostiqueHypothese"></span></td>
+              <td><span data-key="descriphypo"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Complications -->
+      <div id="compli" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">COMPLICATIONS</div>
+        <table class="table table-bordered mt-2">
+          <tr>
+            <td><span data-key="complications"></span></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Examens complémentaires -->
+      <div id="examcom" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">EXAMENS COMPLEMENTAIRES</div>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td><span data-key="examensComplementaires"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Diagnostic certitude -->
+      <div id="diagnos2" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">DIAGNOSTIQUE DE CERTITUDE</div>
+
+        <table class="table table-bordered mt-2">
+          <thead class="table-light">
+            <tr>
+              <th>Diagnostic</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span data-key="diagnostiqueCertitude"></span></td>
+              <td><span data-key="descripcerti"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Traitement -->
+      <div id="rapptraitement" class="p-3 d-none rapport-section">
+        <div class="bg-info bg-opacity-25 p-2 fw-bold">TRAITEMENT</div>
+        <table class="table table-bordered mt-2">
+          <thead class="table-light">
+            <tr>
+              <th>Prescription</th>
+              <th>Posologie</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span data-key="prescription"></span>
+              </td>
+              <td>
+                <span data-key="posologie"></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Suivi -->
+      <div id="suivi" class="p-3 d-none rapport-section">
+        <div style="background-color: #0c90ac4d" class="bg-info bg-opacity-25 p-2 fw-bold">SUIVI ET RENDEZ-VOUS</div>
+        <table class="table table-bordered mt-2">
+          <thead class="table-light">
+            <tr>
+              <th>Prochain Rendez-vous</th>
+              <th>Recommandations</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span data-key="prochainRDV"></span>
+              </td>
+              <td>
+                <span data-key="recommandations"></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer -->
+      <div class="p-3 border-top">
+        <p class="text-end me-5">
+          <strong>Signature</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 justify-content-end mt-4">
+      <div>
+        <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+        <button type="button" id="saveconsultation2" class="btn btn-primary">Enregistrer</button>
+      </div>
+    </div>
+
+    <!-- *************
+			************ JavaScript Files *************
+		************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <script src="/template2/assets/js/jquery.min.js"></script>
+    <script src="/template2/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/template2/assets/js/moment.min.js"></script>
+
+    <!-- Overlay Scroll JS -->
+    <script src="/template2/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
+    <script src="/template2/assets/vendor/overlay-scroll/custom-scrollbar.js"></script>
+
+    <!-- Date Range JS -->
+    <script src="/template2/assets/vendor/daterange/daterange.js"></script>
+    <script src="/template2/assets/vendor/daterange/custom-daterange.js"></script>
+
+  
+     <!-- Custom JS files -->
+    <script src="/template2/assets/js/custom.js"></script>
+    <script src="/js/dmi.js" ></script>
+
+   
+    <!-- JS pour affichage titre rapport -->
+    <script>
+      function toggleSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+
+        let visible = false;
+
+        // Vérifier tous les spans
+        section.querySelectorAll("span").forEach((el) => {
+          if (el.textContent.trim() !== "") visible = true;
+        });
+
+        // Vérifier toutes les cellules de tableau
+        section.querySelectorAll("td").forEach((el) => {
+          if (el.textContent.trim() !== "") visible = true;
+        });
+
+        // Vérifier tous les divs qui contiennent du texte (pas les titres)
+        section.querySelectorAll("div").forEach((el) => {
+          if (!el.classList.contains("bg-info") && el.textContent.trim() !== "") visible = true;
+        });
+
+        // Afficher ou cacher la section
+        section.classList.toggle("d-none", !visible);
+      }
+
+      function updateAllSections() {
+        document.querySelectorAll(".rapport-section").forEach((sec) => {
+          toggleSection(sec.id);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", updateAllSections);
+
+      // Mise à jour à chaque saisie ou changement
+      document.addEventListener("input", updateAllSections);
+      document.addEventListener("change", updateAllSections);
+
+      // Observer les changements dynamiques
+      const observer = new MutationObserver(updateAllSections);
+      document.querySelectorAll(".rapport-section").forEach((sec) => {
+        observer.observe(sec, { childList: true, subtree: true });
+      });
+    </script>
+
+    <script>
+      function bindToReport(inputId, dataKey) {
+        const input = document.getElementById(inputId);
+        const target = document.querySelector(`span[data-key="${dataKey}"]`);
+        if (input && target) {
+          input.addEventListener("input", () => {
+            target.textContent = input.value;
+          });
+        }
+      }
+
+      // Liaison des champs simple
+      bindToReport("motifConsult", "motifConsult");
+      bindToReport("histoiremaladie", "histoiremaladie");
+      bindToReport("antecedentsPerso", "antecedentsPerso");
+      bindToReport("antecedentsFam", "antecedentsFam");
+      bindToReport("enqueteSysteme", "enqueteSysteme");
+      bindToReport("examenPhysique", "examenPhysique");
+      bindToReport("diagnostiqueHypothese", "diagnostiqueHypothese");
+      bindToReport("descriphypo", "descriphypo");
+      bindToReport("complications", "complications");
+      bindToReport("examensComplementaires", "examensComplementaires");
+      bindToReport("diagnostiqueCertitude", "diagnostiqueCertitude");
+      bindToReport("descripcerti", "descripcerti");
+      bindToReport("prescription", "prescription");
+      bindToReport("posologie", "posologie");
+      bindToReport("prochainRDV", "prochainRDV");
+      bindToReport("recommandations", "recommandations");
+    </script>
+
+    <script>
+      function verifierAntecedents() {
+        const blocAntecedent = document.getElementById("antecedent");
+
+        const persoSpan = document.querySelector('[data-key="antecedentsPerso"]');
+        const famSpan = document.querySelector('[data-key="antecedentsFam"]');
+
+        const persoTable = document.getElementById("antecedents-personnels-body").closest("table");
+        const famTable = document.getElementById("antecedents-familiaux-body").closest("table");
+
+        const textePerso = persoSpan.textContent.trim();
+        const texteFam = famSpan.textContent.trim();
+
+        // Affiche ou masque chaque tableau
+        persoTable.classList.toggle("d-none", textePerso === "");
+        famTable.classList.toggle("d-none", texteFam === "");
+
+        // Si les deux tableaux sont vides → cacher tout le bloc (titre inclus)
+        const toutVide = textePerso === "" && texteFam === "";
+        blocAntecedent.classList.toggle("d-none", toutVide);
+      }
+
+      // --- Observation automatique des changements sur les deux <span> ---
+      function activerObservation() {
+        const persoSpan = document.querySelector('[data-key="antecedentsPerso"]');
+        const famSpan = document.querySelector('[data-key="antecedentsFam"]');
+
+        const observer = new MutationObserver(verifierAntecedents);
+
+        [persoSpan, famSpan].forEach((span) => {
+          observer.observe(span, { childList: true, characterData: true, subtree: true });
+        });
+
+        verifierAntecedents(); // Vérification initiale
+      }
+
+      document.addEventListener("DOMContentLoaded", activerObservation);
+    </script>
+  </body>
+</html>

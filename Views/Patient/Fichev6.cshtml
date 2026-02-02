@@ -1,0 +1,376 @@
+@model BANA.Models.Patient
+
+@{
+    ViewData["Title"] = "Details";
+     Layout="_Layout3";
+}
+
+<!-- Scrollbar CSS -->
+    <link rel="stylesheet" href="/template2/assets/vendor/overlay-scroll/OverlayScrollbars.min.css"/>
+    <script src="/template2/assets/js/chart.js" defer></script>
+
+    <style>
+      .a4-container {
+        position: relative;
+        width: 633px;
+        height: 792px;
+        border: 1px solid #ccc;
+        margin: 0px auto;
+
+        background-image: url("/template2/fiche5/cb2.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
+      .data-point {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background-color: 364fc7;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .table {
+        width: 254px;
+        height: 125px;
+        table-layout: fixed;
+        font-size: 9px;
+        position: absolute;
+        left: 67px;
+        bottom: 576px;
+        /* left: 230px;
+        bottom: 18px; */
+      }
+
+      th,
+      td {
+        border: 1px solid black;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #336b94 !important;
+      }
+
+      thead th {
+        background-color: #336b94 !important;
+        color: #fff !important;
+      }
+
+      td[contenteditable]:focus {
+        border: none !important;
+        outline: none !important;
+      }
+
+      td {
+        padding: 0 !important;
+      }
+
+      table{
+        background-color: #fff;
+       }
+
+      @@media print {
+        body * {
+          visibility: hidden;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        .card,
+        .card * {
+          visibility: visible;
+        }
+
+        .card {
+          position: absolute;
+          left: 0;
+          top: 0;
+          box-shadow: none;
+        }
+
+        /* Hide buttons */
+        .card button,
+        .custom-daterange {
+          visibility: hidden !important;
+        }
+
+        /* Force hide the last column header & cells */
+        .card table th:last-child,
+        .card table td:last-child {
+          display: none !important;
+          visibility: hidden !important;
+        }
+      }
+    </style>
+
+<link href="/css/stock2.css" rel="stylesheet">
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">
+                Fiche de croissance
+            </li>
+        </ol>
+        <!-- Breadcrumb ends -->
+    </div>
+    <!-- App Hero header ends -->
+
+   <!-- App body starts -->
+          <div class="app-body">
+            <div class="col-sm-12">
+              <div class="card">
+                <div
+                  class="card-header d-flex justify-content-between align-items-center"
+                >
+                  <h5 class="card-title mb-0">
+                    FICHE DE CROISSANCE DE L’ENFANT: De 2 à 20 ans
+                  </h5>
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary btn-sm"
+                      onclick="window.print()"
+                    >
+                      Imprimer
+                    </button>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="">
+                    <div
+                      class="d-flex mb-3 align-items-end justify-content-between"
+                    >
+                      <!-- Stats starts -->
+                      <div class="d-flex align-items-center flex-wrap gap-4">
+                        <div class="d-flex align-items-center">
+                          <div>
+                            <p class="m-0">Nom du patient</p>
+                            <h4 style="color: #0c90ac;" class="mb-1">@Model.Nom @Model.Prenom</h4>
+                            
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <div>
+                            <p class="m-0">Sexe</p>
+                            <h4 style="color: #0c90ac;" class="mb-1">@Model.Genre</h4>
+                          </div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                          <div>
+                            <p class="m-0">Age</p>
+                            <h4 style="color: #0c90ac;" class="mb-1">@((int)((DateTime.Now-Model.DateNaissance).TotalDays/365)) ans  @((int)(((DateTime.Now-Model.DateNaissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-Model.DateNaissance).TotalDays)%365)%30) jours</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="table-responsive mb-3"></div>
+                  </div>
+
+                  <!-- forground image -->
+                  <div class="a4-container">
+                    <table
+                      class="table table-bordered truncate m-0 text-center"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Age</th>
+                          <th>Poids</th>
+                          <th>Taille</th>
+                          <th>Périmètre crânien</th>
+                          <th>Observations</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- App body ends -->
+</div>
+
+<!-- hidden table -->
+                  <table id="hidden-data" style="display: none">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Age</th>
+                        <th>Poids</th>
+                        <th>Taille</th>
+                        <th>Périmètre crânien</th>
+                        <th>Observations</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach(var item in ViewBag.parametres){
+                        <tr>
+                          <td>@item.Create_date.ToShortDateString()</td>
+                          <td>@(((item.Create_date.Year - Model.DateNaissance.Year) * 12) + item.Create_date.Month - Model.DateNaissance.Month)</td>
+                          <td>@item.Poids</td>
+                          <td>@item.Taille</td>
+                          <td></td>
+                          <td>RAS</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+<!-- My script -->
+    <script>
+      const hiddenTable = document.querySelector("#hidden-data");
+      const visibleTable = document.querySelector("table");
+      const rows = visibleTable.querySelectorAll("tbody tr");
+      const a4Container = document.querySelector(".a4-container");
+      const state = [];
+
+      // 1. Extract data from hidden table into state
+      function loadHiddenData() {
+        const hiddenRows = hiddenTable.querySelectorAll("tbody tr");
+        hiddenRows.forEach((row) => {
+          const cells = row.querySelectorAll("td");
+          if (cells.length >= 4) {
+            state.push({
+              age: parseFloat(cells[1].textContent) || "",
+              poids: parseFloat(cells[2].textContent) || "",
+              taille: parseFloat(cells[3].textContent) || "",
+            });
+          }
+        });
+      }
+
+      // 2. Fill visible table with the 7 most recent entries
+      function fillVisibleTable() {
+        const latestData = state.slice(-7).reverse();
+        latestData.forEach((entry, i) => {
+          if (rows[i]) {
+            const cells = rows[i].querySelectorAll("td");
+            cells[0].textContent = new Date().toLocaleDateString();
+            cells[1].textContent = ⁠ ${entry.age} ans ⁠;
+            cells[2].textContent = ⁠ ${entry.poids} kg ⁠;
+            cells[3].textContent = ⁠ ${entry.taille} cm ⁠;
+            cells[4].textContent = "—";
+          }
+        });
+      }
+
+      function calculate(data) {
+        totalCm =
+          data.taille && (((data.taille - 80) / 110) * 0.5593 + 0.2828) * 100;
+
+        totalMonths =
+          data.age && (((data.age - 2) / 18) * 0.6098 + 0.1864) * 100;
+
+        totalKg =
+          data.poids && (((data.poids - 10) / 95) * 0.4823 + 0.1048) * 100;
+
+        return { totalCm, totalMonths, totalKg };
+      }
+
+      function render() {
+        state.forEach((data) => {
+          const { totalCm, totalMonths, totalKg } = calculate(data);
+
+          // taille
+          if (totalCm && totalMonths) {
+            a4Container.insertAdjacentHTML(
+              "beforeend",
+              ⁠ <div class="data-point" style="left: ${totalMonths}%; bottom: ${totalCm}%"></div> ⁠
+            );
+          }
+
+          // poids
+          if (totalKg && totalMonths) {
+            a4Container.insertAdjacentHTML(
+              "beforeend",
+              ⁠ <div class="data-point" style="left: ${totalMonths}%; bottom: ${totalKg}%"></div> ⁠
+            );
+          }
+        });
+      }
+
+      // === On page load ===
+      window.addEventListener("DOMContentLoaded", () => {
+        loadHiddenData();
+        console.log(state);
+
+        render();
+        fillVisibleTable();
+      });
+    </script>

@@ -1,0 +1,233 @@
+@model BANA.Models.Patient
+
+@{
+    ViewData["Title"] = "Index";
+    Layout=null;
+}
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>e-Dr Tim RX</title>
+  <style>
+    :root{--accent:#0b84ff}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;margin:0;background:#f7f9fc;color:#111}
+    header{background:var(--accent);color:#fff;padding:12px 16px}
+    .container{padding:12px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    button{background:#fff;border:1px solid #ddd;padding:10px 12px;border-radius:8px;cursor:pointer}
+    button.primary{background:var(--accent);color:#fff;border:0}
+    .viewer{margin-top:12px;background:#fff;border-radius:8px;padding:12px;border:1px solid #e5e7eb}
+    video, canvas{max-width:100%;border-radius:6px}
+    .thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .thumb{border:1px solid #ddd;padding:6px;border-radius:6px;background:#fff}
+    .small{font-size:13px;color:#555}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+  <header>
+    <h1 style="margin:0;font-size:18px">Scanner & Envoyer vers Hospital Management</h1>
+    <div style="font-size:13px;opacity:.9">Capture → PDF → Envoi</div>
+  </header>
+
+  <main class="container">
+  <img style="width: 180px" src="/template2/assets/images/dmi.png" alt="Bootstrap Gallery" />
+    <div class="controls">
+      <button id="startCamera">Ouvrir la caméra</button>
+      <label>
+        <input id="fileInput" type="file" accept="image/*" capture="environment" class="hidden">
+        <button id="fromFile">Prendre une photo (fallback)</button>
+      </label>
+      <button id="captureBtn" class="hidden">Capturer</button>
+      <button id="addPage" class="hidden">Ajouter la page</button>
+      <button id="generatePdf" class="primary hidden">Générer PDF</button>
+      <button id="uploadPdf" class="primary hidden">Envoyer au serveur</button>
+      <button id="clearAll" class="hidden">Effacer tout</button>
+    </div>
+
+    <div class="viewer">
+      <video id="video" playsinline autoplay class="hidden"></video>
+      <canvas id="canvas" class="hidden"></canvas>
+      <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+        <button id="rotateLeft" class="hidden">⟲</button>
+        <button id="rotateRight" class="hidden">⟳</button>
+        <span class="small" id="info">Aucune image</span>
+      </div>
+    </div>
+
+    <div class="thumbs" id="thumbs"></div>
+  </main>
+
+  <!-- jsPDF CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    const startCamera = document.getElementById('startCamera');
+    const fileInput = document.getElementById('fileInput');
+    const fromFile = document.getElementById('fromFile');
+    const captureBtn = document.getElementById('captureBtn');
+    const addPageBtn = document.getElementById('addPage');
+    const generatePdfBtn = document.getElementById('generatePdf');
+    const uploadPdfBtn = document.getElementById('uploadPdf');
+    const clearAllBtn = document.getElementById('clearAll');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const info = document.getElementById('info');
+    const thumbs = document.getElementById('thumbs');
+    const rotateLeft = document.getElementById('rotateLeft');
+    const rotateRight = document.getElementById('rotateRight');
+
+    let stream = null;
+    let currentImage = null;
+    let currentRotation = 0;
+    const pages = [];
+
+    function show(el){ el.classList.remove('hidden'); }
+    function hide(el){ el.classList.add('hidden'); }
+
+    // 🎥 Ouvrir caméra
+    startCamera.addEventListener('click', async ()=>{
+      if (stream){ stopCamera(); return; }
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        video.srcObject = stream;
+        show(video); show(captureBtn); show(rotateLeft); show(rotateRight);
+        startCamera.textContent = 'Fermer la caméra';
+      } catch(err){
+        alert("Erreur d'accès à la caméra : " + err.message);
+      }
+    });
+
+    function stopCamera(){
+      if (stream){ stream.getTracks().forEach(t=>t.stop()); stream = null; }
+      hide(video); hide(captureBtn); hide(rotateLeft); hide(rotateRight);
+      startCamera.textContent = 'Ouvrir la caméra';
+    }
+
+    // 📸 Capture image
+    captureBtn.addEventListener('click', ()=>{
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.save();
+      ctx.translate(canvas.width/2, canvas.height/2);
+      ctx.rotate(currentRotation * Math.PI/180);
+      ctx.drawImage(video, -canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
+      ctx.restore();
+      currentImage = new Image();
+      currentImage.src = canvas.toDataURL('image/jpeg',0.95);
+      show(canvas); hide(video);
+      show(addPageBtn); show(generatePdfBtn); show(uploadPdfBtn); show(clearAllBtn);
+      info.textContent = "Image capturée";
+    });
+
+    // 🖼️ Charger depuis fichier
+    fromFile.addEventListener('click', ()=> fileInput.click());
+    fileInput.addEventListener('change', (ev)=>{
+      const f = ev.target.files && ev.target.files[0];
+      if (!f) return;
+      const reader = new FileReader();
+      reader.onload = ()=>{
+        const img = new Image();
+        img.onload = ()=>{
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          canvas.getContext('2d').drawImage(img,0,0);
+          currentImage = new Image();
+          currentImage.src = canvas.toDataURL('image/jpeg',0.95);
+          show(canvas); hide(video);
+          show(addPageBtn); show(generatePdfBtn); show(uploadPdfBtn); show(clearAllBtn);
+          info.textContent = "Image chargée";
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(f);
+    });
+
+    rotateLeft.addEventListener('click', ()=> rotate(-90));
+    rotateRight.addEventListener('click', ()=> rotate(90));
+    function rotate(delta){ currentRotation = (currentRotation + delta) % 360; video.style.transform=`rotate(${currentRotation}deg)`; }
+
+    addPageBtn.addEventListener('click', ()=>{
+      if (!currentImage) return;
+      pages.push(currentImage.src);
+      renderThumbnails();
+      currentImage = null;
+      hide(canvas); show(video);
+      info.textContent = `${pages.length} page(s)`;
+    });
+
+    function renderThumbnails(){
+      thumbs.innerHTML='';
+      pages.forEach((dataUrl, i)=>{
+        const div=document.createElement('div'); div.className='thumb';
+        const img=document.createElement('img'); img.src=dataUrl; img.style.height='100px';
+        const btn=document.createElement('button'); btn.textContent='Supprimer';
+        btn.onclick=()=>{ pages.splice(i,1); renderThumbnails(); };
+        div.appendChild(img); div.appendChild(btn);
+        thumbs.appendChild(div);
+      });
+    }
+
+    // 🧾 Générer PDF et envoyer
+    generatePdfBtn.addEventListener('click', ()=> generateAndUpload(false));
+    uploadPdfBtn.addEventListener('click', ()=> generateAndUpload(true));
+
+    async function generateAndUpload(sendToServer){
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit:'mm', format:'a4' });
+
+      const toExport = pages.slice();
+      if (currentImage) toExport.push(currentImage.src);
+
+      for (let i=0;i<toExport.length;i++){
+        const imgData = toExport[i];
+        const img = new Image();
+        await new Promise((res,rej)=>{ img.onload=res; img.onerror=rej; img.src=imgData; });
+        const pageW=210, pageH=297, pxPerMm=96/25.4;
+        const imgWmm=img.naturalWidth/pxPerMm, imgHmm=img.naturalHeight/pxPerMm;
+        let drawW=pageW, drawH=(imgHmm*pageW)/imgWmm;
+        if(drawH>pageH){ drawH=pageH; drawW=(imgWmm*pageH)/imgHmm; }
+        const x=(pageW-drawW)/2, y=(pageH-drawH)/2;
+        if(i>0) pdf.addPage();
+        pdf.addImage(imgData,'JPEG',x,y,drawW,drawH);
+      }
+
+      const pdfBlob = pdf.output('blob');
+      if (!sendToServer){
+        pdf.save('scan.pdf');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', new File([pdfBlob], 'scan.pdf', { type:'application/pdf' }));
+
+      try{
+        const response = await fetch('/upload', { // endpoint ASP.NET Core
+          method: 'POST',
+          body: formData
+        });
+        if (response.ok){
+          alert('✅ PDF envoyé avec succès au serveur !');
+        } else {
+          alert('❌ Erreur serveur : ' + response.statusText);
+        }
+      } catch(err){
+        alert('Erreur AJAX : ' + err.message);
+      }
+    }
+
+    clearAllBtn.addEventListener('click', ()=>{
+      if(confirm('Effacer toutes les pages ?')){
+        pages.length=0;
+        thumbs.innerHTML='';
+        info.textContent='Aucune image';
+        hide(clearAllBtn); hide(generatePdfBtn); hide(uploadPdfBtn);
+      }
+    });
+  </script>
+</body>
+</html>

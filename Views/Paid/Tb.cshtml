@@ -1,0 +1,68 @@
+@model IEnumerable<BANA.Models.Paid>
+
+@{
+    ViewData["Title"] = "Controle de Caisse";
+}
+
+ <!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Rapport de caisse automatique
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+            <div class="card px-3">
+              <div class="row gx-3">
+                <!-- barre de recherche start -->
+                <div class="card-body mb-3">
+                  <input
+                    id="search"
+                    type="search"
+                    class="form-control"
+                    placeholder="barre de recherche"
+                  />
+                </div>
+                <!-- barre de recherche end -->
+
+                <div class="row gx-3" id="testfiltre">
+                  @foreach (var item in ViewBag.dates)
+                  {
+                  <div  class="col-xl-2 col-sm-6 col-12 item montest">
+                    <div class="card mb-3 bg-secondary">
+                      <div class="card-body">
+                        <div class="text-center">
+                          <a asp-action="Tb1"  asp-route-madate="@item">
+                            <img src="/img/caisse.png" style="box-shadow: 0 5px 5px #9fa0a3;" class="img-4xx me-2" alt="Admin Dashboard templates"/>
+                            <div style="margin-top: 10px;">
+                              <h6>
+                                <span class="separateur">@(Model.Where(x=>x.Create_date>=DateTime.Parse(item).AddHours(-11) && x.Create_date<=DateTime.Parse(item).AddHours(13).AddSeconds(-1) &&((x.Moyen_paiement=="orange money" || x.Moyen_paiement=="momo" || x.Moyen_paiement=="especes" || x.Moyen_paiement=="banque" || x.Moyen_paiement=="autre"))).Select(x=>x.Montant).Sum())</span>
+                                <span>FCFA</span>
+                              </h6>
+                            </div>
+                            </a>
+                            <small>Du:@DateTime.Parse(item).AddHours(-11).ToString("dd/MM/yyyy") @DateTime.Parse(item).AddHours(-11).ToShortTimeString() au @DateTime.Parse(item).AddHours(13).AddSeconds(-1).ToString("dd/MM/yyyy hh:mm:ss")
+                            </small>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- app body end-->

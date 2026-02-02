@@ -1,0 +1,262 @@
+@model BANA.Models.Stock
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<link href="/css/input_image.css" rel="stylesheet">
+<form asp-action="Delete">
+        <input type="hidden" asp-for="Id" id="ident" />
+        <input type="hidden" asp-for="CreateBy" />
+        <input type="hidden" asp-for="Create_date" />
+        <input type="hidden" asp-for="LastModification" />
+        <input type="hidden" asp-for="Img" />
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+              <div class="col-lg-4 col-md-12 col-sm-12">
+               <h1>Policlinique de Poitiers</h1>
+                <span>Suppression d'un Article ,</span>
+              </div>
+               <div class="card-body">
+                    <div id="ident_medecin"  class="alert bg-danger text-white alert-dismissible  align-items-center fade show" role="alert">
+                    <i class="ri-checkbox-circle-line fs-3 me-2 lh-1"></i>Attention: Cette action est Irréversible.
+                </div>
+              <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                  <div class="mb-3 mb-xl-0">
+                   <button type="submit" class="btn btn-danger">
+                      <i class="fa fa-trash"></i> Confirmer la suppression</button>
+                    </button>
+                    <button type="button" onclick="history.back()" class="btn btn-outline-secondary">Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="card">
+                <div class="header">
+                  <h2>Informations générales</h3>
+                </div>
+                <div class="body">
+                  <div class="row clearfix">
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Nom de l'article
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Nom_article" class="form-control" disabled>
+                        <span asp-validation-for="Nom_article" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Catégorie
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Categorie"  class="form-control" autocomplete="off" disabled>
+                        
+                        <span asp-validation-for="Categorie" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    @* <div class="col-sm-3">ViewBag.Cat=_context.Stock.Select(x =>x.Categorie).Distinct().ToList();
+                      <div class="form-group c_form_group">
+                        <label>Date de Naissance
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Date_De_Naissance" type="text" data-provide="datepicker" data-date-autoclose="true" class="form-control" >
+                        <span asp-validation-for="Date_De_Naissance" class="text-danger"></span>
+                      </div>
+                    </div> *@
+                    <div class="col-sm-3">
+                      <div class="form-group c_form_group">
+                        <label>Type d'article
+                          <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="Type" class="form-control show-tick" disabled>
+                            <option asp-for="Type" value="Article Stockable" selected>Article Stockable</option>
+                            <option asp-for="Type" value="Consomable">Consomable</option>
+                            <option asp-for="Type" value="Service">Service</option>
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group c_form_group">
+                        <label>Prix de vente (FCFA)
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Prix_vente" class="form-control" disabled >
+                        <span asp-validation-for="Prix_vente" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group c_form_group">
+                        <label>Prix d'achat
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Prix_achat" class="form-control" disabled >
+                        <span asp-validation-for="Prix_achat" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group c_form_group">
+                        <label>Emplacement
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Lieu_stockage" class="form-control show-tick" disabled>
+                           
+                        <span asp-validation-for="Lieu_stockage" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="form-group mt-3">
+                        <textarea asp-for="Description" rows="4" class="form-control no-resize" placeholder="Description de l'article..." disabled>
+                        </textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="header">
+                  <h2>Information de Stockage</h3>
+                </div>
+                <div class="body">
+                  <div class="row clearfix">
+                    <div class="col-sm-12">
+                      <div class="form-group c_form_group">
+                        <label>Unité de stockage
+                          <span class="text-danger"></span>
+                        </label>
+                        <input class="form-control" asp-action="unité" disabled>
+                        <span asp-validation-for="unité" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Quantité
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Quantitee" class="form-control" disabled >
+                        <span asp-validation-for="Quantitee" class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group c_form_group">
+                        <label>Stock minimal
+                          <span class="text-danger"></span>
+                        </label>
+                        <input asp-for="Stock_minimal" class="form-control" disabled>
+                        <span asp-validation-for="Stock_minimal" class="text-danger"></span>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="header">
+                  <h2>Autres informations</h3>
+                </div>
+                <div class="body">
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      <div class="form-group c_form_group">
+                        <label>Code Barre</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                            </span>
+                          </div>
+                          <input asp-for="codebarre"  class="form-control" placeholder="" disabled>
+                           <span asp-validation-for="codebarre" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group c_form_group">
+                        <label>Référence</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                            </span>
+                          </div>
+                          <input asp-for="Reference" class="form-control" placeholder="" disabled>
+                          <span asp-validation-for="Reference" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group c_form_group">
+                        <label>Compte Géneral achats</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                            </span>
+                          </div>
+                          <input asp-for="Compte_general_entree" class="form-control" placeholder="" disabled>
+                          <span asp-validation-for="Compte_general_entree" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group c_form_group">
+                        <label>Compte Géneral ventes</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                            </span>
+                          </div>
+                          <input asp-for="Compte_general_sortie" class="form-control" placeholder="" disabled>
+                          <span asp-validation-for="Compte_general_sortie" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="tab-pane" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab">
+                            <div class="bg-light rounded h-100 p-4">
+                                <div id="file-upload">
+                                    <div class="upload"><a style="color: #FFF;">
+                                    <span><i class="fa fa-camera"></i>Image</span>
+                                    <div class="files"><input  type="file" id="files" name="files[]"></div></a>
+                                    </div>
+                                    <div class="box">
+                                    <div id="container"><div class="box-image" draggable="true"><img class="thumb" src="/uploads/img/@Model.Img" alt=""></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="col-md-6">
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input asp-for="Actif" style="accent-color: #82b540;" class="form-check-input" /> Activer
+                                </label>
+                            </div>
+                        </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</form>
+
+

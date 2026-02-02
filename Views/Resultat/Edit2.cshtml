@@ -1,0 +1,87 @@
+@model BANA.Models.Resultat
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout=null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Editeur NOLAN-HOSPITAL</title>
+        @* <link rel="stylesheet" href="/css/bootstrap3.min.css">*@
+        <link rel="stylesheet" href="/css/all.min.css"> 
+        <link rel="stylesheet" href="/template/assets/vendor/font-awesome/css/font-awesome.min.css">
+        <link href="/css/style.css" rel="stylesheet">
+
+        <script type="module" crossorigin src="/texteditor/js/index-DNISOPoi.js"></script>
+            <link rel="stylesheet" crossorigin href="/texteditor/css/index-BPNe07m6.css">
+        <style>
+            p{
+                margin: 0!important;
+            }
+
+            .page-container{
+                 width: 1000px !important;
+                margin: auto !important;
+            }
+            .btn {
+                cursor: pointer;
+                font-size: 16px;
+                padding: 12px 24px;
+            }
+           
+            .btn.default {
+            background-color: #116aef; /* Green background */
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            }
+
+            .btn.default:hover {
+            background-color: #116aef; /* Slightly darker green */
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            }
+
+           
+        </style>
+
+    </head>
+    <body>
+
+
+        <!-- /.container-fluid -->
+        
+         @* <a  style="position: fixed;right: 50px;bottom: 45px;border-color: #116aef;background-color: #116aef;" id="saveresultat2" href="javascript:void(0)" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-save"></i></a>
+        <a  style="position: fixed;right: 110px;bottom: 45px;border-color: #116aef;background-color: #116aef;" onclick="history.back()" href="javascript:void(0)" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-close"></i></a> *@
+
+
+        <input asp-for="Id" type="hidden" id="identifiant"  />
+        <input asp-for="Contenu" type="hidden" id="contenu"  />
+
+ <div id="app">
+  
+ </div>
+
+
+       
+
+   
+
+
+        <script src="/js/jquery3.min.js"></script>
+        <script src="/js/bootstrap3.min.js"></script>
+        <script src="/js/site.js" asp-append-version="true"></script>
+       
+ 
+    </body>
+
+</html>

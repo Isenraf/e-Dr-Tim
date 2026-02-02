@@ -1,0 +1,281 @@
+@model BANA.Models.Parametre
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout="_Layout3";
+}
+
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">suppression des Paramètres</li>
+        </ol>
+        <!-- Breadcrumb ends -->
+    </div>
+    <!-- App Hero header ends -->
+
+
+    
+
+    <!-- App body starts -->
+    <div class="app-body">
+
+       <!-- Row starts -->
+                <div class="row gx-3">
+                    <div class="col-sm-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <!-- Stats starts -->
+                                    <div class="d-flex align-items-center flex-wrap gap-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-account-circle-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h4>
+                                                <p class="m-0">Nom du patient</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-women-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-1">@ViewBag.patient.Genre</h4>
+                                                <p class="m-0">Genre</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-arrow-right-up-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h4>
+                                                <p class="m-0">Âge du patient</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-contrast-drop-2-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-1">@ViewBag.patient.GroupeSanguin</h4>
+                                                <p class="m-0">Groupe sanguin</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-secondary rounded-5 me-2">
+                                                <i class="ri-stethoscope-line fs-3 text-body"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="mb-1"></h4>
+                                                <p class="m-0"> Médecin</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Stats ends -->
+                                    @if(ViewBag.patient.Genre=="M"){
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient2.png" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }else{
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient1.jpg" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }           
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row ends -->
+
+        <!-- Row starts -->
+        <div class="row gx-3">
+            <div class="col-sm-12">
+        <div class="">
+          <div class="card-header mb-3">
+            <h5 class="card-title">Prise des parametres</h5>
+          </div>
+          <div class="card-body">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Numero_Facture" value="">
+                <input type="hidden" asp-for="Id" />
+              <!-- Row starts -->
+              <div class="row gx-3">
+                <div class="col-lg-3 col-sm-6 col-12">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Temperature">Temperature(°C)</label>
+                        <input class="form-control" asp-for="Temperature" id="Temperature" type="number" placeholder="en °C" disabled/>
+                        <span asp-validation-for="Temperature" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6 col-12">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Poids">Poids(kg)</label>
+                        <input class="form-control" asp-for="Poids" id="Poids" type="number" placeholder="en kg" disabled/>
+                        <span asp-validation-for="Poids" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6 col-12">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Taille">Taille(cm)</label>
+                        <input class="form-control" asp-for="Taille" id="Taille" type="number" placeholder="en cm" disabled/>
+                        <span asp-validation-for="Taille" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                 <div class="col-lg-3 col-sm-6 col-12">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Taille">Pouls</label>
+                        <input class="form-control" asp-for="Pbg" id="Taille" type="number" placeholder="" disabled/>
+                        <span asp-validation-for="Pbg" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Saturation">Saturation en O₂(%)</label>
+                        <input class="form-control" asp-for="Saturation" id="Saturation" type="number" placeholder="en %" disabled/>
+                        <span asp-validation-for="Saturation" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Rpm">Fréquence respiratoire(rpm)</label>
+                        <input class="form-control" asp-for="Rpm" id="Rpm" type="number" placeholder="en rpm" disabled/>
+                        <span asp-validation-for="Rpm" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Glycemie_capillaire">Glycémie capillaire</label>
+                        <input class="form-control" asp-for="Glycemie_capillaire" id="Glycemie_capillaire" type="text" placeholder="" disabled/>
+                        <span asp-validation-for="Glycemie_capillaire" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-12">
+                  <div class="card mb-3">
+                    <div class="card-header mb-3">
+                      <h5 class="card-title">BRAS GAUCHE</h5>
+                    </div>
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="m-0">
+                          <label class="form-label" for="Tsysbg">Tension systolique</label>
+                          <input class="form-control" asp-for="Tsysbg" id="Tsysbg" type="text" placeholder="" disabled/>
+                          <span asp-validation-for="Tsysbg" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="m-0">
+                          <label class="form-label" for="Tdiasbg">Tension diastolique</label>
+                          <input class="form-control" asp-for="Tdiasbg" id="Tdiasbg" type="text" placeholder="" disabled/>
+                          <span asp-validation-for="Tdiasbg" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-12">
+                  <div class="card mb-3">
+                    <div class="card-header mb-3">
+                      <h5 class="card-title">BRAS DROIT</h5>
+                    </div>
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="m-0">
+                          <label class="form-label" for="Tsysbd">Tension systolique</label>
+                          <input class="form-control" asp-for="Tsysbd" id="Tsysbd" type="text" placeholder="" disabled/>
+                          <span asp-validation-for="Tsysbd" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <div class="m-0">
+                          <label class="form-label" for="Tdiasbd">Tension diastolique</label>
+                          <input class="form-control" asp-for="Tdiasbd" id="Tdiasbd" type="text" placeholder="" disabled/>
+                          <span asp-validation-for="Tdiasbd" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+
+                <div>
+                  <label class="form-label" for="Observations">Observations :</label>
+                  <textarea class="form-control" asp-for="Observation" id="Observations" rows="3" placeholder="Description" disabled></textarea>
+                  <span asp-validation-for="Observation" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2 justify-content-end mt-4">
+                  <div>
+                    <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+                     <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+                  </div>
+                </div>
+              </div>
+              <!-- Row ends -->
+            </form>
+          </div>
+        </div>
+      </div>
+        </div>
+        <!-- Row ends -->
+    </div>
+    <!-- App body ends -->
+</div>
+
+   
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

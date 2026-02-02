@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/departments-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Feb 2025 14:39:30 GMT -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap Gallery - Medical Admin Templates & Dashboards</title>
+
+    <!-- Meta -->
+    <meta
+      name="description"
+      content="Marketplace for Bootstrap Admin Dashboards"
+    />
+    <meta property="og:title" content="Admin Templates - Dashboard Templates" />
+    <meta
+      property="og:description"
+      content="Marketplace for Bootstrap Admin Dashboards"
+    />
+    <meta property="og:type" content="Website" />
+    <link rel="shortcut icon" href="assets/images/favicon.svg" />
+
+    <!-- *************
+		************ CSS Files *************
+	************* -->
+    <link rel="stylesheet" href="assets/fonts/remix/remixicon.css" />
+    <link rel="stylesheet" href="assets/css/main.min.css" />
+
+    <!-- *************
+		************ Vendor Css Files *************
+	************ -->
+
+    <!-- Scrollbar CSS -->
+    <link
+      rel="stylesheet"
+      href="assets/vendor/overlay-scroll/OverlayScrollbars.min.css"
+    />
+
+    <!-- Data Tables -->
+    <link rel="stylesheet" href="assets/vendor/datatables/dataTables.bs5.css" />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/datatables/dataTables.bs5-custom.css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/datatables/buttons/dataTables.bs5-custom.css"
+    />
+  </head>
+
+  <body>
+    <!-- Page wrapper starts -->
+    <div class="page-wrapper">
+      <!-- App header starts -->
+      <div class="app-header d-flex align-items-center">
+        <!-- Toggle buttons starts -->
+        <div class="d-flex">
+          <button class="toggle-sidebar">
+            <i class="ri-menu-line"></i>
+          </button>
+          <button class="pin-sidebar">
+            <i class="ri-menu-line"></i>
+          </button>
+        </div>
+        <!-- Toggle buttons ends -->
+
+        <!-- App brand starts -->
+        <div class="app-brand ms-3">
+          <a href="index.html" class="d-lg-block d-none">
+            <img
+              src="assets/images/logo.svg"
+              class="logo"
+              alt="Medicare Admin Template"
+            />
+          </a>
+          <a href="index.html" class="d-lg-none d-md-block">
+            <img
+              src="assets/images/logo-sm.svg"
+              class="logo"
+              alt="Medicare Admin Template"
+            />
+          </a>
+        </div>
+        <!-- App brand ends -->
+
+        <!-- App header actions starts -->
+        <div class="header-actions">
+          <!-- Search container starts -->
+          <div class="search-container d-lg-block d-none mx-3">
+            <input
+              type="text"
+              class="form-control"
+              id="searchId"
+              placeholder="Recherche"
+            />
+            <i class="ri-search-line"></i>
+          </div>
+          <!-- Search container ends -->
+
+          <!-- Header actions starts -->
+          <div class="d-lg-flex d-none gap-2">
+            <!-- Select country dropdown starts -->
+            <div class="dropdown">
+              <a
+                class="dropdown-toggle header-icon"
+                href="#!"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="assets/images/flags/1x1/fr.svg"
+                  class="header-country-flag"
+                  alt="Bootstrap Dashboards"
+                />
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-mini">
+                <div class="country-container">
+                  <a href="index.html" class="py-2">
+                    <img
+                      src="assets/images/flags/1x1/us.svg"
+                      alt="Admin Panel"
+                    />
+                  </a>
+                  <a href="index.html" class="py-2">
+                    <img
+                      src="assets/images/flags/1x1/in.svg"
+                      alt="Admin Panels"
+                    />
+                  </a>
+                  <a href="index.html" class="py-2">
+                    <img
+                      src="assets/images/flags/1x1/br.svg"
+                      alt="Admin Dashboards"
+                    />
+                  </a>
+                  <a href="index.html" class="py-2">
+                    <img
+                      src="assets/images/flags/1x1/tr.svg"
+                      alt="Admin Templatess"
+                    />
+                  </a>
+                  <a href="index.html" class="py-2">
+                    <img
+                      src="assets/images/flags/1x1/gb.svg"
+                      alt="Google Admin"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!-- Select country dropdown ends -->
+
+            <!-- Notifications dropdown starts -->
+            <div class="dropdown">
+              <a
+                class="dropdown-toggle header-icon"
+                href="#!"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="ri-list-check-3"></i>
+                <span class="count-label warning"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-300">
+                <h5 class="fw-semibold px-3 py-2 text-primary">Activité</h5>
+
+                <!-- Scroll starts -->
+                <div class="scroll300">
+                  <!-- Activity List Starts -->
+                  <div class="p-3">
+                    <ul class="p-0 activity-list2">
+                      <li class="activity-item pb-3 mb-3">
+                        <a href="#!">
+                          <h5 class="fw-regular">
+                            <i class="ri-circle-fill text-danger me-1"></i>
+                            Factures.
+                          </h5>
+                          <div class="ps-3 ms-2 border-start">
+                            <div class="d-flex align-items-center mb-2">
+                              <div class="flex-shrink-0">
+                                <img
+                                  src="assets/images/products/1.jpg"
+                                  class="img-shadow img-3x rounded-1"
+                                  alt="e-Dr Tim Hospital Management"
+                                />
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                23 factures ont été payées aux laboratoires
+                                MediCare.
+                              </div>
+                            </div>
+                            <p class="m-0 small">10h20 aujourd'hui</p>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="activity-item pb-3 mb-3">
+                        <a href="#!">
+                          <h5 class="fw-regular">
+                            <i class="ri-circle-fill text-info me-1"></i>
+                            Acheté.
+                          </h5>
+                          <div class="ps-3 ms-2 border-start">
+                            <div class="d-flex align-items-center mb-2">
+                              <div class="flex-shrink-0">
+                                <img
+                                  src="assets/images/products/2.jpg"
+                                  class="img-shadow img-3x rounded-1"
+                                  alt="e-Dr Tim Hospital Management"
+                                />
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                28 nouveaux équipements chirurgicaux ont été
+                                achetés.
+                              </div>
+                            </div>
+                            <p class="m-0 small">16h30 aujourd'hui</p>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="activity-item pb-3 mb-3">
+                        <a href="#!">
+                          <h5 class="fw-regular">
+                            <i class="ri-circle-fill text-success me-1"></i>
+                            Nommé.
+                          </h5>
+                          <div class="ps-3 ms-2 border-start">
+                            <div class="d-flex align-items-center mb-2">
+                              <div class="flex-shrink-0">
+                                <img
+                                  src="assets/images/products/8.jpg"
+                                  class="img-shadow img-3x rounded-1"
+                                  alt="e-Dr Tim Hospital Management"
+                                />
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                36 nouveaux médecins et 28 membres du personnel
+                                nommés.
+                              </div>
+                            </div>
+                            <p class="m-0 small">18h50 aujourd'hui</p>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="activity-item">
+                        <a href="#!">
+                          <h5 class="fw-regular">
+                            <i class="ri-circle-fill text-warning me-1"></i>
+                            Demandé
+                          </h5>
+                          <div class="ps-3 ms-2 border-start">
+                            <div class="d-flex align-items-center mb-2">
+                              <div class="flex-shrink-0">
+                                <img
+                                  src="assets/images/products/9.jpg"
+                                  class="img-shadow img-3x rounded-1"
+                                  alt="e-Dr Tim Hospital Management"
+                                />
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                Demande de 6 nouveaux véhicules pour urgence
+                                médicale. .
+                              </div>
+                            </div>
+                            <p class="m-0 small">20h30 aujourd'hui</p>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- Activity List Ends -->
+                </div>
+                <!-- Scroll ends -->
+
+                <!-- View all button starts -->
+                <div class="d-grid m-3">
+                  <a href="javascript:void(0)" class="btn btn-primary"
+                    >Tout voir</a
+                  >
+                </div>
+                <!-- View all button ends -->
+              </div>
+            </div>
+            <!-- Notifications dropdown ends -->
+
+            <!-- Notifications dropdown starts -->
+            <div class="dropdown">
+              <a
+                class="dropdown-toggle header-icon"
+                href="#!"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="ri-alarm-warning-line"></i>
+                <span class="count-label success"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-300">
+                <h5 class="fw-semibold px-3 py-2 text-primary">Alertes</h5>
+
+                <!-- Scroll starts -->
+                <div class="scroll300">
+                  <!-- Alert list starts -->
+                  <div class="p-3">
+                    <div class="d-flex py-2">
+                      <div class="icon-box md bg-info rounded-circle me-3">
+                        <span class="fw-bold fs-6 text-white">DS</span>
+                      </div>
+                      <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Douglass Shaw</h6>
+                        <p class="mb-1">Nommé nouveau président 2014-2025</p>
+                        <p class="small m-0 opacity-50">Aujourd'hui, 19h30</p>
+                      </div>
+                    </div>
+                    <div class="d-flex py-2">
+                      <div class="icon-box md bg-danger rounded-circle me-3">
+                        <span class="fw-bold fs-6 text-white">WG</span>
+                      </div>
+                      <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Willie Garrison</h6>
+                        <p class="mb-1">
+                          Félicitations, James pour son nouvel emploi.
+                        </p>
+                        <p class="small m-0 opacity-50">Aujourd'hui, 20h00</p>
+                      </div>
+                    </div>
+                    <div class="d-flex py-2">
+                      <div class="icon-box md bg-warning rounded-circle me-3">
+                        <span class="fw-bold fs-6 text-white">TJ</span>
+                      </div>
+                      <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Terry Jenkins</h6>
+                        <p class="mb-1">
+                          Lewis a ajouté un nouveau calendrier de formation pour
+                          les médecins.
+                        </p>
+                        <p class="small m-0 opacity-50">Aujourd'hui, 21h30</p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Alert list ends -->
+                </div>
+                <!-- Scroll ends -->
+
+                <!-- View all button starts -->
+                <div class="d-grid m-3">
+                  <a href="javascript:void(0)" class="btn btn-primary"
+                    >Tout voir</a
+                  >
+                </div>
+                <!-- View all button ends -->
+              </div>
+            </div>
+            <!-- Notifications dropdown ends -->
+
+            <!-- Messages dropdown starts -->
+            <div class="dropdown">
+              <a
+                class="dropdown-toggle header-icon"
+                href="#!"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="ri-message-3-line"></i>
+                <span class="count-label"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-300">
+                <h5 class="fw-semibold px-3 py-2 text-primary">Messages</h5>
+
+                <!-- Scroll starts -->
+                <div class="scroll300">
+                  <!-- Messages list starts -->
+                  <div class="p-3">
+                    <div class="d-flex py-2">
+                      <img
+                        src="assets/images/user3.png"
+                        class="img-shadow img-3x me-3 rounded-5"
+                        alt="e-Dr Tim Hospital Management"
+                      />
+                      <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Nick Gonzalez</h6>
+                        <p class="mb-1">Nommé nouveau président 2014-2025</p>
+                        <p class="small m-0 opacity-50">Aujourd'hui, 19h30</p>
+                      </div>
+                    </div>
+                    <div class="d-flex py-2">
+                      <img
+                        src="assets/images/user1.png"
+                        class="img-shadow img-3x me-3 rounded-5"
+                        alt="e-Dr Tim Hospital Management"
+                      />
+                      <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Clyde Fowler</h6>
+                        <p class="mb-1">
+                          Félicitations, James pour son nouvel emploi.
+                        </p>
+                        <p class="small m-0 opacity-50">Aujourd'hui, 20h00</p>
+                      </div>
+                    </div>
+                    <div class="d-flex py-2">
+                      <img
+                        src="assets/images/user4.png"
+                        class="img-shadow img-3x me-3 rounded-5"
+                        alt="e-Dr Tim Hospital Management"
+                      />
+                      <div class="m-0">
+                        <h6 class="mb-1 fw-semibold">Sophie Michiels</h6>
+                        <p class="mb-1">
+                          Lewis a ajouté un nouveau calendrier de formation pour
+                          les médecins.
+                        </p>
+                        <p class="small m-0 opacity-50">Aujourd'hui, 21h30</p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Messages list ends -->
+                </div>
+                <!-- Scroll ends -->
+
+                <!-- View all button starts -->
+                <div class="d-grid m-3">
+                  <a href="javascript:void(0)" class="btn btn-primary"
+                    >Tout voir</a
+                  >
+                </div>
+                <!-- View all button ends -->
+              </div>
+            </div>
+          </div>
+          <!-- Header actions ends -->
+
+          <!-- Header user settings starts -->
+          <div class="dropdown ms-2">
+            <a
+              id="userSettings"
+              class="dropdown-toggle d-flex align-items-center"
+              href="#!"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <div class="avatar-box">JB<span class="status busy"></span></div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end shadow-lg">
+              <div class="px-3 py-2">
+                <span class="small">Admin</span>
+                <h6 class="m-0">James Bruton</h6>
+              </div>
+              <div class="mx-3 my-2 d-grid">
+                <a href="login.html" class="btn btn-danger">Déconnexion</a>
+              </div>
+            </div>
+          </div>
+          <!-- Header user settings ends -->
+        </div>
+        <!-- App header actions ends -->
+      </div>
+      <!-- App header ends -->
+
+      <!-- Main container starts -->
+      <div class="main-container">
+        <!-- Sidebar wrapper starts -->
+        <nav id="sidebar" class="sidebar-wrapper">
+          <!-- Sidebar profile starts -->
+          <div class="sidebar-profile">
+            <img
+              src="assets/images/user6.png"
+              class="img-shadow img-3x me-3 rounded-5"
+              alt="e-Dr Tim Hospital Management"
+            />
+            <div class="m-0">
+              <h5 class="mb-1 profile-name text-nowrap text-truncate">
+                Nick Gonzalez
+              </h5>
+              <p class="m-0 small profile-name text-nowrap text-truncate">
+                Dept Admin
+              </p>
+            </div>
+          </div>
+          <!-- Sidebar profile ends -->
+
+          <!-- Sidebar menu starts -->
+          <div class="sidebarMenuScroll">
+            <ul class="sidebar-menu">
+              <li
+                class="text-secondary"
+                style="padding: 0 15px; margin: 30px 0 5px 0"
+              >
+                Hospital
+              </li>
+
+              <li class="active current-page">
+                <a href="index.html">
+                  <i class="ri-home-6-line"></i>
+                  <span class="menu-text">Hospital Dashboard</span>
+                </a>
+              </li>
+
+              <li class="treeview">
+                <a href="#">
+                  <i class="ri-stethoscope-line"></i>
+                  <span class="menu-text">Cash</span>
+                </a>
+
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#">Main cash register</a>
+                  </li>
+                  <li>
+                    <a href="#"> Pharmacy cash register</a>
+                  </li>
+                  <li>
+                    <a href="#">Cash control</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview">
+                <a href="#">
+                  <i class="ri-heart-pulse-line"></i>
+                  <span class="menu-text">Doctors</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#"> All doctors</a>
+                  </li>
+                  <li>
+                    <a href="#">Add doctor</a>
+                  </li>
+                  <li>
+                    <a href="#">Profile of doctors</a>
+                  </li>
+                  <li>
+                    <a href="#">Edition médecins</a>
+                  </li>
+                  <li>
+                    <a href="#"> Doctors' schedule</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <a href="#">
+                  <i class="ri-calendar-line"></i>
+                  <span class="menu-text">Insurance</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="#">
+                  <i class="ri-calendar-line"></i>
+                  <span class="menu-text">To-do list</span>
+                </a>
+              </li>
+
+              <li class="treeview">
+                <a href="#">
+                  <i class="ri-nurse-line"></i>
+                  <span class="menu-text">Exams and Imaging</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#">Laboratory</a>
+                  </li>
+                  <li>
+                    <a href="#">Lab Printing</a>
+                  </li>
+                  <li>
+                    <a href="#">All models</a>
+                  </li>
+                  <li>
+                    <a href="#">Analysis model</a>
+                  </li>
+                  <li>
+                    <a href="#">Results Analysis</a>
+                  </li>
+                  <li>
+                    <a href="#">Imagery Model</a>
+                  </li>
+                  <li>
+                    <a href="#">Imaging</a>
+                  </li>
+                  <li>
+                    <a href="#">Imaging Results</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <a href="#">
+                  <i class="ri-calendar-line"></i>
+                  <span class="menu-text">Medical acts</span>
+                </a>
+              </li>
+
+              <li class="treeview">
+                <a href="#">
+                  <i class="ri-nurse-line"></i>
+                  <span class="menu-text">Patients</span>
+                </a>
+
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#">Patients List</a>
+                  </li>
+                  <li>
+                    <a href="#">Add patient</a>
+                  </li>
+                  <li>
+                    <a href="#">Patient profile</a>
+                  </li>
+                  <li>
+                    <a href="#">Edit Patient Details</a>
+                  </li>
+                  <li>
+                    <a href="#">Patients bills</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview">
+                <a href="#!">
+                  <i class="ri-dossier-line"></i>
+                  <span class="menu-text">Rooms allocations</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#">Rooms status</a>
+                  </li>
+                  <li>
+                    <a href="#">Add an attribution</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <a href="./departments-list.html">
+                  <i class="ri-calendar-line"></i>
+                  <span class="menu-text">Departments</span>
+                </a>
+              </li>
+
+              <li class="treeview">
+                <a href="#">
+                  <i class="ri-building-2-line"></i>
+                  <span class="menu-text">Payments</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="departments-list.html">Direct payments</a>
+                  </li>
+                  <li>
+                    <a href="add-department.html">Insurance payments</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview">
+                <a href="#!">
+                  <i class="ri-secure-payment-line"></i>
+                  <span class="menu-text">Invoices</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#">Direct invoices</a>
+                  </li>
+                  <li>
+                    <a href="#">Insurance invoices</a>
+                  </li>
+                  <li>
+                    <a href="#">Sureties</a>
+                  </li>
+                  <li>
+                    <a href="#">Proforma Invoices</a>
+                  </li>
+                  <li>
+                    <a href="#">Summary of invoices</a>
+                  </li>
+                  <li>
+                    <a href="#"
+                      >Summary of invoices<br />
+                      (complete)</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#">Cumulative Invoice</a>
+                  </li>
+                  <li>
+                    <a href="#">Invoice modification</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview">
+                <a href="#">
+                  <i class="ri-group-2-line"></i>
+                  <span class="menu-text">Fees</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#">To Treat</a>
+                  </li>
+                  <li>
+                    <a href="#">On hold</a>
+                  </li>
+                  <li>
+                    <a href="#">States</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li
+                class="text-secondary"
+                style="padding: 0 15px; margin: 30px 0 5px 0"
+              >
+                Staff
+              </li>
+
+              <li>
+                <a href="#">
+                  <i class="ri-calendar-line"></i>
+                  <span class="menu-text">Our Staff</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="#">
+                  <i class="ri-calendar-line"></i>
+                  <span class="menu-text">Contacts</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="#">
+                  <i class="ri-calendar-line"></i>
+                  <span class="menu-text">Users</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="#">
+                  <i class="ri-calendar-line"></i>
+                  <span class="menu-text">Our centers</span>
+                </a>
+              </li>
+
+              <li
+                class="text-secondary"
+                style="padding: 0 15px; margin: 30px 0 5px 0"
+              >
+                Stock management
+              </li>
+
+              <li class="treeview">
+                <a href="#">
+                  <i class="ri-group-2-line"></i>
+                  <span class="menu-text">Stock</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#">Location</a>
+                  </li>
+                  <li>
+                    <a href="#">Stock status</a>
+                  </li>
+                  <li>
+                    <a href="#">Stock movement</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="treeview">
+                <a href="#">
+                  <i class="ri-group-2-line"></i>
+                  <span class="menu-text">Accounting</span>
+                </a>
+                <ul class="treeview-menu">
+                  <li>
+                    <a href="#">Patient invoice</a>
+                  </li>
+                  <li>
+                    <a href="#">Insurance invoice</a>
+                  </li>
+                  <li>
+                    <a href="#">Sureties</a>
+                  </li>
+                  <li>
+                    <a href="#">Sureties</a>
+                  </li>
+                  <li>
+                    <a href="#">Cash register</a>
+                  </li>
+                  <li>
+                    <a href="#">Periodical Details</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li
+                class="card-body"
+                style="
+                  margin-top: 20px;
+                  margin-bottom: 20px;
+                  margin-left: 15px;
+                  margin-right: 15px;
+                "
+              >
+                <div
+                  class="progress"
+                  role="progressbar"
+                  aria-label="Success"
+                  aria-valuenow="25"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style="/* align-items: center; */"
+                >
+                  <div class="progress-bar bg-success" style="width: 77%">
+                    77%
+                  </div>
+                </div>
+
+                <div class="m-3"></div>
+
+                <div
+                  class="progress"
+                  role="progressbar"
+                  aria-label="Danger example"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  <div class="progress-bar bg-danger" style="width: 50%">
+                    50%
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- Sidebar menu ends -->
+
+          <!-- Sidebar contact starts -->
+          <div class="sidebar-contact">
+            <p class="fw-light mb-1 text-nowrap text-truncate">
+              Emergency Contact
+            </p>
+            <h5 class="m-0 lh-1 text-nowrap text-truncate">0987654321</h5>
+            <i class="ri-phone-line"></i>
+          </div>
+          <!-- Sidebar contact ends -->
+        </nav>
+        <!-- Sidebar wrapper ends -->
+
+        <!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                All departments
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+
+            <!-- Sales stats starts -->
+            <div class="ms-auto d-lg-flex d-none flex-row">
+              <div class="d-flex flex-row gap-1 day-sorting">
+                <button class="btn btn-sm btn-primary">Aujourd'hui</button>
+                <button class="btn btn-sm">7j</button>
+                <button class="btn btn-sm">2s</button>
+                <button class="btn btn-sm">1m</button>
+                <button class="btn btn-sm">3m</button>
+                <button class="btn btn-sm">6m</button>
+                <button class="btn btn-sm">1A</button>
+              </div>
+            </div>
+            <!-- Sales stats ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- App body starts -->
+          <div class="app-body">
+            <div class="row gx-3 gy-3">
+              <div class="card">
+                <div class="card-body">
+                  <input
+                    type="search"
+                    class="form-control"
+                    placeholder="Search bar"
+                  />
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/INFIRMIER.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">NURSE</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/ADDICTOLOGUE.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">ADDICTIONIST</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/ANESTHESISTE.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">ANESTHETIST</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/CANCEROLOGUE.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">ONCORIST</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/INFIRMIER.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">NURSE</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/ADDICTOLOGUE.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">ADDICTIONIST</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/ANESTHESISTE.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">ANESTHETIST</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/CANCEROLOGUE.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">ONCORIST</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/INFIRMIER.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">NURSE</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/ADDICTOLOGUE.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">ADDICTIONIST</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/ANESTHESISTE.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">ANESTHETIST</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="card-img">
+                      <img
+                        src="assets/nolan-images/CANCEROLOGUE.png"
+                        class="img-fluid rounded-3 mb-3"
+                        alt="e-Dr Tim Hospital Management"
+                        style="
+                          width: 100px;
+                          max-width: auto;
+                          display: flex;
+                          justify-self: anchor-center;
+                        "
+                      />
+                    </div>
+                    <p class="mb-1 text-center">ONCORIST</p>
+                    <div class="text-center">
+                      <div class="ml-2 mr-2">
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                        <i class="ri-star-s-line"></i>
+                      </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary">Show</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- App body ends -->
+
+          <!-- App footer starts -->
+          <div class="app-footer bg-white">
+            <span>© Medflex admin 2024</span>
+          </div>
+          <!-- App footer ends -->
+        </div>
+        <!-- App container ends -->
+      </div>
+      <!-- Main container ends -->
+    </div>
+    <!-- Page wrapper ends -->
+
+    <!-- *************
+			************ JavaScript Files *************
+		************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+
+    <!-- *************
+			************ Vendor Js Files *************
+		************* -->
+
+    <!-- Overlay Scroll JS -->
+    <script src="assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
+    <script src="assets/vendor/overlay-scroll/custom-scrollbar.js"></script>
+
+    <!-- Apex Charts -->
+    <script src="assets/vendor/apex/apexcharts.min.js"></script>
+    <script src="assets/vendor/apex/custom/department/department-list.js"></script>
+    <script src="assets/vendor/apex/custom/department/employees.js"></script>
+
+    <!-- Data Tables -->
+    <script src="assets/vendor/datatables/dataTables.min.js"></script>
+    <script src="assets/vendor/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="assets/vendor/datatables/custom/custom-datatables.js"></script>
+
+    <!-- Custom JS files -->
+    <script src="assets/js/custom.js"></script>
+  </body>
+
+  <!-- Mirrored from buybootstrap.com/demos/medflex/medflex-admin-dashboard/departments-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Feb 2025 14:39:31 GMT -->
+</html>

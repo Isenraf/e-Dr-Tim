@@ -1,0 +1,394 @@
+@model BANA.Models.Resultat
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<link rel="stylesheet" href="~/css/richtext.css">
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"> <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i> <a asp-action="Index" asp-controller="Departement">Acceuil</a> </li>
+            <li class="breadcrumb-item text-primary" aria-current="page"> Examens et Imagerie </li>
+        </ol> <!-- Breadcrumb ends -->
+    </div> <!-- App Hero header ends -->
+   
+    <!-- app body start -->
+    <div class="app-body">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mt-2 mx-3 mb-4">
+                    <h5 class="card-title">@Model.Nom</h5>
+                    <div class="d-flex flex-wrap gap-1">
+                        <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">  <span class="me-1 fw-semibold ps-1">@Model.NomPatient</span> </div>
+                        <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">  <span class="me-1 fw-semibold ps-1">@Model.Genre</span> </div>
+                        <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">  <span class="me-1 fw-semibold ps-1">@((int)((DateTime.Now-Model.Date_de_naissance).TotalDays/365)) ans  @((int)(((DateTime.Now-Model.Date_de_naissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-Model.Date_de_naissance).TotalDays)%365)%30) jours</span></div>
+                    </div>
+                </div>
+                
+                @if(ViewBag.user.nom=="DR NGOUNGOURE"){
+                  <div id="summernote"> @Html.Raw(Model.Contenu.Replace("false","True").Replace("False","True").Replace("FALSE","True")) </div>
+                }else{
+                  <div id="summernote"> @Html.Raw(Model.Contenu) </div>
+                }
+                
+                      <div class="card">
+                        <div class="body">
+                            <input asp-for="Id" type="hidden" id="identifiant"  />
+                                <br>
+                                @if(ViewBag.Lignes1.Count>0){
+                                  <input id="t1" style="border-color: #116aef;" value="@ViewBag.Lignes1[0]" contenteditable class="form-control"> 
+                                  <table id="emptbl" class="table table-hover table-striped inventory1">
+                                      <thead>
+                                            <tr>
+                                              <th style="text-align: center;">#Antibiotique </th>
+                                              <th style="text-align: center;">Taux</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr style="display: none;">
+                                              <td id="col0"><input style="border-color: #116aef;" contenteditable class="form-control" list="antibiotique" autocomplete="off"></td>
+                                              <td id="col1" style="text-align: center;">
+                                                <select  style="border-color: #116aef;" class="form-control show-tick ref">
+                                                  <option  value="">Aucune sélection</option>
+                                                  <option  value="Sensible">Sensible</option>
+                                                  <option  value="Intermédiaire">Intermédiaire</option>
+                                                  <option  value="Résistant">Résistant</option>
+                                                </select>
+                                              </td>
+                                          </tr>
+                                          @for (int i = 1; i < ViewBag.Lignes1.Count-1; i+=2)
+                                          {
+                                            <tr>
+                                                <td id="col0"><input value="@ViewBag.Lignes1[i]" style="border-color: #116aef;" contenteditable class="form-control" list="antibiotique" autocomplete="off"></td>
+                                                <td id="col1" style="text-align: center;">
+                                                  <select  style="border-color: #116aef;" class="form-control show-tick ref">
+                                                    @if(ViewBag.Lignes1[i+1]=="Sensible"){
+                                                      <option  value="Sensible" selected>Sensible</option>
+                                                    }else{
+                                                      <option  value="Sensible">Sensible</option>
+                                                    }
+                                                    @if(ViewBag.Lignes1[i+1]=="Intermédiaire"){
+                                                      <option  value="Intermédiaire" selected>Intermédiaire</option>
+                                                    }else{
+                                                      <option  value="Intermédiaire">Intermédiaire</option>
+                                                    }
+                                                    @if(ViewBag.Lignes1[i+1]=="Résistant"){
+                                                      <option  value="Résistant" selected>Résistant</option>
+                                                    }else{
+                                                      <option  value="Résistant">Résistant</option>
+                                                    }
+                                                  </select>
+                                                </td>
+                                            </tr>
+                                          }
+                                          
+
+                                      </tbody>
+                                  </table>
+                                }else{
+                                  <input id="t1" style="border-color: #116aef;" value="ANTIBIOGRAMME" contenteditable class="form-control"> 
+                                  <table id="emptbl" class="table table-hover table-striped  inventory1">
+                                      <thead>
+                                            <tr>
+                                              <th style="text-align: center;">#Antibiotique </th>
+                                              <th style="text-align: center;">Taux</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+                                              <td id="col0"><input style="border-color: #116aef;" contenteditable class="form-control" list="antibiotique" autocomplete="off"></td>
+                                              <td id="col1" style="text-align: center;">
+                                                <select  style="border-color: #116aef;" class="form-control show-tick ref">
+                                                  <option  value="">Aucune sélection</option>
+                                                  <option  value="Sensible">Sensible</option>
+                                                  <option  value="Intermédiaire">Intermédiaire</option>
+                                                  <option  value="Résistant">Résistant</option>
+                                                </select>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                }
+                                  
+                                <a class="btn btn-primary gradient" onclick="addRows()" style="color: #FFF;">+ Ajouter</a>
+                                <a class="btn btn-danger gradient" onclick="deleteRows()" style="color: #FFF;">- Supprimer</a>
+                                  <br><br>
+                                  @if(ViewBag.Lignes2.Count>0){
+                                    <input value="@ViewBag.Lignes2[0]" id="t2" style="border-color: #116aef;" value="ANTIFONGIGRAMME" contenteditable class="form-control">
+                                    <table id="emptbl2" class="table table-hover table-striped inventory2">
+                                        <thead>
+                                              <tr>
+                                                <th style="text-align: center;">#Antifungique (µg) </th>
+                                                <th style="text-align: center;">Taux</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr style="display: none;">
+                                                <td id="coll0"><input style="border-color: #116aef;" contenteditable class="form-control" list="antibiotique2" autocomplete="off"></td>
+                                                <td id="coll1" style="text-align: center;">
+                                                  <select  style="border-color: #116aef;" class="form-control show-tick ref">
+                                                    <option  value="">Aucune sélection</option>
+                                                    <option  value="Sensible">Sensible</option>
+                                                    <option  value="Intermédiaire">Intermédiaire</option>
+                                                    <option  value="Résistant">Résistant</option>
+                                                  </select>
+                                                </td>
+                                            </tr>
+                                          @for (int i = 1; i < ViewBag.Lignes2.Count-1; i+=2)
+                                          {
+                                            
+                                            <tr>
+                                                <td id="coll0"><input style="border-color: #116aef;" value="@ViewBag.Lignes2[i]" contenteditable class="form-control" list="antibiotique2" autocomplete="off"></td>
+                                                <td id="coll1" style="text-align: center;">
+                                                  <select  style="border-color: #116aef;" class="form-control show-tick ref">
+                                                    @if(ViewBag.Lignes2[i+1]=="Sensible"){
+                                                    <option  value="Sensible" selected>Sensible</option>
+                                                    }else{
+                                                      <option  value="Sensible">Sensible</option>
+                                                    }
+                                                    @if(ViewBag.Lignes2[i+1]=="Intermédiaire"){
+                                                      <option  value="Intermédiaire" selected>Intermédiaire</option>
+                                                    }else{
+                                                      <option  value="Intermédiaire">Intermédiaire</option>
+                                                    }
+                                                    @if(ViewBag.Lignes2[i+1]=="Résistant"){
+                                                      <option  value="Résistant" selected>Résistant</option>
+                                                    }else{
+                                                      <option  value="Résistant">Résistant</option>
+                                                    }
+                                                  </select>
+                                                </td>
+                                            </tr>
+                                          }
+                                        </tbody>
+                                    </table>
+                                  }else{
+                                    <input id="t2" style="border-color: #116aef;" value="ANTIFONGIGRAMME" contenteditable class="form-control">
+                                    <table id="emptbl2" class="table table-hover table-striped inventory2">
+                                        <thead>
+                                              <tr>
+                                                <th style="text-align: center;">#Antifungique (µg) </th>
+                                                <th style="text-align: center;">Taux</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td id="coll0"><input style="border-color: #116aef;" contenteditable class="form-control" list="antibiotique2" autocomplete="off"></td>
+                                                <td id="coll1" style="text-align: center;">
+                                                  <select  style="border-color: #116aef;" class="form-control show-tick ref">
+                                                    <option  value="">Aucune sélection</option>
+                                                    <option  value="Sensible">Sensible</option>
+                                                    <option  value="Intermédiaire">Intermédiaire</option>
+                                                    <option  value="Résistant">Résistant</option>
+                                                  </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  }
+                                  
+                                <a class="btn btn-primary gradient" onclick="addRows2()" style="color: #FFF;">+ Ajouter</a>
+                                <a class="btn btn-danger  gradient" onclick="deleteRows2()" style="color: #FFF;">- Supprimer</a>
+                        </div>
+                      </div>
+
+                
+            </div>
+        </div>
+    </div> <!-- app body end-->
+
+    <a  style="position: fixed;right: 50px;bottom: 45px;" id="saveresultat" href="#" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-save"></i></a>
+     <a  style="position: fixed;right: 100px;bottom: 45px;" onclick="history.back()" href="javascript:void(0)" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-close"></i></a>
+    
+
+  <datalist id="antibiotique">
+      <option  value="Amikacine (AK) 30 µg"></option>
+      <option  value="Amoxicilline (AX) 20"></option>
+      <option  value="Amoxicilline-acide clavulanique (AMC) 20-10"></option>
+      <option  value="Ampicilline (AM) 10"></option>
+      <option  value="Aztréonam 30"></option>
+      <option  value="Céfixime 5 (CFM)"></option>
+      <option  value="Céfotaxime 5  CTX "></option>
+      <option  value="Ceftazidime 10   CAZ"></option>
+      <option  value="Ceftriaxone 30  CRO"></option>
+      <option  value="Céfuroxime 30 CXM"></option>
+      <option  value="Ciprofloxacine 5 CIP"></option>
+      <option  value="Gentamicine 10  GN"></option>
+      <option  value="Imipénème 10 IMP"></option>
+      <option  value="Lévofloxacine 5 LEV"></option>
+      <option  value="Ofloxacine 5 OFX"></option>
+      <option  value="Tobramycine 10 TOB"></option>
+      <option  value="Azithromycine 15 AZM"></option>
+      <option  value="Amikacine 30"></option>
+      <option  value="Aztréonam 30"></option>
+      <option  value="Ceftazidime 10"></option>
+      <option  value="Ciprofloxacine 5"></option>
+      <option  value="Gentamicine 10"></option>
+      <option  value="Imipénème 10"></option>
+      <option  value="Lévofloxacine"></option>
+      <option  value="Tobramycine 10"></option>
+      <option  value="Ceftriaxone 30  CRO"></option>
+      <option  value="Céfotaxime 5  CTX"></option>
+      <option  value="Céfixime 5 (CFM"></option>
+      <option  value="Amikacine 30µg"></option>
+      <option  value="Amoxicilline-acide clavulanique 20-10"></option>
+      <option  value="Ampicilline 2µg"></option>
+      <option  value="Érythromycine 15"></option>
+      <option  value="Ciprofloxacine 5"></option>
+      <option  value="Gentamicine 10"></option>
+      <option  value="Lévofloxacine 5"></option>
+      <option  value="Ofloxacine 5"></option>
+      <option  value="Oxacilline 1"></option>
+      <option  value="Pénicilline G 1 U"></option>
+      <option  value="Tobramycine 10"></option>
+      <option  value="Ampicilline 2"></option>
+      <option  value="Céfotaxime 5"></option>
+      <option  value="Ceftriaxone 30"></option>
+      <option  value="Céfuroxime 30"></option>
+      <option  value="Ciprofloxacine 5"></option>
+      <option  value="Érythromycine 15"></option>
+      <option  value="Imipénème 10"></option>
+      <option  value="Lévofloxacine 5"></option>
+      <option  value="Ofloxacine 5"></option>
+      <option  value="Oxacilline 1"></option>
+      <option  value="Pénicilline G 1 U"></option>
+      <option  value="Vancomycine 5"></option>
+      <option  value="Pristinamycine"></option>
+      <option  value="Roxithromycine"></option>
+      <option  value="Minocycline "></option>
+      <option  value="Josamycine "></option>
+      <option  value="Erythromycine "></option>
+      <option  value="Clindamycine "></option>
+      <option  value="Ofloxacine "></option>
+      <option  value="Ciprofloxacine "></option>
+      <option  value="Clarithromycine "></option>
+      <option  value="Tetracycline"></option>
+      <option  value="Levofloxacine"></option>
+      <option  value="Doxycycline"></option>
+  </datalist>
+
+  <datalist id="antibiotique2">
+      <option  value="Nystatine 50"></option>
+      <option  value="Amphotéricine B 100"></option>
+      <option  value="ECONAZOLE 50"></option>
+      <option  value="Myconazole 50"></option>
+      <option  value="Clotrimazole 50"></option>
+      <option  value="Fluconazole"></option>
+      <option  value="Ketoconazole"></option>
+      <option  value="Griseofulvine"></option>
+      <option  value="Itraconazole"></option>
+  </datalist>
+
+
+<style>
+/* content editable */
+
+*[contenteditable] { border-radius: 0.25em; min-width: 1em; outline: 0; }
+
+*[contenteditable] { cursor: pointer; }
+
+*[contenteditable]:hover, *[contenteditable]:focus, td:hover *[contenteditable], td:focus *[contenteditable], img.hover { background: #DEF; box-shadow: 0 0 1em 0.5em #DEF; }
+
+span[contenteditable] { display: inline-block; }
+table { width: 100%; }
+th, td { border-width: 1px; padding: 0.5em; position: relative; text-align: left; }
+
+
+
+
+/* table items */
+
+table.inventory { clear: both; width: 98%; margin-left: 20px;}
+table.inventory th { font-weight: bold; text-align: center; }
+
+table.inventory td:nth-child(1) { width: 50%; }
+table.inventory td:nth-child(2) { width: 50%; }
+
+
+
+
+
+
+
+
+/* javascript */
+
+.add
+{
+	display: block;
+	font-size: .8rem;
+	padding: 0.25em 0.5em;	
+	float: left;
+	text-align: center;
+}
+.cut{
+    width: 25px;
+}
+
+
+.add { margin: -2.5em 0 0; }
+
+.add:hover { background: #89e114; }
+
+.cut { opacity: 0; position: absolute; top: 0; left: -1.9em; color: #FFF; }
+.cut { -webkit-transition: opacity 100ms ease-in; }
+tr:hover .cut { opacity: 1; }
+
+
+</style>
+
+<script type="text/javascript">
+function addRows(){ 
+	var table = document.getElementById('emptbl');
+	var rowCount = table.rows.length;
+	var cellCount = table.rows[0].cells.length; 
+	var row = table.insertRow(rowCount);
+	for(var i =0; i < cellCount; i++){
+		var cell = 'cell'+i;
+		cell = row.insertCell(i);
+		var copycel = document.getElementById('col'+i).innerHTML;
+		cell.innerHTML=copycel;
+		
+	}
+}
+function deleteRows(){
+	var table = document.getElementById('emptbl');
+	var rowCount = table.rows.length;
+	if(rowCount > '2'){
+		var row = table.deleteRow(rowCount-1);
+		rowCount--;
+	}
+	else{
+		
+	}
+}
+
+function addRows2(){ 
+	var table = document.getElementById('emptbl2');
+	var rowCount = table.rows.length;
+	var cellCount = table.rows[0].cells.length; 
+	var row = table.insertRow(rowCount);
+	for(var i =0; i < cellCount; i++){
+		var cell = 'cell'+i;
+		cell = row.insertCell(i);
+		var copycel = document.getElementById('coll'+i).innerHTML;
+		cell.innerHTML=copycel;
+		
+	}
+}
+function deleteRows2(){
+	var table = document.getElementById('emptbl2');
+	var rowCount = table.rows.length;
+	if(rowCount > '2'){
+		var row = table.deleteRow(rowCount-1);
+		rowCount--;
+	}
+	else{
+		
+	}
+}
+</script>

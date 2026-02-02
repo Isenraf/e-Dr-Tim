@@ -1,0 +1,214 @@
+@model IEnumerable<BANA.Models.Facture>
+
+@{
+    ViewData["Title"] = "Index";
+}
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+             <div class="col-xl-6 col-md-5 col-sm-12">
+               <h1>Policlinique de Poitiers</h1>
+                <span>Listing des Rendez-vous,</span>
+              </div>
+              <div class="col-xl-6 col-md-7 col-sm-12 text-md-right">
+                <div class="d-flex align-items-center justify-content-md-end mt-4 mt-md-0 flex-wrap vivify pullUp delay-550">
+                  <div class="border-right pr-4 mr-4 mb-3 mb-xl-0 hidden-xs">
+                    <p class="text-muted mb-1">Cardiologie</p>
+                    <h5 class="mb-0">12</h5>
+                  </div>
+                  <div class="border-right pr-4 mr-4 mb-3 mb-xl-0">
+                    <p class="text-muted mb-1">Pédiatrie</p>
+                    <h5 class="mb-0">13</h5>
+                  </div>
+                  <div class="pr-4 mb-3 mb-xl-0">
+                    <p class="text-muted mb-1">Dermatologie</p>
+                    <h5 class="mb-0">25</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-12">
+              <div class="card">
+                <div class="body">
+                  <form>
+                    <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Rechercher un rendez-vous">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="search-mail">
+                          <i class="icon-magnifier"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>E-mail</th>
+                        <th>Date et Heure</th>
+                        <th>Medécin</th>
+                        <th>Etat</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="w60">
+                          <img src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="" alt="Avatar" class="avatar rounded-circle" data-original-title="Polyclinique de Poitiers">
+                        </td>
+                        <td>
+                          <div>Adrien Tienchei</div>
+                          <p class="mb-0">+ 237 692 88 31 85</p>
+                        </td>
+                        <td>
+                          <a href="https://nsdbytes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="543e35273b3a79243b2620312614312c35392438317a373b39">[email&#160;protected]</a>
+                        </td>
+                        <td>
+                          <div>13 juin 2022</div>
+                          <span class="text-muted font-12">09h30 - 10h00</span>
+                        </td>
+                        <td>Dr. Tessa</td>
+                        <td>Accouchement</td>
+                        <td>
+                          <button type="button" class="btn btn-outline-secondary" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </button>
+                        </td>
+                       <tr>
+                        <td class="w60">
+                          <img src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="" alt="Avatar" class="avatar rounded-circle" data-original-title="Polyclinique de Poitiers">
+                        </td>
+                        <td>
+                          <div>Adrien Tienchei</div>
+                          <p class="mb-0">+ 237 692 88 31 85</p>
+                        </td>
+                        <td>
+                          <a href="https://nsdbytes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="543e35273b3a79243b2620312614312c35392438317a373b39">[email&#160;protected]</a>
+                        </td>
+                        <td>
+                          <div>13 juin 2022</div>
+                          <span class="text-muted font-12">09h30 - 10h00</span>
+                        </td>
+                        <td>Dr. Tessa</td>
+                        <td>Accouchement</td>
+                        <td>
+                          <button type="button" class="btn btn-outline-secondary" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </button>
+                        </td>
+                      </tr>
+                       <tr>
+                        <td class="w60">
+                          <img src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="" alt="Avatar" class="avatar rounded-circle" data-original-title="Polyclinique de Poitiers">
+                        </td>
+                        <td>
+                          <div>Adrien Tienchei</div>
+                          <p class="mb-0">+ 237 692 88 31 85</p>
+                        </td>
+                        <td>
+                          <a href="https://nsdbytes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="543e35273b3a79243b2620312614312c35392438317a373b39">[email&#160;protected]</a>
+                        </td>
+                        <td>
+                          <div>13 juin 2022</div>
+                          <span class="text-muted font-12">09h30 - 10h00</span>
+                        </td>
+                        <td>Dr. Tessa</td>
+                        <td>Accouchement</td>
+                        <td>
+                          <button type="button" class="btn btn-outline-secondary" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </button>
+                        </td>
+                      </tr>
+                       <tr>
+                        <td class="w60">
+                          <img src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="" alt="Avatar" class="avatar rounded-circle" data-original-title="Polyclinique de Poitiers">
+                        </td>
+                        <td>
+                          <div>Adrien Tienchei</div>
+                          <p class="mb-0">+ 237 692 88 31 85</p>
+                        </td>
+                        <td>
+                          <a href="https://nsdbytes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="543e35273b3a79243b2620312614312c35392438317a373b39">[email&#160;protected]</a>
+                        </td>
+                        <td>
+                          <div>13 juin 2022</div>
+                          <span class="text-muted font-12">09h30 - 10h00</span>
+                        </td>
+                        <td>Dr. Tessa</td>
+                        <td>Accouchement</td>
+                        <td>
+                          <button type="button" class="btn btn-outline-secondary" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </button>
+                        </td>
+                      </tr>
+                       <tr>
+                        <td class="w60">
+                          <img src="/template/assets/images/xs/avatar1.jpg" data-toggle="tooltip" data-placement="top" title="" alt="Avatar" class="avatar rounded-circle" data-original-title="Polyclinique de Poitiers">
+                        </td>
+                        <td>
+                          <div>Adrien Tienchei</div>
+                          <p class="mb-0">+ 237 692 88 31 85</p>
+                        </td>
+                        <td>
+                          <a href="https://nsdbytes.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="543e35273b3a79243b2620312614312c35392438317a373b39">[email&#160;protected]</a>
+                        </td>
+                        <td>
+                          <div>13 juin 2022</div>
+                          <span class="text-muted font-12">09h30 - 10h00</span>
+                        </td>
+                        <td>Dr. Tessa</td>
+                        <td>Accouchement</td>
+                        <td>
+                          <button type="button" class="btn btn-outline-secondary" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary" title="Delete">
+                            <i class="fa fa-trash-o"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">Precedent</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">3</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">Suivant</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>

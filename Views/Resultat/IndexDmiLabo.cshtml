@@ -1,0 +1,150 @@
+@model IEnumerable<BANA.Models.Resultat>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout="_Layout3";
+}
+
+<!-- App container starts -->
+        <div class="app-container">
+            <!-- App hero header starts -->
+            <div class="app-hero-header d-flex align-items-center">
+                <!-- Breadcrumb starts -->
+                
+                
+                <!-- Breadcrumb ends -->
+
+                <!-- Sales stats starts -->
+                <div class="d-lg-flex d-none flex-row">
+                    <div class="d-flex flex-row gap-1 day-sorting">
+                        
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                <i class="ri-account-circle-line fs-3"></i>
+                            </div>
+                                <div>
+                                    <p class="m-0">Nom du patient</p>
+                                    <h5 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    @if(ViewBag.patient.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                </div>
+                                <div>
+                                    <p class="m-0">Genre</p>
+                                    <h5 class="mb-1">@ViewBag.patient.Genre</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-arrow-right-up-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Âge du patient</p>
+                                    <h5 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-contrast-drop-2-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Groupe sanguin</p>
+                                    <h5 class="mb-1">@ViewBag.patient.GroupeSanguin</h5>
+                                    
+                                </div>
+                            </div>
+                            @if(ViewBag.patient.Genre=="M"){
+                                <img style="width: 60px;height: 60px;" src="/template2/assets/images/patient2.png" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                            }else{
+                                <img style="width: 60px;height: 60px;" src="/template2/assets/images/patient1.jpg" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                            }
+                                       
+                    </div>
+                </div>
+                <!-- Sales stats ends -->
+            </div>
+            <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+            <div class="col-sm-12">
+              <div class="d-flex justify-content-end gap-2 my-2">
+                  <button type="button" style="margin-left: 18px;" onclick="location.href='/Patient/Detailss/@ViewBag.patient.Id'" class="btn btn-primary">
+                      <i class="ri-folder-2-line"></i> Dossier patient
+                  </button>
+              </div>
+              <div class="card mb-3">
+
+                <div class="card-body">
+                  <!-- barre de recherche start-->
+                  <div class="card">
+                    <div class="card-body">
+                      <input
+                        id="search"
+                        type="search"
+                        class="form-control"
+                        placeholder="Bare de Recherche"
+                      />
+                    </div>
+                  </div>
+                  <!-- barre de recheche end -->
+
+                  <div class="table-outer">
+                    <div class="table-responsive">
+                      <table class="table truncate m-0">
+                        @if(Model.Count()>0){
+                          <thead>
+                            <tr>
+                              <th><strong>Nomination</strong></th>
+                              <th><strong>Patient</strong></th>
+                              <th><strong>Date Creation</strong></th>
+                              <th><strong>Status</strong></th>
+                              <th><strong>Actions</strong></th>
+                            </tr>
+                          </thead>
+                        }
+                        
+                        <tbody id="testfiltre">
+                          @foreach (var item in Model)
+                          {
+                            <tr class="montest">
+                              <td>
+                                  <div class="d-flex align-items-center">
+                                      <img src="/template2/assets/images/examdmi.png" style="box-shadow: 0 5px 5px rgb(18 106 239);" class="img-2xx me-2" alt="afficher le modèle"/>
+                                    <div class="ml-3">
+                                    <a asp-action="Details2" asp-route-Id="@item.Id" title="">@item.Nom</a>
+                                      
+                                      <p style="max-width: 300px; overflow: hidden" class="mb-0">
+                                        Numéro dossier: @item.NumeroDossier
+                                      </p>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td><div style="max-width: 200px;overflow: hidden;">@item.NomPatient</div></td>
+                                <td>@item.Create_date.ToString("dd/MM/yyyy") @item.Create_date.ToShortTimeString()</td>
+                                <td>@if (item.valide_par!=null){<span class="badge border border-success text-success">Cloturé</span>}else{<span class="badge border border-warning text-warning">En cours</span>}
+                                <td> 
+                                
+                                  <button type="button" onclick="location.href='/Resultat/Details2/@item.Id';" class="btn btn-outline-secondary" title="Edit">
+                                    <i class="fa fa-eye"></i>
+                                  </button>
+                                  
+                                </td>
+                            </tr>
+                          }
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- app body end-->
+

@@ -1,0 +1,562 @@
+@model BANA.Models.Hospi
+
+@{
+    ViewData["Title"] = "Index";
+    Layout="_Layout3";
+    decimal taille = 0, poids = 0;
+     var tailleStr = ViewBag.parametre?.Taille?.ToString() ?? "0";
+    var poidsStr  = ViewBag.parametre?.Poids?.ToString() ?? "0";
+
+    decimal.TryParse(tailleStr, out taille);
+    decimal.TryParse(poidsStr, out poids);
+}
+<style>
+   
+
+      
+
+      h1,
+      h2 {
+        font-weight: bolder;
+      }
+
+      header,
+      h1,
+      h2,
+      section {
+        padding: 16px 24px;
+      }
+
+      header {
+        border-bottom: 1px solid;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        background-color: #0b8fac;
+        color: #f8f9fa;
+      }
+
+      header h2 {
+        padding: 0;
+      }
+
+      header a {
+        color: #f8f9fa;
+      }
+
+      h1 {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        color: #0b8fac;
+        font-size: 30px;
+      }
+
+      h1 img {
+        width: 50px;
+        height: auto;
+      }
+
+      img {
+        width: 75px;
+        height: auto;
+      }
+
+      section h2,h6 {
+        padding: 0px;
+        /* background-color: #15aabf; */
+        color: #0b8fac;
+      }
+
+      section {
+        border-bottom: 1px solid #ced4da;
+      }
+
+      section:last-child {
+        border-bottom: 0;
+      }
+
+      /* header h2 {
+        color: #2b8a3e;
+      } */
+
+      .clinic {
+        border: 1px solid #ced4da;
+        border-radius: 10px;
+        padding: 16px;
+        background: #f9fbff;
+        font-size: 0.95rem;
+      }
+
+      #wrapper {
+        max-width: 960px;
+        height: auto;
+        margin: 16px auto !important;
+        /* background-color: #15aabf; */
+      }
+
+      #report {
+        /* padding: 40px; */
+        background-color: white;
+        /* border-top-right-radius: 10% 15%;
+        border-bottom-right-radius: 10% 15%; */
+        display: flex;
+        flex-direction: column;
+        /* row-gap: 8px; */
+        outline: 1px solid #ced4da;
+      }
+
+      .right-text {
+        text-align: right;
+      }
+
+      .left-text {
+        display: flex;
+        column-gap: 4px;
+      }
+    </style>
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">
+                Fiche de ronde
+            </li>
+        </ol>
+        <!-- Breadcrumb ends -->
+
+    </div>
+    <!-- App Hero header ends -->
+
+    <div style="padding:20px 20px 0px 20px;" class="col-sm-12">
+        <!-- Card starts -->
+        <div class="card mb-3">
+          
+          <div class="card-body">
+            <div class="d-flex flex-wrap gap-2 justify-content-end">
+              <button type="button" class="btn btn-primary">
+                Créer une nouvelle fiche
+              </button>
+              @foreach(var item in ViewBag.rondes){
+                <button type="button" onclick="window.location.href='@Url.Action("Details", "Ronde", new { id = item.Id })'" class="btn btn-secondary">
+                 Dr @item.Medecin @item.CreateDate
+                </button>
+              }
+              
+              
+              
+            </div>
+          </div>
+        </div>
+        <!-- Card ends -->
+    </div>
+
+    <!-- Row starts -->
+    <div style="padding-left: 20px;padding-right: 20px;" class="row gx-3">
+        <div class="col-sm-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <!-- Stats starts -->
+                        <div class="d-flex align-items-center flex-wrap gap-4">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-account-circle-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Nom du patient</p>
+                                      <h4 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h4>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                     @if(ViewBag.patient.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                </div>
+                                <div>
+                                      <p class="m-0">Genre</p>
+                                     <h4 class="mb-1">@ViewBag.patient.Genre</h4>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-arrow-right-up-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Âge du patient</p>
+                                    <h4 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h4>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-contrast-drop-2-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Groupe sanguin</p>
+                                     <h4 class="mb-1">@ViewBag.patient.GroupeSanguin</h4>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-secondary rounded-5 me-2">
+                                    <i class="ri-stethoscope-line fs-3 text-body"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0"> Médecin</p>
+                                     <h4 class="mb-1">@Model.MedecinResponsable</h4> 
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Stats ends -->
+                           <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient.png" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Row ends -->
+
+    <!-- App body starts -->
+<div class="app-body">
+    <div class="row gx-3">
+        <div class="col-12 col-sm-12">
+            <div class="card h-100 mb-3">
+                <div class="card-body">
+                    <!-- Contenu de la fiche médecin -->
+                    <div id="wrapper mt-0 p-0">
+                        <form id="report">
+                            <header>
+                                <div class="left-text">
+                                    <div>
+                                        <h4>FICHE DE RONDE</h4>
+                                    </div>
+                                </div>
+                            </header>
+
+                            <section>
+                                <h6 class="mb-2">Plainte</h6>
+
+                                <div class="row row-gap-2">
+                                    <div class="col-sm-12">
+                                        <div>
+                                            <textarea  class="form-control" rows="2" name="" id="plainte"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <input type="hidden" id="nd" value="@Model.Id">
+
+                            <section id="parametres">
+                                 @if(ViewBag.parametre!=null){
+                                    <div class="d-flex align-items-center flex-wrap">
+                                    
+                                                <div class="row gx-3">
+                                                      
+                                                      <div style="width: 120px;">
+                                                            <div style="background-color: #2196f3;" class="card border-0 mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                <p style="margin: 0;">
+                                                                Bras Gauche
+                                                                </p>
+                                                              
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style="width: 160px;">
+                                                            <div class="card border-0 bg-primary mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                <p style="margin: 0;">
+                                                              TA (mmHg): <strong style="color: #ffd9a0;">@ViewBag.parametre.Tsysbg/@ViewBag.parametre.Tdiasbg</strong> 
+                                                                </p>
+                                                                
+                                                            </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="width: 130px;">
+                                                            <div class="card border-0 bg-primary mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                <p style="margin: 0;">
+                                                              Pouls(Bpm): <strong style="color: #ffd9a0;">@ViewBag.parametre.Pbg</strong>
+                                                                </p>
+                                                              
+                                                            </div>
+                                                            </div>
+                                                        </div>
+
+                                                        
+                                                    </div>
+
+                                                    <div  class="row gx-3">
+                                                        <div style="width: 120px;">
+                                                            <div style="background-color: #2196f3;" class="card border-0 mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                <p style="margin: 0;">
+                                                                Bras Droit
+                                                                </p>
+                                                              
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div style="width: 160px;">
+                                                            <div class="card border-0 bg-primary mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                <p style="margin: 0;">
+                                                              TA (mmHg): <strong style="color: #ffd9a0;">@ViewBag.parametre.Tsysbd/@ViewBag.parametre.Tdiasbd</strong>
+                                                                </p>
+                                                                
+                                                            </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="width: 130px;">
+                                                            <div class="card border-0 bg-primary mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                <p style="margin: 0;">
+                                                              Pouls (Bpm):  <strong style="color: #ffd9a0;">@ViewBag.parametre.Pbd </strong>
+                                                                </p>
+                                                              
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div  class="row gx-3">
+                                                      
+                                                        <div style="width: 110px;">
+                                                            <div class="card border-0 bg-primary mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                <p style="margin: 0;">
+                                                                T (Cº): <strong style="color: #ffd9a0;">@ViewBag.parametre.Temperature</strong>
+                                                                </p>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="width: 130px;">
+                                                            <div class="card border-0 bg-primary mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                <p style="margin: 0;">
+                                                                Taille (m): <strong style="color: #ffd9a0;">@ViewBag.parametre.Taille</strong>
+                                                                </p>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="width: 140px;">
+                                                            <div class="card border-0 bg-primary mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                <p style="margin: 0;">
+                                                                Poids (kg): <strong style="color: #ffd9a0;">@ViewBag.parametre.Poids</strong>
+                                                                </p>
+                                                                
+                                                            </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="width: 140px;">
+                                                            <div class="card border-0 bg-primary mb-3">
+                                                            <div style="padding: 2px;" class="text-white">
+                                                                
+                                                              @if(taille==0 || poids==0){
+                                                                <p style="margin: 0;">
+                                                                    IMC (kg/m²):
+                                                                </p>
+                                                              }else{
+                                                                <p style="margin: 0;">
+                                                                    IMC (kg/m²):  <strong style="color: #ffd9a0;">@((poids/taille*taille).ToString("0.0"))</strong>
+                                                                </p>
+                                                              }
+                                                                
+                                                                
+                                                              
+                                                            </div>
+                                                            </div>
+                                                        </div><p>Heure de prise des paramètres: <span style="color:#0c90ac;">@ViewBag.parametre.Create_date</span> </p>
+
+                                                    </div>
+                                  </div>
+                                }
+                            </section>
+
+                            <section>
+                                <h6 class="mb-2">Examen physique du jour</h6>
+
+                                <div class="row row-gap-2">
+                                    <div class="col-sm-12">
+                                        <div>
+                                            <textarea class="form-control" rows="2" name="" id="examenphysique"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <h6>Examens</h6>
+                                <div id="examens-container"></div>
+                                <datalist id="examensOptions">
+                                   
+                                    @foreach(var item in ViewBag.examens){
+                                       <option value="@item.Nom">@item.ExamType</option>
+                                    }
+                                </datalist>
+                                <button type="button" onclick="ajouterExamen()" class="btn btn-outline-info mt-2">
+                                    Ajouter un examen
+                                </button>
+                            </section>
+
+                            <section>
+                              <h6>Actes Medicaux</h6>
+                              <div id="actes-container"></div>
+
+                              <datalist id="actesOptions">
+                                  @foreach(var item in ViewBag.actes){
+                                       <option value="@item.Nom">@item.Departement</option>
+                                    }
+                              </datalist>
+
+                              <button type="button" onclick="ajouterActe()" class="btn btn-outline-info mt-2">
+                                  Ajouter un acte
+                              </button>
+                          </section>
+
+
+                            <section>
+                                <h6>Médicaments</h6>
+                                <div id="medicaments-container"></div>
+                                <datalist id="datalistOptions">
+                                    @foreach(var item in ViewBag.medicaments){
+                                       <option value="@item.Nom">@item.DCI</option>
+                                    }
+                          
+                                </datalist>
+                                <button type="button" onclick="ajouterMedicament()" class="btn btn-outline-info mt-2">
+                                    Ajouter un médicament
+                                </button>
+                            </section>
+
+                           
+
+                            <section>
+                                <h6 class="mb-2">Conclusion</h6>
+
+                                <div class="row row-gap-2">
+                                    <div class="col-sm-12">
+                                        <div>
+                                            <textarea class="form-control" rows="2" name="" id="conclusion"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                             <section>
+                                <h6>Conduite à tenir</h6>
+                                <div id="cat-container"></div>
+                                <button type="button" onclick="ajouterCAT()" class="btn btn-outline-info mt-2">
+                                    Ajouter une CAT
+                                </button>
+                            </section>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- App body ends -->
+
+<button type="button" style="position:fixed;right: 45px;bottom: 45px;" onclick="window.location.href='/Hospi/Details/@Model.Id'" class="btn btn-primary">
+  <i class="ri-corner-up-left-line"></i>
+</button>
+
+
+
+   <div style="padding:20px 20px 0px 20px;" class="col-sm-12">
+      <!-- Card starts -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex flex-wrap gap-2 justify-content-end">
+            <button type="button" id="saveronde" class="btn btn-primary">
+              Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Card ends -->
+    </div>
+
+
+<script>
+      const infirmierName = "Infirmier Dupont"; // <-- Remplace par la vraie variable
+
+      // --- Ajout dynamique ---
+      function ajouterMedicament() {
+        const container = document.getElementById("medicaments-container");
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("medicament-item", "row", "gx-3", "mt-3");
+        newDiv.innerHTML = `
+      <div class="col-8">
+        <input class="form-control a1" list="datalistOptions" placeholder="Faites une recherche..." name="medicament[]""/>
+      </div>
+      <div class="col-4">
+        <input class="form-control a1" type="text" placeholder="Indication (ex: 2 fois/jour)" name="medicament_indication[]""/>
+      </div>
+    `;
+        container.appendChild(newDiv);
+      }
+
+      function ajouterExamen() {
+        const container = document.getElementById("examens-container");
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("examen-item", "row", "gx-3", "mt-3");
+        newDiv.innerHTML = `
+      <div class="col-8">
+        <input class="form-control a2" list="examensOptions" placeholder="Faites une recherche..." name="examen[]"/>
+      </div>
+       <div class="col-4">
+        <input class="form-control a2" type="text" placeholder="Indication (ex: 2 fois/jour)" name="examenindication[]"/>
+      </div>
+    `;
+        container.appendChild(newDiv);
+      }
+
+      function ajouterCAT() {
+        const container = document.getElementById("cat-container");
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("cat-item", "mt-3");
+        newDiv.innerHTML = `
+      <div class="col-12">
+        <input class="form-control a3" type="text" name="cat[]"/>
+      </div>
+    `;
+        container.appendChild(newDiv);
+      }
+
+      function ajouterActe() {
+        const container = document.getElementById("actes-container");
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("acte-item", "row", "gx-3", "mt-3");
+        newDiv.innerHTML = `
+      <div class="col-8">
+        <input class="form-control a4" list="actesOptions" placeholder="Faites une recherche..." name="examen[]"/>
+      </div>
+       <div class="col-4">
+        <input class="form-control a4" type="text" placeholder="Indication (ex: 2 fois/jour)" name="indication[]"/>
+      </div>
+    `;
+
+        container.appendChild(newDiv);
+      }
+
+    </script>
+

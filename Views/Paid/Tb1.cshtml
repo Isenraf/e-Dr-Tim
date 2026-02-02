@@ -1,0 +1,421 @@
+@model IEnumerable<BANA.Models.Paid>
+
+@{
+    ViewData["Title"] = "Controle de Caisse";
+    int somme=0;
+    int somme2=0;
+}
+<link rel="stylesheet"  href="/css/tb1.css">
+
+<!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Rapport de caisse automatique
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+            <div class="card px-3">
+              <div class="row gx-3 px-3 py-3">
+                <div class="d-flex align-items-center justify-content-between my-2 mx-2">
+                  <h5 class="card-title">
+                    Rapport de caisse automatique!<br /><h7 style="font-size: 12px; color: #4c545e">DU : Du:@DateTime.Parse(ViewBag.date).AddHours(-11).ToString("dd/MM/yyyy") @DateTime.Parse(ViewBag.date).AddHours(-11).ToShortTimeString() au @DateTime.Parse(ViewBag.date).AddHours(13).AddSeconds(-1).ToString("dd/MM/yyyy hh:mm:ss"),</h7>
+                  </h5>
+                  <div class="d-flex flex-wrap gap-1">
+                    <div
+                      class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                    >
+                      <i class="ri-pie-chart-2-fill text-success fs-4"></i>
+                      <span class="me-1 fw-semibold ps-1 separateur">@ViewBag.total</span>
+                      <span class="text-success">Total</span>
+                    </div>
+                    <div
+                      class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                    >
+                      <i class="ri-pie-chart-2-fill text-danger fs-4"></i>
+                      <span class="me-1 fw-semibold ps-1">@ViewBag.caissierscount</span>
+                      <span class="text-primary">Nombre Caissiers</span>
+                    </div>
+                    <div
+                      class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                    >
+                      <i class="ri-pie-chart-2-fill text-info fs-4"></i>
+                      <span class="me-1 fw-semibold ps-1">@Model.Count()</span>
+                      <span class="text-info">Nombre de Transactions</span>
+                    </div>
+                  </div>
+                </div>
+              @foreach (var item in ViewBag.caissiers)
+              {
+
+                <div class="card bg-info p-2 d-flex flex-row ms-2">
+                  @if(ViewBag.user.Genre=="Homme"){
+                    <img src="/template2/assets/images/user_men.png" class="img-shadow img-3x me-3 rounded-5" alt="e-Dr Tim Hospital Management"/>
+                  }else{
+                    <img src="/template2/assets/images/user_woman.webp" class="img-shadow img-3x me-3 rounded-5" alt="e-Dr Tim Hospital Management"/>
+                  }
+
+                  <span id="nom-caissier" style="color: white;font-family: Arial, sans-serif;top: 25%;"><p>@item</p></span>
+                </div>
+
+                somme2=0;
+                somme=0;
+                  
+                foreach (var item2 in ViewBag.Lignespaid_om)
+                {
+                  if (item2.Caissier==item)
+                  {
+                    somme+=item2.Montant;
+                    somme2+=item2.Montant;
+                  }
+                }
+
+                    <div class="row gx-3" id="itemsContainer">
+                      <div class="col-xl-2 col-sm-6 col-12 py-3">
+                        <div class="card mb-3 bg-secondary">
+                          <div class="card-body">
+                            <div class="text-center">
+                              <a asp-action="Index"  asp-route-arg1="@ViewBag.date" asp-route-arg2="@item" asp-route-arg3="orange money">
+                                <img
+                                  src="/img/om.png"
+                                  class="img-fluid mb-1 rounded-3"
+                                  alt="Admin Dashboard templates"
+                                  style="width: 60px"
+                                />
+
+                                <div>
+                                  <h6>
+                                    <span class="separateur">@somme</span><br />
+                                    <span>FCFA</span>
+                                  </h6>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                  @{somme=0;}
+                  @foreach (var item2 in ViewBag.Lignespaid_momo)
+                  {
+                    if (item2.Caissier==item)
+                    {
+                      somme+=item2.Montant;
+                      somme2+=item2.Montant;
+                    }
+                  }
+
+                  <div class="col-xl-2 col-sm-6 col-12 py-3">
+                    <div class="card mb-3 bg-secondary">
+                      <div class="card-body">
+                        <div class="text-center">
+                          <a asp-action="Index"  asp-route-arg1="@ViewBag.date" asp-route-arg2="@item" asp-route-arg3="momo">
+                            <img
+                              src="/img/momo.jpeg"
+                              class="img-fluid mb-1 rounded-3"
+                              alt="Admin Dashboard templates"
+                              style="width: 60px"
+                            />
+
+                            <div>
+                              <h6>
+                                <span class="separateur">@somme</span><br />
+                                <span>FCFA</span>
+                              </h6>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  @{somme=0;}
+                    @foreach (var item2 in ViewBag.Lignespaid_especes)
+                    {
+                      if (item2.Caissier==item)
+                      {
+                        somme+=item2.Montant;
+                        somme2+=item2.Montant;
+                      }
+                    }
+
+                  <div class="col-xl-2 col-sm-6 col-12 py-3">
+                    <div class="card mb-3 bg-secondary">
+                      <div class="card-body">
+                        <div class="text-center">
+                          <a asp-action="Index"  asp-route-arg1="@ViewBag.date" asp-route-arg2="@item" asp-route-arg3="especes">
+                            <img
+                              src="/img/especes.webp"
+                              class="img-fluid mb-1 rounded-3"
+                              alt="Admin Dashboard templates"
+                              style="width: 60px"
+                            />
+
+                            <div>
+                              <h6>
+                                <span class="separateur">@somme</span><br />
+                                <span>FCFA</span>
+                              </h6>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  @{somme=0;}
+                  @foreach (var item2 in ViewBag.Lignespaid_banque)
+                  {
+                    if (item2.Caissier==item)
+                    {
+                      somme+=item2.Montant;
+                      somme2+=item2.Montant;
+                    }
+                  }
+
+                  <div class="col-xl-2 col-sm-6 col-12 py-3">
+                    <div class="card mb-3 bg-secondary">
+                      <div class="card-body">
+                        <div class="text-center">
+                          <a asp-action="Index"  asp-route-arg1="@ViewBag.date" asp-route-arg2="@item" asp-route-arg3="banque">
+                            <img
+                              src="/img/banque.png"
+                              class="img-fluid mb-1 rounded-3"
+                              alt="Admin Dashboard templates"
+                              style="width: 60px"
+                            />
+
+                            <div>
+                              <h6>
+                                <span class="separateur">@somme</span><br />
+                                <span>FCFA</span>
+                              </h6>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  @{somme=0;}
+                  @foreach (var item2 in ViewBag.Lignespaid_autre)
+                  {
+                    if (item2.Caissier==item)
+                    {
+                      somme+=item2.Montant;
+                      somme2+=item2.Montant;
+                    }
+                  }
+                  <div class="col-xl-2 col-sm-6 col-12 py-3">
+                    <div class="card mb-3 bg-secondary">
+                      <div class="card-body">
+                        <div class="text-center">
+                          <a asp-action="Index"  asp-route-arg1="@ViewBag.date" asp-route-arg2="@item" asp-route-arg3="autre">
+                            <img
+                              src="/img/autre.png"
+                              class="img-fluid mb-1 rounded-3"
+                              alt="Admin Dashboard templates"
+                              style="width: 60px"
+                            />
+
+                            <div>
+                              <h6>
+                                <span class="separateur">@somme</span><br/>
+                                <span>FCFA</span>
+                              </h6>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-2 col-sm-6 col-12 py-3">
+                    <div
+                      class="card mb-3 bg-secondary bg-warning"
+                      style="height: 130px"
+                    >
+                      <div class="card-body">
+                        <div class="text-center">
+                          <a asp-action="Index"  asp-route-arg1="@ViewBag.date" asp-route-arg2="@item">
+                            <label
+                              class="img-fluid mb-1 rounded-3 text-primary text-primary"
+                              style="
+                                font-size: 20px;
+                                font-weight: bold;
+                              " >TOTAL</label>
+
+                            <div>
+                              <h6>
+                                <span class="text-danger separateur">@somme2</span><br />
+                                <span>FCFA</span>
+                              </h6>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                }
+              </div>
+              
+            </div>
+          </div>
+          <!-- app body end-->
+
+
+<style>
+  /* Modale */
+      .modal, .modal2{
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      }
+
+      .modal-header {
+      padding: 10px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      }
+
+      .modal-body {
+      flex: 1;
+      overflow: hidden;
+      }
+
+      .modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .modal2 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      }
+</style>
+
+
+ <!-- Modal -->
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+    <span>📄 Rapport de caisse Du @DateTime.Parse(ViewBag.date).AddHours(-11).ToString("dd/MM/yyyy") @DateTime.Parse(ViewBag.date).AddHours(-11).ToShortTimeString() au @DateTime.Parse(ViewBag.date).AddHours(13).AddSeconds(-1).ToString("dd/MM/yyyy hh:mm:ss")</span>
+    <button class="close-btn" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+    <iframe id="target" src="/Paid/Pdf1?madate=@ViewBag.date#navpanes=0"></iframe> <!-- Remplace par ton PDF -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="pdfModal2" class="modal2">
+  <div class="modal-content">
+    <div class="modal-header">
+    <span>📄 Rapport de caisse Du mois de @DateTime.Parse(ViewBag.date).ToString( "MMMM" )  @DateTime.Parse(ViewBag.date).Year</span>
+    <button class="close-btn" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+    <iframe id="target" src="/Paid/Pdf2?madate=@ViewBag.date#navpanes=0"></iframe> <!-- Remplace par ton PDF -->
+    </div>
+  </div>
+</div>
+
+
+@* popup *@
+
+  <div id="popup1" class="overlay1">
+	<div class="popup">
+		<h6>Selectionner une caisse</h6>
+		<a class="close" href="#">&times;</a>
+		<div class="content">
+      @foreach(var item in ViewBag.caisses){
+        <button class="btn btn-primary button-32" onclick="location.href='/Paid/Tb1?madate=@ViewBag.date'+'&caisse=@item'">Caisse Poitiers</button>
+      }
+		</div>
+	</div>
+</div>
+
+
+
+
+<a  style="color: white;position: fixed;right: 45px;bottom: 45px;"  href="#popup1" class="button btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-list"></i></a>
+<a  style="color: white;position: fixed;right: 100px;bottom: 45px;" id="openModalBtn" href="javascript:void(0);" class="button btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-file-pdf-o"></i></a>
+<a  style="color: white;position: fixed;right: 155px;bottom: 45px;background-color: #39d301;" id="openModalBtn2" href="javascript:void(0);" class="button btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-file-pdf-o"></i></a>
+
+  <script>
+    const modal = document.getElementById('pdfModal');
+    const modal2 = document.getElementById('pdfModal2');
+    const openBtn = document.getElementById('openModalBtn');
+    const openBtn2 = document.getElementById('openModalBtn2');
+
+    openBtn.onclick = () => {
+      modal.style.display = 'block';
+    };
+
+    openBtn2.onclick = () => {
+      modal2.style.display = 'block';
+    };
+
+    function closeModal() {
+      modal.style.display = 'none';
+      modal2.style.display = 'none';
+    }
+
+    // Fermer si on clique en dehors du contenu
+    window.onclick = event => {
+      if (event.target === modal || event.target === modal2) {
+        closeModal();
+      }
+    };
+</script>
+
+
+
+
+
+
+

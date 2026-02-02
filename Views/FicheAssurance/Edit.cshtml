@@ -1,0 +1,86 @@
+@model BANA.Models.FicheAssurance
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">Telecharger une fiche</li>
+    </ol>
+    <!-- Breadcrumb ends -->
+
+  </div>
+  <!-- App Hero header ends -->
+
+  <!-- App body starts -->
+  <div class="app-body">
+    <div class="card px-3 py-3 mb-3">
+      <div class="text-center">
+        <img class="mb-3" src="/template2/assets/images/pdf.png" style="width: 200px; height: auto" alt="" />
+      </div>
+      <form asp-action="Edit" enctype="multipart/form-data">
+      <input type="hidden" asp-for="Create_date">
+      <input type="hidden" asp-for="Dernieremodification">
+      <div class="row">
+       <div class="col-xxl-4 col-sm-6 col-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                <label class="form-label" >Nom de la fiche</label>
+                    <input class="form-control inline-block" asp-for="Nom" type="text" />
+                </div>
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-xxl-4 col-sm-6 col-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                <label class="form-label" for="Nom-assurance">Assureur</label>
+                <input class="form-control inline-block" asp-for="Assurance" list="listeassu" type="text" autocomplete="off" />
+                <datalist id="listeassu">
+                    @foreach(var item in ViewBag.assurance){
+                        <option value="@item.Nom">@item.Niu</option>
+                    }
+                </datalist>
+                </div>
+                <span asp-validation-for="Assurance" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-xxl-4 col-sm-6 col-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <label class="form-label" for="Nom-assurance">Catégorie</label>
+                    <input class="form-control inline-block" asp-for="Categorie" list="listecat" type="text" autocomplete="off"/>
+                    <datalist id="listecat">
+                        @foreach(var item in ViewBag.cat){
+                            <option value="@item">@item</option>
+                        }
+                    </datalist>
+                </div>
+                <span asp-validation-for="Categorie" class="text-danger"></span>
+            </div>
+        </div>
+
+      </div>
+
+      <div class="mt-4 text-end">
+        <button class="btn btn-outline-secondary me-2">Annuler</button>
+        <button class="btn btn-primary">Enregistrer</button>
+      </div>
+      </form> 
+    </div>
+  </div>
+
+  <!-- App body ends -->
+

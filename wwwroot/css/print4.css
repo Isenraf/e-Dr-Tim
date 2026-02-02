@@ -1,0 +1,73 @@
+﻿@media print { 
+
+	.test {
+		page-break-after: always;
+	  }
+
+	button{
+		display: none;
+	}
+	.theme_btn{
+		display: none;
+	}
+	.filtre{
+		display: none;
+	}
+	#printed{
+		margin-top: 300px;
+	}
+
+	
+	
+	#left-sidebar{
+		width: 0px;
+		display: none;
+	}
+	#main-content{
+		width: 100%;
+		margin-top: 0px;
+		height: auto;
+	}
+	
+	.block-header{
+		display: none;
+	}
+	.pagination{
+		height: 500px;
+	}
+	.pagination2{
+		height: 400px;
+	}
+	html {
+		max-height: 50 mm;
+		max-width: 50 mm;
+		}
+
+	
+
+	 body {
+		background-image: url('/img1/trans.png');
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: center;
+	  } 
+	  * {
+		-webkit-print-color-adjust: exact !important;  
+		color-adjust: exact !important;                 
+		print-color-adjust: exact !important;           
+	}
+
+
+	div.divFooter {
+        position: fixed;
+        /* background: url(/img1/pied.png); */
+        height: 200px; /* put the image height here */
+        width: 90%; /* put the image width here */
+        bottom: 20px;
+    }
+	
+	
+
+  }
+
+

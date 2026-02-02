@@ -1,0 +1,471 @@
+@model BANA.Models.Stock
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                STOCK 
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+               <form asp-action="Create" enctype="multipart/form-data">
+            <!-- Row starts -->
+            <div class="row gx-3">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div
+                      class="d-flex align-items-center justify-content-between mt-2 gy-3"
+                    >
+                      <h5 class="card-title">
+                        Polyclinique de Poitiers<br /><h7
+                          style="font-size: 12px; color: #4c545e"
+                          >Création d'un Article</h7
+                        >
+                      </h5>
+
+                      <div class="d-flex flex-wrap gap-1">
+                        <div style="display: flex; gap: 10px">
+                          <button type="submit" class="btn btn-info">
+                            <i class="ri-save-3-line"></i> Enregistrer
+                          </button>
+                          <a href="stock-listing-articles.htmlticles.html"><div class="d-flex flex-wrap gap-2">
+                            <button type="button" onclick="history.back()" class="btn btn-outline-primary">
+                              fermer
+                            </button></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-header">
+                    <h5 class="card-title">Informations Générales</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row gap-3">
+                      <div class="row">
+                        <div class="col-md-6 col-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Nom de l'article
+                                <span class="text-danger">*</span></label>
+                              <input asp-for="Nom_article"  type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                              <span asp-validation-for="Nom_article" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Catégorie</label>
+                              <input asp-for="Categorie" list="categorie" type="text" class="form-control" style="height: 50px; border: #c3dff1"  autocomplete="off"/>
+                                <datalist id="categorie">
+                            @foreach (var item in ViewBag.Cat)
+                            {
+                            
+                            <option  value="@item">@item</option>
+                            
+                            }
+                        </datalist>
+                        <span asp-validation-for="Categorie" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="row row-cols-4 row-clos-md-2 row-cols-lg-4 g-3"
+                        >
+                          <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+                            <div class="card mb-3">
+                              <div class="form-control">
+                                <label class="form-label" for="">Type d'article
+                                  <span class="text-danger">*</span></label>
+                               <select asp-for="Type" class="form-select" id="">
+                                  <option asp-for="Type" value="Article Stockable" selected>Article Stockable</option>
+                                  <option asp-for="Type" value="Consomable">Consomable</option>
+                                  <option asp-for="Type" value="Service">Service</option>
+                                </select>
+                                <span asp-validation-for="Type" class="text-danger"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+                            <div class="card mb-3">
+                              <div class="form-control">
+                                <label class="form-label" for="">Prix de vente (FCFA)
+                                  <span class="text-danger">*</span></label>
+                                <input asp-for="Prix_vente" type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                                 <span asp-validation-for="Prix_vente" class="text-danger"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+                            <div class="card mb-3">
+                              <div class="form-control">
+                                <label class="form-label" for="">Prix d'achat</label>
+                                <input asp-for="Prix_achat" type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                                 <span asp-validation-for="Prix_achat" class="text-danger"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+                            <div class="card mb-3">
+                              <div class="form-control">
+                                <label class="form-label" for="">Emplacement
+                                  <span class="text-danger">*</span></label>
+                                <select asp-for="Lieu_stockage" class="form-control show-tick">
+                            @foreach (var item in ViewBag.emplacement)
+                            {
+                                <option asp-for="Lieu_stockage" value="@item.Nom">@item.Nom</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Lieu_stockage" class="text-danger"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <textarea asp-for="Description" rows="6" class="form-control ms-2" placeholder="Description de l'article..."></textarea>
+                          <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card my-2 px-2">
+                  <div class="card-header">
+                    <h5 class="card-title">Informations de Stockage</h5>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="row gap-3">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Unité de Stockage
+                              </label>
+                              <input asp-action="unité" type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                              <span asp-validation-for="unité" class="text-danger"></span>
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Quantité</label>
+                              <input asp-for="Quantitee" type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                              <span asp-validation-for="Quantitee" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Stock minimale</label>
+                              <input asp-for="Stock_minimal" class="form-control" style="height: 50px; border: #c3dff1"/>
+                               <span asp-validation-for="Stock_minimal" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card my-2 px-2">
+                  <div class="card-header">
+                    <h5 class="card-title">Autres Informations</h5>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="row gap-3">
+                      <div class="row">
+                        <div class="col-md-6 col-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Code barre</label>
+                              <input asp-for="codebarre" type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                               <span asp-validation-for="codebarre" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Référence</label>
+                              <input asp-for="Reference" type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                              <span asp-validation-for="Reference" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Compte Général achats</label>
+                              <input asp-for="Compte_general_entree" type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                              <span asp-validation-for="Compte_general_entree" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Compte Général ventes</label>
+                              <input asp-for="Compte_general_sortie" type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                               <span asp-validation-for="Compte_general_sortie" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div  id="nav-image" style="border: 2px dashed #ddd; padding: 20px; text-align: center; cursor: pointer; margin: 10px 0;">
+                          <p>Drag and drop a file here or click</p>
+                          <input style="height: 130px"  type="file"  id="imageUpload" accept="image/*" hidden/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </form>
+            </div>
+            <!-- Row ends -->
+          </div>
+
+
+@* <link href="/css/input_image.css" rel="stylesheet">
+  <!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                STOCK
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+      <div class="app-body">
+          <!-- Row starts -->
+          <div class="row gx-3">
+              <div class="col-sm-12">
+                  <div class="card">
+                      <div class="card-header">
+                          <div class="d-flex align-items-center justify-content-between mt-2 gy-3">
+                              <h5 class="card-title">Polyclinique de Poitiers<br /><h7 style="font-size: 12px; color: #4c545e">Création d'un Article</h7></h5>
+                              <div class="d-flex flex-wrap gap-1">
+                                  <div style="display: flex; gap: 10px">
+                                      <button type="submit" class="btn btn-info">
+                                          <i class="ri-save-3-line"></i> Enregistrer
+                                      </button>
+                                      <a href="listing-articles.html">
+                                          <div class="d-flex flex-wrap gap-2">
+                                              <button type="reset" class="btn btn-outline-primary">
+                                                  fermer
+                                              </button>
+                                      </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="card-header">
+                          <h5 class="card-title">Informations Générales</h5>
+                      </div>
+                      <div class="card-body">
+                        @if (ViewData["error"]!=null)
+                        {
+                          <div class="alert alert-danger" role="alert">
+                            Cette élément existe déjà !
+                          </div>
+                        }
+                          <div class="row gap-3">
+                              <div class="row">
+                                  <div class="col-md-6 col-12">
+                                      <div class="card mb-3">
+                                          <div class="form-control">
+                                              <label class="form-label" for="a2">Nom de l'article
+                                                  <span class="text-danger">*</span></label>
+                                              <input asp-for="Nom_article" class="form-control" style="height: 50px; border: #c3dff1" />
+                                              <span asp-validation-for="Nom_article" class="text-danger"></span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6 col-12">
+                                      <div class="card mb-3">
+                                          <div class="form-control">
+                                              <label class="form-label" for="a2">Catégorie</label>
+                                              <input asp-for="Categorie" list="categorie" class="form-control" style="height: 50px; border: #c3dff1" autocomplete="off" />
+                                              <datalist id="categorie">
+                                                  @foreach (var item in ViewBag.Cat)
+                                                  {
+                                                  
+                                                  <option  value="@item">@item</option>
+                                                  
+                                                  }
+                                              </datalist>
+                                              <span asp-validation-for="Categorie" class="text-danger"></span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row row-cols-4 row-clos-md-2 row-cols-lg-4 g-3">
+                                      <div class="">
+                                          <div class="card mb-3">
+                                              <div class="form-control">
+                                                  <label class="form-label" for="a2">Type d'article
+                                                      <span class="text-danger">*</span></label>
+                                                  <input type="text" class="form-control" style="height: 50px; border: #c3dff1" />
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="">
+                                          <div class="card mb-3">
+                                              <div class="form-control">
+                                                  <label class="form-label" for="a2">Prix de vente (FCFA)
+                                                      <span class="text-danger">*</span></label>
+                                                  <input type="text" class="form-control" style="height: 50px; border: #c3dff1" />
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="">
+                                          <div class="card mb-3">
+                                              <div class="form-control">
+                                                  <label class="form-label" for="a2">Prix d'achat</label>
+                                                  <input type="text" class="form-control" style="height: 50px; border: #c3dff1" />
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="">
+                                          <div class="card mb-3">
+                                              <div class="form-control">
+                                                  <label class="form-label" for="a2">Emplacement
+                                                      <span class="text-danger">*</span></label>
+                                                    <select class="form-select" asp-for="Type" style="height: 50px; border: #c3dff1">
+                                                        <option asp-for="Type" value="Article Stockable" selected>Article Stockable</option>
+                                                        <option asp-for="Type" value="Consomable">Consomable</option>
+                                                        <option asp-for="Type" value="Service">Service</option>
+                                                    </select>
+                                                     <span asp-validation-for="Type" class="text-danger"></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <textarea style="resize: none" rows="6" asp-for="Description" class="form-control ms-2" placeholder="Description de l'article..." name="Description"></textarea>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card my-2 px-2">
+                      <div class="card-header">
+                          <h5 class="card-title">Informations de Stockage</h5>
+                      </div>
+
+                      <div class="card-body">
+                          <div class="row gap-3">
+                              <div class="row">
+                                  <div class="col-lg-12">
+                                      <div class="card mb-3">
+                                          <div class="form-control">
+                                              <label class="form-label" for="a2">Unité de Stockage
+                                              </label>
+                                               <input asp-for="unité" class="form-control" style="height: 50px; border: #c3dff1" />
+                                              <span asp-validation-for="unité" class="text-danger"></span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6 col-12">
+                                      <div class="card mb-3">
+                                          <div class="form-control">
+                                              <label class="form-label" for="a2">Quantité
+                                              </label>
+                                              <input asp-for="Quantitee" class="form-control" style="height: 50px; border: #c3dff1" />
+                                              <span asp-validation-for="Quantitee" class="text-danger"></span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6 col-12">
+                                      <div class="card mb-3">
+                                          <div class="form-control">
+                                              <label class="form-label" for="a2">Catégorie</label>
+                                              <input type="text" class="form-control" style="height: 50px; border: #c3dff1" />
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card my-2 px-2">
+                      <div class="card-header">
+                          <h5 class="card-title">Autres Informations</h5>
+                      </div>
+
+                      <div class="card-body">
+                          <div class="row gap-3">
+                              <div class="row">
+                                  <div class="col-md-6 col-12">
+                                      <div class="card mb-3">
+                                          <div class="form-control">
+                                              <label class="form-label" for="a2">Code barre
+                                              </label>
+                                              <input type="text" class="form-control" style="height: 50px; border: #c3dff1" />
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6 col-12">
+                                      <div class="card mb-3">
+                                          <div class="form-control">
+                                              <label class="form-label" for="a2">Référence</label>
+                                              <input type="text" class="form-control" style="height: 50px; border: #c3dff1" />
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6 col-12">
+                                      <div class="card mb-3">
+                                          <div class="form-control">
+                                              <label class="form-label" for="a2">Compte Général achats</label>
+                                              <input type="text" class="form-control" style="height: 50px; border: #c3dff1" />
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6 col-12">
+                                      <div class="card mb-3">
+                                          <div class="form-control">
+                                              <label class="form-label" for="a2">Compte Général ventes</label>
+                                              <input type="text" class="form-control" style="height: 50px; border: #c3dff1" />
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div id="dropZone" style="border: 2px dashed #ddd;padding: 20px;text-align: center;cursor: pointer;margin: 10px 0;">
+                                      <p>Drag and drop a file here or click</p>
+                                      <input style="height: 130px" type="file" id="imageUpload" accept="image/*" hidden />
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- Row ends -->
+      </div>
+      </div> *@

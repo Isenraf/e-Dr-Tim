@@ -1,0 +1,628 @@
+@model BANA.Models.Facture
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">
+        Création Facture assurance
+      </li>
+    </ol>
+    <!-- Breadcrumb ends -->
+  </div>
+  <!-- App Hero header ends -->
+
+  <!-- App body start -->
+  <div class="app-body">
+    <div class="col-sm-12">
+
+      
+
+      <div class="card mb-3">
+        <div class="card-header">
+          <div class="d-flex flex-wrap gap-1">
+            <h5 class="card-title">@ViewBag.patient.Numero_dossier - @ViewBag.patient.Nom @ViewBag.patient.Prenom<br />
+            @if (Model.Type.Contains("proforma"))
+              {
+                <span>Edition Proforma,</span>
+              }else{
+                <span>Edition Facture,</span>
+              }
+            </h5>
+            <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">
+              <i class="ri-pie-chart-2-fill text-success fs-4"></i>
+              <span class="me-1 fw-semibold ps-1 total_patient">0</span>
+              <span class="text-success">FCFA</span>
+            </div>
+            <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">
+              <i class="ri-pie-chart-2-fill text-danger fs-4"></i>
+              <span class="me-1 fw-semibold ps-1 total_ass">0</span>
+              <span class="text-danger">FCFA</span>
+            </div>
+            <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">
+              <i class="ri-pie-chart-2-fill text-info fs-4"></i>
+              <span class="me-1 fw-semibold ps-1 tot">0</span>
+              <span class="text-info">FCFA</span>
+            </div>
+            
+          </div>
+        </div>
+
+          <div class="card-body">
+
+                 <div class="col-sm-12">
+              <div class="card">
+                <div class="body">
+                  <form>
+                    <input id="identifiant" type="hidden" value="0" />
+                    <input id="totalassurance" type="hidden"  />
+                    <input id="net_a_payer" type="hidden"  />
+                    <div class="form-group row">
+                     
+                       <div class="col-md-6">
+                            <div style="display: none;" class="form-group">
+                              <input style="border-color: #126aef;" type="text" id="numero_dossier" class="form-control" asp-for=Numero_dossier autocomplete="off">
+                            </div>
+
+                            
+                            <div class="col-12">
+                              <div class="input-group mb-4">
+                                <span class="input-group-text" style="width: 140px;">Prescripteur</span>
+                                <input style="border-color: #126aef;" type="text" asp-for="Medecin" class="form-control" list="docteur" id="prescripteur" placeholder="Prescripteur" autocomplete="off">
+                              </div>
+                            </div>
+
+                            <div class="colonneassurance col-12">
+                              <div class="input-group mb-4">
+                                <span class="input-group-text" style="width: 140px;">Matricule Patient</span>
+                                <input style="border-color: #126aef;" asp-for=Matricule_patient  id="a1" type="text" class="form-control" placeholder="Matricule Patient" autocomplete="off">
+                              </div>
+                            </div>
+
+                            <div class="colonneassurance col-12">
+                              <div class="input-group mb-4">
+                                <span class="input-group-text" style="width: 140px;">Matricule ADH</span>
+                                <input style="border-color: #126aef;" asp-for="MatriculeADH" id="a2" type="text" class="form-control" placeholder="Matricule ADH" autocomplete="off">
+                              </div>
+                            </div>
+
+                            <div class="colonneassurance col-12">
+                              <div class="input-group mb-4">
+                                <span class="input-group-text" style="width: 140px;">Date d'entrée</span>
+                                <input style="border-color: #126aef;" asp-for="Date_entree" id="a3" type="date" class="form-control" placeholder="Date d'entrée" autocomplete="off">
+                              </div>
+                            </div>
+
+                        </div>
+
+                        
+                        
+                        <div class="col-sm-6">
+                          @if(Model.Type.Contains("dentiste")){
+                            <input  type="hidden" id="target" value="dentiste_assurance">
+                          }else{
+                            <input  type="hidden" id="target" value="generique_assurance">
+                          }
+                            
+                            <input  type="hidden" id="montant_lettre_assurance">
+                            <input  type="hidden" id="montant_lettre_patient" >
+
+                            <div style="display: none;" id="assur" class="col-12">
+                              <div class="input-group mb-4">
+                                <span class="input-group-text" style="width: 140px;">Assureur</span>
+                                <input style="border-color: #126aef;" asp-for="Assureur" type="text" class="form-control" list="assurance"  id="assureur" placeholder="Selectionner l'assureur" autocomplete="off">
+                              </div>
+                            </div>
+
+                            <div  class="colonneassurance col-12">
+                              <div class="input-group mb-4">
+                                <span class="input-group-text"  style="width: 140px;">Assuré Principal</span>
+                                <input style="border-color: #126aef;" type="text" asp-for="assure_prin" class="form-control" id="a4"   placeholder="Assuré Principal" >
+                              </div>
+                            </div>
+
+                            <div  class="colonneassurance col-12">
+                              <div class="input-group mb-4">
+                                <span class="input-group-text" style="width: 140px;">Société</span>
+                                <input style="border-color: #126aef;" type="text" asp-for="Societe" class="form-control" id="a5"  placeholder="Société">
+                              </div>
+                            </div>
+
+                            <div  class="colonneassurance col-12">
+                              <div class="input-group mb-4">
+                                <span class="input-group-text" style="width: 140px;">Date de sortie</span>
+                                <input style="border-color: #126aef;" type="date" asp-for="Date_sortie" class="form-control" id="a6"   placeholder="Date de sortie">
+                              </div>
+                            </div>
+
+                          </div>
+                        
+                      
+
+                    </div>
+                     <div class="row clearfix">
+                                <div class="col-md-12">
+                                <div style="padding: 10px;">
+                                  <div class="table1">
+                                    <input style="font-weight: bold;color: #126aef;text-align: center;" id="titre1" class="form-control" type="text"  asp-for="Titre1">
+                                    <table class="table table-hover table-striped mb-5 inventory1">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: left;">#REF - DÉSIGNATION</th>
+                                                <th style="text-align: center;">COTE</th>
+                                                <th class="colonneassurance" style="display:none; text-align: center;">%</th>
+                                                <th class="colonneassurance" style="display:none; text-align: center;">PLAFOND</th>
+                                                <th style="text-align: right;">PRIX UNITAIRE</th>
+                                                <th style="text-align: center;">QUANTITE</th>
+                                                <th style="text-align: right;">MONTANT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          @for (int i = 0; i < @ViewBag.Lignes1.Count-1; i+=7)
+                                          {
+                                            string unitaire=ViewBag.Lignes1[i+4].Replace(" ","");
+                                            <tr class="tr_clone1">
+                                                <td style=""><a style="color: #FFF;" class="cut btn btn-primary gradient">-</a><a style="color: #FFF;" class="tr_clone_add1 btn btn-primary gradient">+</a><input value="@ViewBag.Lignes1[i]" style="border-color: #126aef;" contenteditable class="form-control service1" list="service1" autocomplete="off"></td>
+                                                <td style="text-align: center;"><input value="@ViewBag.Lignes1[i+1]" contenteditable style="border-color: #126aef;" class="form-control"></td>
+                                                <td class="colonneassurance"  style="display:none;"><input value="@ViewBag.Lignes1[i+2]" contenteditable style="border-color: #126aef;text-align: center;" class="form-control pourcent" type="number"></td>
+                                                <td class="colonneassurance"  style="display:none;"><input value="@ViewBag.Lignes1[i+3]" contenteditable style="border-color: #126aef;text-align: right;" class="form-control plafond" type="number"></td>
+                                                <td style="text-align: right"><input contenteditable class="form-control" type="number" value="@unitaire" style="border-color: #126aef;text-align: right;"></td>
+                                                <td style="" ><input style="border-color: #126aef;text-align: center" contenteditable class="form-control qte1" type="number" value="@ViewBag.Lignes1[i+5]"></td>
+                                                <td style="text-align: right;"><span>@ViewBag.Lignes1[i+6]</span><span data-prefix> FCFA</span></td>
+                                            </tr>
+                                          }
+                                        </tbody>
+                                    </table>
+                                     
+                                    <a class="add1 btn btn-primary gradient" style="color: #FFF;">+ Consultation</a>
+                                    <br/>
+                                  </div>
+                                  <div class="table2">
+                                    <input style="font-weight: bold;color: #126aef;text-align: center;" id="titre2" class="form-control" type="text"  asp-for="Titre2">
+                                    <table class="table table-hover table-striped mb-5 inventory2">
+                                        <thead>
+                                           <tr>
+                                                <th style="text-align: left;">#REF - DÉSIGNATION</th>
+                                                <th style="text-align: center;">COTE</th>
+                                                <th class="colonneassurance"  style="display:none; text-align: center;">%</th>
+                                                <th class="colonneassurance"  style="display:none; text-align: center;">PLAFOND</th>
+                                                <th style="width: 80px; text-align: right">PRIX UNITAIRE</th>
+                                                <th style="width: 80px; text-align: center">QUANTITE</th>
+                                                <th style="width: 80px; text-align: right">MONTANT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          @for (int i = 0; i < @ViewBag.Lignes2.Count-1; i+=7)
+                                          {
+                                            string unitaire=ViewBag.Lignes2[i+4].Replace(" ","");
+                                            <tr class="tr_clone2">
+                                                <td style=""><a style="color: #FFF;" class="cut btn btn-primary gradient">-</a><a style="color: #FFF;" class="tr_clone_add2 btn btn-primary gradient">+</a><input value="@ViewBag.Lignes2[i]" contenteditable style="border-color: #126aef;" class="form-control service2" list="service2" autocomplete="off"></td>
+                                                <td style="text-align: center;"><input value="@ViewBag.Lignes2[i+1]" contenteditable style="border-color: #126aef;" class="form-control"></td>
+                                                <td class="colonneassurance"  style="display:none;"><input value="@ViewBag.Lignes2[i+2]" contenteditable style="border-color: #126aef;text-align: center;" class="form-control pourcent" type="number"></td>
+                                                <td class="colonneassurance"  style="display:none;"><input contenteditable value="@ViewBag.Lignes2[i+3]" style="border-color: #126aef;text-align: right;" class="form-control plafond" type="number"></td>
+                                                <td style="text-align: right"><input contenteditable class="form-control" type="number" value="@unitaire" style="border-color: #126aef;text-align: right;"></td>
+                                                <td style="" ><input style="border-color: #126aef;text-align: center" contenteditable class="form-control qte2" type="number" value="@ViewBag.Lignes2[i+5]"></td>
+                                                <td style="text-align: right;"><span>@ViewBag.Lignes2[i+6]</span><span data-prefix> FCFA</span></td>
+                                            </tr>
+                                          }
+                                        </tbody>
+                                    </table>
+                                    
+                                    <a class="add2 btn btn-info gradient" style="color: #FFF;">+ Examens</a>
+                                     <br/>
+                                  </div>
+                                  <div class="table3">
+                                   <input style="font-weight: bold;color: #126aef;text-align: center;" id="titre3" class="form-control" type="text"  asp-for="Titre3">
+                                    <table class="table table-hover table-striped mb-5 inventory3">
+                                        <thead>
+                                             <tr>
+                                                <th style="text-align: left;">#REF - DÉSIGNATION</th>
+                                                <th style="text-align: center;">COTE</th>
+                                                <th class="colonneassurance"  style="display:none; text-align: center;">%</th>
+                                                <th class="colonneassurance"  style="display:none; text-align: center;">PLAFOND</th>
+                                                <th style="width: 80px; text-align: right">PRIX UNITAIRE</th>
+                                                <th style="width: 80px; text-align: center">QUANTITE</th>
+                                                <th style="width: 80px; text-align: right">MONTANT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          @for (int i = 0; i < @ViewBag.Lignes3.Count-1; i+=7)
+                                          {
+                                            string unitaire=ViewBag.Lignes3[i+4].Replace(" ","");
+                                            <tr class="tr_clone3">
+                                                <td style=""><a style="color: #FFF;" class="cut btn btn-primary gradient">-</a><a style="color: #FFF;" class="tr_clone_add3 btn btn-primary gradient">+</a><input value="@ViewBag.Lignes3[i]" contenteditable style="border-color: #126aef;" class="form-control service3" list="service3" autocomplete="off"></td>
+                                                <td style="text-align: center;"><input value="@ViewBag.Lignes3[i+1]" style="border-color: #126aef;" contenteditable class="form-control"></td>
+                                                <td class="colonneassurance"  style="display:none;"><input value="@ViewBag.Lignes3[i+2]" contenteditable style="border-color: #126aef;text-align: center;" class="form-control pourcent" type="number"></td>
+                                                <td class="colonneassurance"  style="display:none;"><input value="@ViewBag.Lignes3[i+3]" contenteditable style="border-color: #126aef;text-align: right;" class="form-control plafond" type="number"></td>
+                                                <td style="text-align: right"><input contenteditable class="form-control" type="number" value="@unitaire" style="border-color: #126aef;text-align: right;"></td>
+                                                <td style="" ><input style="border-color: #126aef;text-align: center" contenteditable class="form-control qte3" type="number" value="@ViewBag.Lignes3[i+5]"></td>
+                                                <td style="text-align: right;"><span>@ViewBag.Lignes3[i+6]</span><span data-prefix> FCFA</span></td>
+                                            </tr>
+                                          }
+                                        </tbody>
+                                    </table>
+                                     <a class="add3 btn btn-secondary gradient" style="color: #FFF;">+ Actes Médicaux</a>
+                                     <br/>
+                                    </div>
+                                    <div class="table4">
+                                    <input style="font-weight: bold;color: #126aef;text-align: center;" id="titre4" class="form-control" type="text"  asp-for="Titre4">
+                                    <table class="table table-hover table-striped mb-5 inventory4">
+                                        <thead>
+                                             <tr>
+                                                <th style="text-align: left;">#REF - DÉSIGNATION</th>
+                                                <th style="text-align: center;">COTE</th>
+                                                <th class="colonneassurance"  style="display:none; text-align: center;">%</th>
+                                                <th class="colonneassurance"  style="display:none; text-align: center;">PLAFOND</th>
+                                                <th style="width: 80px; text-align: right">PRIX UNITAIRE</th>
+                                                <th style="width: 80px; text-align: center">QUANTITE</th>
+                                                <th style="width: 80px; text-align: right">MONTANT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          @for (int i = 0; i < @ViewBag.Lignes4.Count-1; i+=7)
+                                          {
+                                            string unitaire=ViewBag.Lignes4[i+4].Replace(" ","");
+                                            <tr class="tr_clone4">
+                                                <td style=""><a style="color: #FFF;" class="cut btn btn-primary gradient">-</a><a style="color: #FFF;" class="tr_clone_add4 btn btn-primary gradient">+</a><input value="@ViewBag.Lignes4[i]" style="border-color: #126aef;" contenteditable class="form-control service4" list="service4" autocomplete="off"></td>
+                                                <td style="text-align: center;"><input value="@ViewBag.Lignes4[i+1]" style="border-color: #126aef;" contenteditable class="form-control"></td>
+                                                <td class="colonneassurance"  style="display:none;"><input value="@ViewBag.Lignes4[i+2]" contenteditable style="border-color: #126aef;text-align: center;" class="form-control pourcent" type="number"></td>
+                                                <td class="colonneassurance"  style="display:none;"><input value="@ViewBag.Lignes4[i+3]" contenteditable style="border-color: #126aef;text-align: right;" class="form-control plafond" type="number"></td>
+                                                <td style="text-align: right"><input contenteditable class="form-control" type="number" value="@unitaire" style="border-color: #126aef;text-align: right;"></td>
+                                                <td style="" ><input style="border-color: #126aef;text-align: center" contenteditable class="form-control qte4" type="number" value="@ViewBag.Lignes4[i+5]"></td>
+                                                <td style="text-align: right;"><span>@ViewBag.Lignes4[i+6]</span><span data-prefix> FCFA</span></td>
+                                            </tr>
+                                          }
+                                        </tbody>
+                                    </table>
+                                    <a class="add4 btn btn-warning gradient" style="color: #FFF;">+ Médicaments</a>
+                                    <br>
+                                  </div>
+                                    <table class="table" style="font-size: 15px;">
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="4" style="width: 50%;"><i class="fa fa-bullseye" aria-hidden="true"></i> <strong class="text-primary" id="montant_lettre"></strong>
+                                                </td>
+                                                <td class="text-right">
+                                                <span>Montant Total Ht: </span>
+                                                </td>
+                                                <td class="text-right"><strong class="text-primary" id="total_ht"></strong> <strong class="text-primary"> FCFA</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                </td>
+                                                <td class="text-right">
+                                                <span>TVA:
+                                                   
+                                                </span>
+                                                </td>
+                                                <td class="text-right"> <strong class="text-primary">Exonérée</strong><strong class="text-primary"> </strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                </td>
+                                                <td class="text-right">
+                                                <span>TAXE IR:
+                                                   
+                                                </span>
+                                                </td>
+                                                <td class="text-right"> <input class="form-control" style="border-color: #126aef;text-align: right;" id="taxe" type="number" value="0"></td>
+                                            </tr>
+                                            @if (ViewBag.user.Type_de_compte=="administrateur")
+                                            {
+                                              <tr>
+                                                  <td colspan="4">
+                                                  </td>
+                                                  <td class="text-right">
+                                                  <span>REMISE:
+                                                    
+                                                  </span>
+                                                  </td>
+                                                  <td class="text-right">  <input class="form-control" style="border-color: #126aef;text-align: right;" id="remise" type="number" value="0"></td>
+                                              </tr> 
+                                              
+                                            }
+                                            <tr>
+                                                <td colspan="4"><strong class="text-primary" id="montant_lettre"></strong>
+                                                </td>
+                                                <td class="text-right">
+                                                <span>Montant Total TTC: </span>
+                                                </td>
+                                                <td class="text-right"><strong class="text-primary" id="total_ttc"></strong> <strong class="text-primary"> FCFA</strong></td>
+                                            </tr>
+                                             <tr>
+                                                <td colspan="4">
+                                                </td>
+                                                <td class="text-right">
+                                                <span>Base Imposable:
+                                                    
+                                                </span>
+                                                </td>
+                                                <td class="text-right"><strong class="text-primary total_assht" >0</strong><strong class="text-primary"> FCFA</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                </td>
+                                                <td class="text-right">
+                                                <span>Net à payer par l'assurances:
+                                                    
+                                                </span>
+                                                </td>
+                                                <td class="text-right"><strong class="text-primary total_ass" >0</strong><strong class="text-primary"> FCFA</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                </td>
+                                                <td class="text-right">
+                                                <span>Ticket Modérateur:
+                                                    
+                                                </span>
+                                                </td>
+                                                <td class="text-right"><strong id="mod_patient" class="text-primary total_patient"></strong><strong class="text-primary"> FCFA</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                </td>
+                                                <td class="text-right">
+                                                <span>Complément Patient:
+                                                    
+                                                </span>
+                                                </td>
+                                                <td class="text-right"><strong id="com_patient" class="text-primary total_patient"></strong><strong class="text-primary"> FCFA</strong></td>
+                                            </tr>
+
+                                             <tr>
+                                                <td colspan="4">
+                                                </td>
+                                                <td class="text-right">
+                                                <span>Net à payer par le patient:
+                                                    
+                                                </span>
+                                                </td>
+                                                <td class="text-right"><strong id="tot_patient" class="text-primary total_patient"></strong><strong class="text-primary"> FCFA</strong></td>
+                                            </tr>
+                                            
+                                            
+                                        </tfoot>
+                                    </table>
+                                   
+                                </div>
+                                </div>
+                            </div>
+                            
+                          
+                  </form>
+                          <div class="row clearfix">
+                           <div id="valinc" style="display:none" class="alert alert-danger" role="alert">
+                                  erreur: valeurs incorrectes, entrez des valeurs positives
+                                </div>
+                                <div class="col-md-12 text-right" style="text-align: right;">
+                                <button onclick="history.back()" type="button" class="btn btn-warning">
+                                    <i class="fa fa-close"></i> Annuler</button>
+                                <button id="saveFacture2" type="button" class="btn btn-primary btn-primary">
+                                    <i class="fa fa-save"></i> Enregistrer</button>
+                                </div>
+                            </div>
+                </div>
+              </div>
+            </div>
+
+
+          
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- App body end -->
+  
+
+
+
+
+        <div style="position: fixed;top: 72px; right: 30%;z-index: 100;" class="alert alert-success fixme" role="alert">
+          <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">
+                  <i class="ri-pie-chart-2-fill text-primary fs-4"></i>
+                  <span class="me-1 fw-semibold ps-1 total_patient">0</span>
+                  <span class="text-primary">FCFA</span>
+                </div>
+                <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">
+                  <i class="ri-pie-chart-2-fill text-danger fs-4"></i>
+                  <span class="me-1 fw-semibold ps-1 total_ass">0</span>
+                  <span class="text-danger">FCFA</span>
+                </div>
+                <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">
+                  <i class="ri-pie-chart-2-fill text-info fs-4"></i>
+                  <span class="me-1 fw-semibold ps-1 tot">0</span>
+                  <span class="text-info">FCFA</span>
+                </div>
+              </div>
+        </div>
+        
+        
+
+
+ <datalist id="service1">
+    @foreach (var item in ViewBag.consultation)
+    {
+         
+        <option  value="@item.Nom"><span class="separateur">@((int)item.Montant)</span> FCFA</option>
+
+    }
+</datalist>
+
+<datalist id="service2">
+    @foreach (var item in ViewBag.examen)
+    {
+         
+        <option  value="@item.Nom"><span class="separateur">@((int)item.Montant)</span> FCFA</option>
+
+    }
+</datalist>
+
+<datalist id="service3">
+    @foreach (var item in ViewBag.actes)
+    {
+         
+        <option  value="@item.Nom"><span class="separateur">@((int)item.Montant)</span> FCFA</option>
+
+    }
+</datalist>
+
+<datalist id="service4">
+    @foreach (var item in ViewBag.Pharmacie)
+    {
+         
+        <option  value="@item.Nom_article"><span class="separateur">@((int)item.Prix_vente)</span> FCFA, Stock: @item.Quantitee</option>
+
+    }
+</datalist>
+
+
+<datalist id="assurance">
+    @foreach (var item in ViewBag.assurances)
+    {
+        <option  value="@item.Nom">@item.Nom</option>
+    }
+</datalist>
+
+<datalist id="docteur">
+    @foreach (var item in ViewBag.doctors)
+    {
+       <option  value="@item.Nom">@item.Specialite</option>
+    }
+</datalist>
+
+<script>
+  function getDate(){
+    var today = new Date();
+
+document.getElementById("a3").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+
+
+}
+</script>
+
+
+
+<style>
+/* content editable */
+
+*[contenteditable] { border-radius: 0.25em; min-width: 1em; outline: 0; }
+
+*[contenteditable] { cursor: pointer; }
+
+*[contenteditable]:hover, *[contenteditable]:focus, td:hover *[contenteditable], td:focus *[contenteditable], img.hover { background: #DEF; box-shadow: 0 0 1em 0.5em #DEF; }
+
+span[contenteditable] { display: inline-block; }
+table { font-size: 75%; width: 100%; }
+th, td { border-width: 1px; padding: 0.5em; position: relative; text-align: left; }
+
+/* page */
+
+/* article */
+
+article, article address, table.meta, table.inventory { margin: 0 0 3em; }
+article:after { clear: both; content: ""; display: table; }
+article h1 { clip: rect(0 0 0 0); position: absolute; }
+
+article address { float: left; font-size: 125%; font-weight: bold; }
+
+/* table meta & balance */
+
+table.meta, table.balance { float: right; width: 36%; }
+table.meta:after, table.balance:after { clear: both; content: ""; display: table; }
+
+
+
+/* table items */
+table{font-size: 12px;}
+table.inventory1 { clear: both; width: 98%; margin-left: 20px;}
+table.inventory1 th { font-weight: bold; text-align: center; }
+
+table.inventory2 { clear: both; width: 98%; margin-left: 20px;}
+table.inventory2 th { font-weight: bold; text-align: center; }
+
+table.inventory3 { clear: both; width: 98%; margin-left: 20px;}
+table.inventory3 th { font-weight: bold; text-align: center; }
+
+table.inventory4 { clear: both; width: 98%; margin-left: 20px;}
+table.inventory4 th { font-weight: bold; text-align: center; }
+
+table.inventory1 td:nth-child(1) { width: 30%; }
+table.inventory1 td:nth-child(2) { width: 9%; }
+table.inventory1 td:nth-child(3) { text-align: right; width: 9%; }
+table.inventory1 td:nth-child(4) { text-align: center; width: 13%; }
+table.inventory1 td:nth-child(5) { text-align: right; width: 13%; }
+table.inventory1 td:nth-child(6) { text-align: right; width: 9%; }
+
+
+table.inventory2 td:nth-child(1) { width: 30%; }
+table.inventory2 td:nth-child(2) { width: 9%; }
+table.inventory2 td:nth-child(3) { text-align: right; width: 9%; }
+table.inventory2 td:nth-child(4) { text-align: center; width: 13%; }
+table.inventory2 td:nth-child(5) { text-align: right; width: 13%; }
+table.inventory2 td:nth-child(6) { text-align: right; width: 9%; }
+
+table.inventory3 td:nth-child(1) { width: 30%; }
+table.inventory3 td:nth-child(2) { width: 9%; }
+table.inventory3 td:nth-child(3) { text-align: right; width: 9%; }
+table.inventory3 td:nth-child(4) { text-align: center; width: 13%; }
+table.inventory3 td:nth-child(5) { text-align: right; width: 13%; }
+table.inventory3 td:nth-child(6) { text-align: right; width: 9%; }
+
+table.inventory4 td:nth-child(1) { width: 30%; }
+table.inventory4 td:nth-child(2) { width: 9%; }
+table.inventory4 td:nth-child(3) { text-align: right; width: 9%; }
+table.inventory4 td:nth-child(4) { text-align: center; width: 13%; }
+table.inventory4 td:nth-child(5) { text-align: right; width: 13%; }
+table.inventory4 td:nth-child(6) { text-align: right; width: 9%; }
+
+
+
+
+/* javascript */
+
+.add1,.add2,.add3,.add4, .cut,.tr_clone_add1,.tr_clone_add2,.tr_clone_add3,.tr_clone_add4
+{
+	display: block;
+	font-size: .8rem;
+	padding: 0.25em 0.5em;	
+	float: left;
+	text-align: center;
+}
+.cut,.tr_clone_add1,.tr_clone_add2,.tr_clone_add3,.tr_clone_add4{
+    width: 25px;
+}
+
+
+.add1 { margin: -2.5em 0 0; }
+.add2 { margin: -2.5em 0 0; }
+.add3 { margin: -2.5em 0 0; }
+.add4 { margin: -2.5em 0 0; }
+
+.add:hover { background: #89e114; }
+
+.cut { opacity: 0; position: absolute; top: 0; left: -1.9em; color: #FFF; }
+.cut,.tr_clone_add1,.tr_clone_add2,.tr_clone_add3,.tr_clone_add4 { -webkit-transition: opacity 100ms ease-in; }
+.tr_clone_add1,.tr_clone_add2,.tr_clone_add3,.tr_clone_add4 { opacity: 0; position: absolute; top: 2.5em; left: -1.9em; color: #FFF; }
+
+tr:hover .cut { opacity: 1; }
+tr:hover .tr_clone_add1 { opacity: 1; }
+tr:hover .tr_clone_add2 { opacity: 1; }
+tr:hover .tr_clone_add3 { opacity: 1; }
+tr:hover .tr_clone_add4 { opacity: 1; }
+
+</style>
+
+

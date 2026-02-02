@@ -1,0 +1,651 @@
+@model BANA.Models.Resultat
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+
+
+
+
+<style>
+  .card{
+    @* min-height: 40cm; *@
+    @* background-image: url('/img1/trans1.png'); *@
+    background-repeat: no-repeat;
+		background-position-x: center;
+    background-position-y: 13cm;
+  }
+
+
+.main {
+  font-family: "Manrope", sans-serif;
+  background: #ffffff;
+  width: 100%;
+ 
+  position: relative;
+ 
+}
+* {
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  transition: all ease 0.2s;
+}
+.container {
+  max-width: 840px;
+  width: 100%;
+  padding-right: var(--bs-gutter-x, 0.75rem);
+  padding-left: var(--bs-gutter-x, 0.75rem);
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+}
+.page-hed {
+  background: #00a852;
+  border-radius: 8px;
+  padding: 20px 30px;
+}
+.page-hed h4 {
+  color: #bdffdd;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 44px;
+}
+.page-hed h1 {
+  color: #ffffff;
+  font-weight: 800;
+  @* font-size: 48px; *@
+  @* line-height: 66px; *@
+}
+.patient-card {
+  padding-top: 60px;
+  display: inline-flex;
+}
+.patient-img {
+  margin-right: 36px;
+}
+.patient-cont {
+  background: #e8f0ff;
+  border-radius: 8px;
+  padding: 20px;
+}
+.patient-cont h5 {
+  color: #00a852;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 30px;
+  margin-bottom: 20px;
+}
+.patient-cont ul {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+}
+.patient-cont li {
+  padding-right: 23px;
+  display: flex;
+}
+.patient-cont li svg {
+  margin-right: 10px;
+}
+.patient-cont li p {
+  color: #000000;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  flex: 1;
+}
+.patient-cont li:last-child {
+  padding-right: 0px;
+}
+.patient-cont li:first-child {
+  max-width: 280px;
+}
+.step-card {
+  @* padding-top: 80px; *@
+}
+.step-head {
+  margin-bottom: 20px;
+}
+.step-head h5 {
+  color: #00a852;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 30px;
+}
+.step-head h5 span {
+  width: 42px;
+  height: 42px;
+  background: #00a852;
+  border-radius: 42px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 42px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+}
+.step-in {
+  display: inline-flex;
+}
+.step-cont {
+  display: flex;
+}
+.step-cont-box {
+  background: #e8f0ff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-right: 17px;
+}
+.step-cont-box:last-child {
+  margin-right: 25px;
+  width: 290px;
+}
+.step-cont-box h6 {
+  color: #000000;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  margin-bottom: 5px;
+}
+.step-cont-box li {
+  color: #000000;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+  display: inline-flex;
+  width: 100%;
+  position: relative;
+  padding-left: 20px;
+}
+.step-cont-box li i {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+}
+.step-cont-box li::after {
+  position: absolute;
+  content: "";
+  top: 13px;
+  left: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #000;
+}
+.step-cont-box ul {
+  margin-bottom: 23px;
+}
+.step-cont-box a {
+  background: #00a852;
+  border-radius: 8px;
+  display: inline-block;
+  padding: 10px 10px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+}
+.step-cont-box a i {
+  width: 24px;
+  height: 24px;
+  background: #00a852;
+  border-radius: 24px;
+  display: inline-block;
+  text-align: center;
+  line-height: 24px;
+  margin-left: 9px;
+}
+.step-cont-box a:hover,
+.step-cont-box a.toggle-fix {
+  background: #ed4875;
+  box-shadow: 0px 12px 24px rgb(209 50 93 / 40%);
+}
+.step-cont-box a i svg {
+  top: 1px;
+  position: relative;
+}
+.step-cont-box a:hover i,
+.step-cont-box a.toggle-fix i {
+  background: #fff;
+  transition: 0.2s;
+  transform: rotateZ(45deg);
+}
+.step-cont-box a:hover i svg path,
+.step-cont-box a.toggle-fix i svg path {
+  stroke: #00a852;
+}
+.popuo-card {
+  width: 318px;
+  background: #ffebf0;
+  box-shadow: 0px 12px 24px rgb(208 126 148 / 40%);
+  border-radius: 8px;
+  padding: 12px 12px 12px 7px;
+  position: absolute;
+  z-index: 9;
+}
+.show-popup {
+  display: none;
+}
+.popuo-card ul {
+  margin-bottom: 0;
+}
+.popuo-card li {
+  display: inline-block;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+  margin-bottom: 7px;
+}
+.popuo-card li:last-child {
+  margin-bottom: 0px;
+}
+.popuo-card li::after {
+  top: 8px;
+}
+.step-img {
+  margin-top: 10px;
+}
+.step1 .step-cont .step-cont-box:last-child .popuo-card {
+  width: 230px;
+}
+.step-card.step2 {
+  padding-top: 76px;
+}
+.step-card.step2 .step-img {
+  margin-top: 0;
+}
+.step-card.step2 .step-head .step-cont-box {
+  padding: 0;
+  margin: 0;
+  width: 260px;
+  background: transparent;
+}
+.step-card.step2 .step-head {
+  display: inline-flex;
+  width: 100%;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.popuo-card h6 {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+}
+.step-card.step2 .popuo-card {
+  width: 250px;
+}
+.step2-cont-box {
+  width: 280px;
+}
+.step2-cont-box .step-cont-box {
+  margin-right: 0;
+  width: 100%;
+}
+.polygon-icon {
+  text-align: center;
+  padding: 5px 0;
+}
+.title-btn {
+  background: #aac7ff;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 6px;
+}
+.title-btn h5 {
+  color: #000000;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+}
+.dived-card {
+  display: flex;
+  width: 100%;
+}
+.dived-card-in {
+  flex: 1;
+  text-align: center;
+}
+.dived-card-in p {
+  color: #000000;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
+.dived-card-in svg {
+  margin: 12px 0 5px 0;
+}
+.step2-in {
+  margin-left: 25px;
+  margin-top: 15px;
+}
+.step2-cont-box .step-cont-box ul {
+  margin-bottom: 14px;
+}
+.step-card.step3 {
+  padding-top: 90px;
+  padding-left: 70px;
+}
+.step-card.step3 .step-cont {
+  flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 478px;
+}
+.step-card.step3 .step-cont .step-cont-box {
+  margin: 0 0 13px 0;
+  padding: 20px 20px 11px 20px;
+}
+.step-card.step3 .step-cont .step-cont-box:last-child {
+  padding: 0;
+  background: transparent;
+  width: 100%;
+}
+.step-card.step3 .step-img {
+  margin: 0;
+  min-width: 255px;
+  text-align: center;
+}
+.step-card.step3 .step-cont .title-btn {
+  margin-bottom: 12px;
+}
+.step-card.step3 .popuo-card {
+  width: 840px;
+}
+.popuo-divider {
+  display: flex;
+}
+.popuo-card-divider {
+  border-right: 1px solid #ffb3cb;
+  flex: 1;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+.popuo-card-divider:last-child {
+  border-right: 0px;
+  padding-right: 0px;
+  margin-right: 0px;
+}
+.step-border {
+  position: absolute;
+  bottom: 170px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.step-border svg {
+  width: 680px;
+}
+
+</style>
+
+
+
+<link rel="stylesheet" media="print" href="/css/print.css">
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">
+        Détails Résultat
+      </li>
+    </ol>
+    <!-- Breadcrumb ends -->
+  </div>
+  <!-- App Hero header ends -->
+<input type="hidden" value="@Model.Id" id="identifiant"/>
+
+
+  <!-- App body start -->
+  <div class="app-body">
+
+    <div  style="margin-bottom: 20px;background-color: #126aef12;padding: 10px;border-radius: 10px;text-align: right;" class="">
+        <div class="">
+                  
+                    
+                    <button class="btn btn-outline-secondary" onclick="location.href='/Resultat/Details/@Model.Id';">
+                        <i class="fa fa-previous"></i>Cpte Rendu</button>
+                    <button type="button" class="btn btn-outline-secondary" title="Send Invoice">
+                      <i class="fa fa-envelope"></i>
+                    </button>
+                    
+                    
+                    @if (Model.Categorie=="Imagerie Médicale")
+                    {
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Imagerie?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }else{
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Labo?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }
+
+                     
+                       <button class="btn btn-primary theme-bg gradient" id="printResultat1">
+                          <i class="fa fa-print"></i> A4</button>
+
+                        <button class="btn btn-primary theme-bg gradient" id="printResultat2">
+                          <i class="fa fa-print"></i> A5</button>
+                    
+
+        </div>
+      </div>
+
+
+
+    <div class="col-sm-12">
+
+          <div class="row clearfix">
+            
+            <div class="col-lg-12">
+              <div id="tdt1" class="card card2">
+                
+                  <div class="col-lg-12">
+              <div id="tdt1" class="card">
+                <div style="padding-top: 10px;" id="adrienn" class="myDivToPrint">
+                  @* <br><br><br><br><br><br><br><br><br><br><br> *@
+                  <img src="/img1/p1.png" style="display: block;margin-left: auto;margin-right: auto;" id="logopp">
+                  
+
+                  <div class="main">
+                    <div class="container">
+                      <div class="page-hed">
+                        @if(Model.Categorie=="Analyse Médicale"){
+                        <h4>RÉSULTAT EXAMEN</h4>
+                        <div class="container text-center">
+                          <div style="text-align: left;" class="row align-items-start">
+                            @foreach(var item in ViewBag.resultats){
+                            @if(item.valide_par!=null){
+                               <div style="color: white;" class="col-4">
+                              ✅ @item.Nom
+                              </div>
+                            }else{
+                              <div style="color: white;" class="col-4">
+                              ☑️ @item.Nom
+                              </div>
+                            }
+                           
+                          }
+                          </div>
+                        </div>
+                        <ul>
+                          
+                          
+                        </ul>
+                       
+                        }else{
+                          <h4>RÉSULTAT EXAMEN</h4>
+                          <h1>@Model.Nom</h1>
+                        }
+                        
+                      </div>
+                      <div class="patient-card">
+                        <div class="patient-img">
+                          @if(Model.Genre=="M"){<img width="162" height="162" src="/img/pm.png" alt="">}else{<img width="162" height="162" src="/img/pf.png" alt="">}
+                          
+                        </div>
+                        <div class="patient-cont">
+                          <h5>@Model.NomPatient</h5>
+                          <ul>
+                            <li>
+                               <i class="fa fa-child" aria-hidden="true" style="color: #02a952;font-size: 20px;"></i>
+                              <p><strong>&nbsp;&nbsp;Âge patient(e)</strong><br>&nbsp;&nbsp;@((int)((DateTime.Now-Model.Date_de_naissance).TotalDays/365)) ans  @((int)(((DateTime.Now-Model.Date_de_naissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-Model.Date_de_naissance).TotalDays)%365)%30) jours</p>
+                            </li>
+                            <li>
+                              <i class="fa fa-venus-mars" aria-hidden="true" style="color: #02a952;font-size: 20px;"></i> 
+                             <p><strong>&nbsp;&nbsp;Sexe patient(e)</strong><br>&nbsp;&nbsp;@Model.Genre</p>
+                            </li>
+                            <li>
+                              <i class="fa fa-phone" aria-hidden="true" style="color: #02a952;font-size: 20px;"></i> 
+                              <p><strong>&nbsp;&nbsp;Téléphone</strong><br>&nbsp;&nbsp;@Model.Telephone_patient</p>
+                            </li>
+                          </ul>
+                        </div>
+
+                         <div style="margin-left: 20px;">
+                            <div  id="qrcode"></div>
+                            <small style="color: #000000;">Édité le @Model.Date_de_finalisation, <br> par @Model.fait_par</small>
+                        </div>
+                      </div>
+                     
+                  <input  id="text" type="text" value="https://www.polycliniquedepoitiers.com/Resultat/Create" style="display: none;" />
+                  <br><br>
+                   <div  class="step-card step1">
+                        <div class="step-head">
+                          <p><span><i class="fa fa-globe" aria-hidden="true"></i></span> www.polycliniquedepoitiers.com <span>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-map-marker" aria-hidden="true"></i></span> Sise à vallé Trois Boutiques ( entre Feu Rouge BESSENGUE et rond point Deido) Douala-Cameroun <br> <span><i class="fa fa-phone" aria-hidden="true"></i></span> Tél: 233410151/ 690073467/ 675018191/ 656238323/ 680586697/ 677459997</p>
+                        </div>
+                      </div>
+
+                    
+                </div>
+
+
+                  
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+        <input type="hidden" asp-for="Id" id="identifiant_result">
+
+      <!-- App body end -->
+
+
+      
+
+<style>
+  /* Modale */
+      .modal, .modal2{
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      }
+
+      .modal-header {
+      padding: 10px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      }
+
+      .modal-body {
+      flex: 1;
+      overflow: hidden;
+      }
+
+      .modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .modal2 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      }
+</style>
+
+<!-- Modal -->
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+    <span>📄 Couverture Résultat @Model.NomPatient </span>
+    <button class="close-btn" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+    <iframe id="target" src=""></iframe> <!-- Remplace par ton PDF -->
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    const modal = document.getElementById('pdfModal');
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.getElementById("target").setAttribute("src", "");
+    }
+
+    // Fermer si on clique en dehors du contenu
+    window.onclick = event => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+</script>
+

@@ -1,0 +1,1792 @@
+@model BANA.Models.User
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">
+                Utilisateurs
+            </li>
+        </ol>
+        <!-- Breadcrumb ends -->
+    </div>
+    <!-- App Hero header ends -->
+
+    <!-- app body start -->
+    <div class="app-body">
+        <div class="card py-3 px-3">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                   <input id="ident" type="hidden" asp-for="Id" />
+                   <input type="hidden" asp-for="Create_date" />
+                   <input type="hidden" asp-for="Lastconnetion" />
+                   <input type="hidden" asp-for="Img" />
+                   <input type="hidden" asp-for="Img" />
+                <div class="row">
+                    
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+
+                        <div class="card-header">
+                            <h5>Informations Utilisateurs</h5>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="card mb-3">
+                                <div class="form-control">
+                                    <label class="form-label" for="a2">Nom d'utilisateur<span class="text-danger">*</span></label>
+                                    <input placeholder="exemple: Adrien" asp-for="nom" class="form-control"  style="height: 50px; border: #c3dff1;" />
+                                    <span asp-validation-for="nom" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card mb-3">
+                                <div class="form-control">
+                                    <label class="form-label" for="a2">Email </label>
+                                    <input placeholder="exemple: donaldtrump@gmail.com" asp-for="Email" class="form-control" style="height: 50px; border: #c3dff1;" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card mb-3">
+                                <div class="form-control">
+                                    <label class="form-label" for="a2">Sexe</label>
+                                    <div class="input-group">
+                                        <select asp-for="Genre" class="form-select" id="a9" style="height: 50px; border: #c3dff1;">
+                                           <option asp-for="Genre" value="Homme" selected>Homme</option>
+                                            <option asp-for="Genre" value="Femme">Femme</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card mb-3">
+                                <div class="form-control">
+                                    <label class="form-label" for="a2">Mot de passe </label>
+                                    <input asp-for="Password" class="form-control" style="height: 50px; border: #c3dff1;" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        @* <div class="col">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input mon-checkbox" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                            <label class="form-check-label" for="flexRadioDefault1">Stagiaire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input mon-checkbox" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                            <label class="form-check-label" for="flexRadioDefault1">Assistant</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input mon-checkbox" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                            <label class="form-check-label" for="flexRadioDefault1">Chef de Mission</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input mon-checkbox" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                            <label class="form-check-label" for="flexRadioDefault1">IT</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> *@
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="card-header">
+                            <h5>Droits d'accès</h5>
+                        </div>
+                        <div class="col">
+                            <div class="card mb-3">
+                                <div class="form-control">
+                                    <label class="form-label" for="a2">Entreprise</label>
+                                    <div class="input-group">
+                                        <select class="form-select" asp-for="Societe" style="height: 50px; border: #c3dff1;">
+                                            <option asp-for="Societe" value="Polyclinique de Poitiers">Polyclinique de Poitiers</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card mb-3">
+                                <div class="form-control">
+                                    <label class="form-label" for="a2">Département</label>
+                                    <input placeholder="exemple: Comptabilité" asp-for="Departement" class="form-control" style="height: 50px; border: #c3dff1;" />
+                                    <span asp-validation-for="Departement" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card mb-3">
+                                <div class="form-control">
+                                    <label class="form-label" for="a2">Type de compte</label>
+                                    <div class="input-group">
+                                        <select class="form-select" asp-for="Type_de_compte" style="height: 50px; border: #c3dff1;">
+                                            <option asp-for="Type_de_compte" value="Utilisateur">Utilisateur</option>
+                                            <option asp-for="Type_de_compte" value="Gestionnaire">Gestionnaire</option>
+                                            <option asp-for="Type_de_compte" value="Administrateur">Administrateur</option>
+                                            <option asp-for="Type_de_compte" value="Super-admin">Super-admin</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="card mb-3">
+                                <div class="form-control">
+                                    <label class="form-label" for="a2">Confirmer le Mot de passe </label>
+                                    <input asp-for="ConfirmPassword" class="form-control" style="height: 50px; border: #c3dff1;" />
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                <input type="hidden" id="accm" asp-for="Access_module" value="Stagiaire" />
+                <!-- Row starts -->
+                <div class="row gx-3">
+                    <div class="col-sm-12">
+                        <div class="accordion mb-3" id="accordionSpecialTitle">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpecialTitleOne" aria-expanded="true" aria-controls="collapseSpecialTitleOne">
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Tableau de bord</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleOne" class="accordion-collapse collapse show" aria-labelledby="headingSpecialTitleOne" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("A1")){
+                                                <input class="form-check-input mon-checkbox" type="checkbox" value="A1" checked/>
+                                            }else{
+                                                <input class="form-check-input mon-checkbox" type="checkbox" value="A1"  />
+                                            }
+                                            <label class="form-check-label" for="check-tbd-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("A2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="A2"  checked />
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="A2" />
+                                            }
+                                            <label class="form-check-label" for="check-tbd-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("A3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="A3"  checked  />
+                                             }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="A3"  />
+                                            }
+                                            <label class="form-check-label" for="check-tbd-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("A4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="A4"  checked  />
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="A4"  />
+                                            }
+                                            <label class="form-check-label" for="check-tbd-supprimer">Supprimer</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpecialTitleTwo" aria-expanded="false" aria-controls="collapseSpecialTitleTwo">
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Dentiste</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwo" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwo" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("B1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="B1" id="check-dent-ecrire"  checked />
+                                              }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="B1"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("B2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="B2" id="check-dent-lire"  checked />
+                                              }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="B2"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("B3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="B3" id="check-dent-modifier"  checked />
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="B3"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("B4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="B4" id="check-dent-supprimer"  checked />
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="B4"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleThree">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleThree"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleThree"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Caisse</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleThree" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleThree" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("C1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="C1" id="check-cais-ecrire"  checked />
+                                             }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="C1"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("C2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="C2" id="check-cais-lire"  checked />
+                                              }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="C2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("C3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="C3" id="check-cais-modifier"  checked />
+                                              }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="C3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("C4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="C4" id="check-cais-supprimer"  checked />
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="C4"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleFour">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleFour"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleFour"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Medecin</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleFour" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleFour" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("D1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="D1" id="check-med-ecrire"  checked />
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="D1"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("D2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="D2" id="check-med-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="D2"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("D3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="D3" id="check-med-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="D3"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("D4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="D4" id="check-med-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="D4"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleFive">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleFive"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleFive"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Assurance</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleFive" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleFive" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("E1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="E1" id="check-ass-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="E1"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("E2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="E2" id="check-ass-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="E2"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("E3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="E3" id="check-ass-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="E3"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("E4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="E4" id="check-ass-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="E4"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleSix">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpecialTitleSix" aria-expanded="false" aria-controls="collapseSpecialTitleSix">
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">
+                                                Liste des choses a faire
+                                            </h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleSix" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleSix" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("F1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="F1" id="check-laf-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="F1"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("F2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="F2" id="check-laf-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="F2"  />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("F3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="F3" id="check-laf-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="F3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("F4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="F4" id="check-laf-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="F4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleSeven">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleSeven"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleSeven"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Laboratoire</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleSeven" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleSeven" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("G1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="G1" id="check-lab-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="G1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("G2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="G2" id="check-lab-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="G2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("G3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="G3" id="check-lab-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="G3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("G4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="G4" id="check-lab-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="G4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleEight">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleEight"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleEight"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Impression labo</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleEight" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleEight" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("H1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="H1" id="check-implab-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="H1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("H2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="H2" id="check-implab-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="H2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("H3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="H3" id="check-implab-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="H3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("H4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="H4" id="check-implab-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="H4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleNine">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleNine"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleNine"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Tout les modeles</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleNine" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleNine" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("I1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="I1" id="check-tlm-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="I1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("I2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="I2" id="check-tlm-lire" checked/>
+                                             }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="I2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("I3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="I3" id="check-tlm-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="I3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("I4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="I4" id="check-tlm-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="I4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTen">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpecialTitleTen" aria-expanded="false" aria-controls="collapseSpecialTitleTen">
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Modeles analyse</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTen" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTen" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("J1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="J1" id="check-mda-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="J1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("J2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="J2" id="check-mda-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="J2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("J3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="J3" id="check-mda-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="J3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("J4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="J4" id="check-mda-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="J4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleEleven">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleEleven"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleEleven"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Resultats analyse</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleEleven" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleEleven" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("K1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="K1" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="K1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("K2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="K2" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="K2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("K3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="K3" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="K3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("K4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="K4" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="K4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Valider" />
+                                            <label class="form-check-label" for="check-dent-supprimer">Valider</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwelve">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwelve"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwelve"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Modele imagerie</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwelve" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwelve" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("L1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="L1" id="check-mdi-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="L1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("L2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="L2" id="check-mdi-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="L2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("L3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="L3" id="check-mdi-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="L3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("L4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="L4" id="check-mdi-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="L4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleThirteen">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleThirteen"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleThirteen"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Imagerie</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleThirteen" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleThirteen" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("M1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="M1" id="check-im-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="M1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("M2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="M2" id="check-im-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="M2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("M3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="M3" id="check-im-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="M3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("M4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="M4" id="check-im-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="M4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleFourteen">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleFourteen"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleFourteen"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Resultat Imagerie</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleFourteen" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleFourteen" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("N1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="N1" id="check-rim-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="N1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("N2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="N2" id="check-rim-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="N2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("N3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="N3" id="check-rim-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="N3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("N4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="N4" id="check-rim-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="N4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleFifteen">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleFifteen"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleFifteen"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Actes médicaux</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleFifteen" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleFifteen" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("O1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="O1"  checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="O1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("O2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="O2" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="O2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("O3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="O3"  checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="O3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("O4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="O4"  checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="O4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleSixteen">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleSixteen"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleSixteen"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Statut de chambres</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleSixteen" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleSixteen" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("P1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="P1" id="check-stc-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="P1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("P2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="P2" id="check-stc-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="P2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("P3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="P3" id="check-stc-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="P3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("P4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="P4" id="check-stc-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="P4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleSeventeen">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleSeventeen"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleSeventeen"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Ajouter attribution</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleSeventeen" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleSeventeen" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("Q1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Q1" id="check-aja-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Q1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("Q2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Q2" id="check-aja-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Q2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("Q3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Q3" id="check-aja-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Q3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("Q4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Q4" id="check-aja-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Q4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleEighteen">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleEighteen"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleEighteen"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Departement</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleEighteen" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleEighteen" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("R1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="R1" id="check-dep-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="R1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("R2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="R2" id="check-dep-lire" checked/>
+                                             }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="R2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("R3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="R3" id="check-dep-modifier" checked/>
+                                             }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="R3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("R4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="R4" id="check-dep-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="R4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleNineteen">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleNineteen"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleNineteen"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Paiements</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleNineteen" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleNineteen" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("S1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="S1" id="check-paie-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="S1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("S2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="S2" id="check-paie-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="S2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("S3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="S3" id="check-paie-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="S3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("S4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="S4" id="check-paie-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="S4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwenty">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwenty"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwenty"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Factures directe</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwenty" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwenty" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("T1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="T1" id="check-factd-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="T1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("T2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="T2" id="check-factd-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="T2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("T3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="T3" id="check-factd-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="T3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("T4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="T4" id="check-factd-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="T4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwentyone">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwentyone"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwentyone"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Factures assurance</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwentyone" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwentyone" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("U1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="U1" id="check-facta-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="U1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("U2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="U2" id="check-facta-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="U2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("U3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="U3" id="check-facta-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="U3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("U4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="U4" id="check-facta-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="U4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwentytwo">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwentytwo"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwentytwo"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Factures patient</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwentytwo" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwentytwo" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("V1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="V1" id="check-factp-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="V1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("V2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="V2" id="check-factp-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="V2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("V3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="V3" id="check-factp-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="V3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("V4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="V4" id="check-factp-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="V4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwentythree">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwentythree"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwentythree"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Caution</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwentythree" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwentythree" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("W1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="W1" id="check-cau-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="W1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("W2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="W2" id="check-cau-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="W2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("W3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="W3" id="check-cau-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="W3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("W4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="W4" id="check-cau-supprimer" checked/>
+                                             }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="W4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwentyfour">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwentyfour"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwentyfour"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">facture proformat</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwentyfour" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwentyfour" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("X1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="X1" id="check-factpro-ecrire" checked/>
+                                             }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="X1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("X2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="X2" id="check-factpro-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="X2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("X3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="X3" id="check-factpro-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="X3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("X4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="X4" id="check-factpro-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="X4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwentyfife">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwentyfife"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwentyfife"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Recap facture</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwentyfife" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwentyfife" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("Y1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Y1" id="check-recfa-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Y1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("Y2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Y2" id="check-recfa-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Y2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("Y3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Y3" id="check-recfa-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Y3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("Y4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Y4" id="check-recfa-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Y4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwentysix">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwentysix"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwentysix"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Culmul facture</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwentysix" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwentysix" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("Z1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Z1" id="check-culfa-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Z1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("Z2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Z2" id="check-culfa-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Z2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("Z3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Z3" id="check-culfa-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Z3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("Z4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="Z4" id="check-culfa-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="Z4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwentyseven">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwentyseven"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwentyseven"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Honoraires</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwentyseven" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwentyseven" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("A_1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="A_1" id="check-hon-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="A_1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("A_2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="A_2" id="check-hon-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="A_2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("A_3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="A_3" id="check-hon-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="A_3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("A_4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="A_4" id="check-hon-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="A_4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleTwentynine">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleTwentynine"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleTwentynine"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Contact</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleTwentynine" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleTwentynine" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("B_1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="B_1" id="check-contact-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="B_1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("B_2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="B_2" id="check-contact-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="B_2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("B_3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="B_3" id="check-contact-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="B_3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("B_4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="B_4" id="check-contact-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="B_4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleThirty">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleThirty"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleThirty"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Utilisateurs</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleThirty" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleThirty" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("C_1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="C_1" id="check-utili-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="C_1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("C_2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="C_2" id="check-utili-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="C_2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("C_3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="C_3" id="check-utili-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="C_3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("C_4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="C_4" id="check-utili-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="C_4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleThirtyone">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleThirtyone"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleThirtyone"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Stock</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleThirtyone" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleThirtyone" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("D_1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="D_1" id="check-stock-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="D_1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("D_2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="D_2" id="check-stock-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="D_2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="D_3" id="check-stock-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="D_3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("D_4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="D_4" id="check-stock-supprimer" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="D_4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSpecialTitleThirtytwo">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSpecialTitleThirtytwo"
+                                        aria-expanded="false"
+                                        aria-controls="collapseSpecialTitleThirtytwo"
+                                    >
+                                        <div class="d-flex flex-column">
+                                            <h6 class="m-0">Comptabilité</h6>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseSpecialTitleThirtytwo" class="accordion-collapse collapse" aria-labelledby="headingSpecialTitleThirtytwo" data-bs-parent="#accordionSpecialTitle">
+                                    <div class="accordion-body">
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("E_1")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="E_1" id="check-compta-ecrire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="E_1" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-ecrire">Écrire</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @if(Model.Access_module.Contains("E_2")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="E_2" id="check-compta-lire" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="E_2" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-lire">Lire</label>
+                                        </div>
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("E_3")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="E_3" id="check-compta-modifier" checked/>
+                                            }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="E_3" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-modifier">Modifier</label>
+                                        </div>
+                                        <div class="form-check">
+                                             @if(Model.Access_module.Contains("E_4")){
+                                            <input class="form-check-input mon-checkbox" type="checkbox" value="E_4" id="check-compta-supprimer" checked/>
+                                             }else{
+                                                 <input class="form-check-input mon-checkbox" type="checkbox" value="E_4" />
+                                            }
+                                            <label class="form-check-label" for="check-dent-supprimer">Supprimer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row ends -->
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" asp-for="Activate"  />
+                            <label class="form-check-label" >Activer l'utilisateur</label>
+                        </div>
+                    </div>
+                </div>
+                            
+                       
+                </div>
+
+                <div style="display: flex; justify-content: end; gap: 10px">
+                    <button type="button" onclick="history.back()" class="btn btn-secondary">Annuler</button>
+                    <button type="submit" class="btn btn-info">
+                        <i class="ri-save-3-line"></i> Enregistrer
+                    </button>
+                    
+                </div>
+            </form>
+        </div>
+        <!-- App body ends -->
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

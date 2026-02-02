@@ -1,0 +1,233 @@
+@model BANA.Models.Hospi
+
+@{
+    ViewData["Title"] = "Create";
+    Layout="_Layout3";
+}
+
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">Hospitalisation</li>
+    </ol>
+    <!-- Breadcrumb ends -->
+  </div>
+  <!-- App Hero header ends -->
+
+  <!-- App body starts -->
+  <div class="app-body">
+
+    <!-- Row starts -->
+                <div class="row gx-3">
+                    <div class="col-sm-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <!-- Stats starts -->
+                                    <div class="d-flex align-items-center flex-wrap gap-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-account-circle-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Nom du patient</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                @if(ViewBag.patient.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Genre</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Genre</h4>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-arrow-right-up-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Âge du patient</p>
+                                                <h4 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h4>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-contrast-drop-2-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Groupe sanguin</p>
+                                                <h4 class="mb-1">@ViewBag.patient.GroupeSanguin</h4>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- Stats ends -->
+                                    @if(ViewBag.patient.Genre=="M"){
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient2.png" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }else{
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient1.jpg" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }           
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row ends -->
+
+    <!-- Row starts -->
+    <div class="row gx-3">
+      <div class="col-sm-12">
+        <div class="">
+          <div class="card-header mb-3">
+            <h5 class="card-title">Hospitalisation</h5>
+          </div>
+          <div class="card-body">
+            <form asp-action="Create">
+              <input type="hidden" asp-for="Numero_dossier" value="@ViewBag.patient.Numero_dossier">
+              <!-- Row starts -->
+              <div class="row gx-3">
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="DateAdmission">Date d'admission</label>
+                        <input class="form-control" asp-for="DateAdmission" id="DateAdmission" type="datetime-local" />
+                        <span asp-validation-for="DateAdmission" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Service">Service</label>
+                        <input class="form-control" asp-for="Service" list="departement" autocomplete="off"  />
+                        <datalist id="departement">
+                          @foreach(var item in ViewBag.departement){
+                            <option value="@item"></option>
+                          }
+                        </datalist>
+                        <span asp-validation-for="Service" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="TypeHospitalisation">Type d'hospitalisation</label>
+                        <input class="form-control" asp-for="TypeHospitalisation" id="TypeHospitalisation" type="text" placeholder="" />
+                        <span asp-validation-for="TypeHospitalisation" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Lit">Lit</label>
+                        <input class="form-control" asp-for="Lit" id="Lit" type="text" placeholder="Ex: Lit B" />
+                        <span asp-validation-for="Lit" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="Chambre">Chambre</label>
+                        <input class="form-control" asp-for="Chambre" id="Chambre" type="text" placeholder="Ex: Chambre 205" />
+                        <span asp-validation-for="Chambre" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="DiagnosticAdmission">Diagnostic d'admission</label>
+                        <input class="form-control" asp-for="DiagnosticAdmission" id="DiagnosticAdmission" type="text" placeholder="" />
+                        <span asp-validation-for="DiagnosticAdmission" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="MedecinResponsable">Médecin responsable</label>
+                        <input class="form-control" asp-for="MedecinResponsable"  list="medecins" autocomplete="off" />
+                        <datalist id="medecins">
+                          @foreach(var item in ViewBag.doctors){
+                            <option value="@item.Nom @item.Prenom">@item.Specialite</option>
+                          }
+                        </datalist>
+                        <span asp-validation-for="MedecinResponsable" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-3 col-lg-4 col-sm-6">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="m-0">
+                        <label class="form-label" for="GardeMalade">Contact Garde malade</label>
+                        <input class="form-control" asp-for="PersonneContactUrgence" id="GardeMalade" type="tel" placeholder="" />
+                        <span asp-validation-for="PersonneContactUrgence" class="text-danger"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="form-label" for="MotifAdmission">Motif d’admission :</label>
+                  <textarea class="form-control" asp-for="MotifAdmission" id="MotifAdmission" rows="3" placeholder=""></textarea>
+                  <span asp-validation-for="MotifAdmission" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2 justify-content-end mt-4">
+                  <div>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <button type="reset" class="btn btn-outline-secondary">Annuler</button>
+                  </div>
+                </div>
+              </div>
+              <!-- Row ends -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Row ends -->
+  </div>
+  <!-- App body ends -->
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

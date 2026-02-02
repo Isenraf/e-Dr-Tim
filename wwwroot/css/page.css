@@ -1,0 +1,177 @@
+﻿
+div.page {
+   
+    overflow:scroll
+  }
+  
+  div.a4 {
+    width: 21cm;
+    height: 29.7cm;
+    background: white;
+    margin: 5px auto;
+  }
+  .container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .summary {
+    display: flex;
+  }
+  
+  div.summary-top {    
+    border: 0.2mm solid black;
+    border-top: 0px solid black;
+    height: 0.8cm;
+    background-color: lightgrey !important;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 2px;
+  }
+  
+  div.summary-bottom {
+    border: 0.2mm solid black;
+    border-top: none;
+    /* height: 0.4cm; */
+    font-size: 14px;
+    padding: 0.6mm;
+  }
+  
+  .trap {
+    border: 0px black solid;
+    width: 100%;
+    display: flex;
+  }
+  
+  .trap-number {
+    width:1.5cm;
+    border:0px blue solid;
+    height: 4cm;
+    display: flex;
+    flex-wrap:wrap;
+  }
+  
+  .actual-number {
+    height:2.4cm;
+    border: 2px solid black;
+    font-size: 50px;
+    background-color: lightgrey;
+    width:100%;
+    text-align: center;
+  }
+  
+  .wins {
+    font-size: 10px;
+    font-weight: normal;
+  }
+  
+  .name {
+    width:6cm;
+    border:2px solid black;
+    height:1.2cm;
+    font-size:20px;
+    font-weight: bold;
+  }
+  
+  .detail {
+    border: 0px solid blue;
+    width:64%;
+    height:1.2cm;
+  }
+  
+  .owner {
+    font-weight:bold;
+  }
+  
+  .trainer {
+    font-weight: bold;
+    float:right;  
+  }
+  
+  .other-detail {
+    padding-right: 5px;
+    float:right;
+    font-size: 10px;
+    padding-top: 0.4cm;
+  }
+  
+  .dog-summary {
+    border: 0px solid green;
+    width: 17.5cm;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .general {
+    margin-left: auto;
+    float: right;
+  }
+  
+  .general-major {
+      font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .general-minor {
+    float:right;
+      font-size: 14px;
+  }
+  
+  .race_class {
+    float: right;
+  }
+  
+  .another {
+    margin-top: 0.5cm;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    width: 100%;
+  }
+  
+  .title {
+    width: 100%;
+    border-bottom: 1px solid black;
+    /* height: 0.5cm; */
+    border-top: 2px solid black;
+    font-weight: bold; 
+    padding-top: 0.1cm;
+    padding-bottom: 0.1cm;
+  }
+  
+  span.meeting-no {
+    float: right;
+  }
+  
+  .headings {
+    padding-top:4px;
+    padding-bottom:4px;
+    display: flex;
+    width:100%;
+    font-size:10px;
+    text-align:center;
+  }
+  
+  .form {
+    border: green 0px solid;
+    width:100%;
+    font-size:10px;
+    text-align:center;
+    height: 2.4cm;
+  }
+  
+  .form-row {
+    width: 100%;
+    padding: 0mm;
+    display: flex;
+    margin-bottom: 0;
+    /* height:0.4cm; */
+  }
+  
+  .heading-small {
+    width: 0.9cm;
+  }
+  
+  .heading-large {
+    width: 2.9cm;
+  }

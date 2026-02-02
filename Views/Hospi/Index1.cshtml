@@ -1,0 +1,270 @@
+@model IEnumerable<BANA.Models.Hospi>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout="_Layout3";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sexe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateNaissance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adresse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telephone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonneContactUrgence)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelephoneContactUrgence)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupeSanguin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroHospitalisation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateAdmission)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotifAdmission)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeHospitalisation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chambre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MedecinResponsable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiagnosticAdmission)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Temperature)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TensionArterielle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pouls)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FrequenceRespiratoire)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaturationOxygene)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Allergies)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Antecedents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TraitementsEnCours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prescriptions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActesMedicaux)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExamensEtResultats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotesInfirmieres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EvolutionClinique)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateSortie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiagnosticSortie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EtatSortie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Destination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResumeMedical)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrdonnanceSortie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assurance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoutSejour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaiementEffectue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoldeRestant)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sexe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateNaissance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telephone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PersonneContactUrgence)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelephoneContactUrgence)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupeSanguin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroHospitalisation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateAdmission)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotifAdmission)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeHospitalisation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Chambre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MedecinResponsable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiagnosticAdmission)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Temperature)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TensionArterielle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pouls)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FrequenceRespiratoire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SaturationOxygene)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Allergies)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Antecedents)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraitementsEnCours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prescriptions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActesMedicaux)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExamensEtResultats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NotesInfirmieres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EvolutionClinique)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateSortie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiagnosticSortie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EtatSortie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResumeMedical)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrdonnanceSortie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assurance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CoutSejour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaiementEffectue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoldeRestant)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

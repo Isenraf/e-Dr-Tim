@@ -1,0 +1,301 @@
+@model BANA.Models.Stock
+
+@{
+    ViewData["Title"] = "Details";
+}   
+
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row clearfix">
+        <div class="col-lg-4 col-md-12 col-sm-12">
+         <h1>Policlinique de Poitiers</h1>
+          <span>détails Article: @Model.Nom_article,</span>
+        </div>
+        <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+          <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+            <div class="mb-3 mb-xl-0">
+              <a asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-primary">Modifier l'article</a>
+              <button type="button" onclick="history.back()" class="btn btn-outline-secondary">Fermer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-4 col-md-12">
+        <div class="card profile-header">
+          <div class="body text-center">
+            <img width="250px" src="/uploads/img/@Model.Img" alt="">
+            <div class="mt-3">
+              <h5 class="mb-0">
+                <strong>@Model.Nom_article </strong></h5>
+              <span>@Model.Categorie</span><br>
+              <span>@Model.Prix_vente</span>
+            </div>
+            <div class="m-t-15">
+              <button onclick="location.href='/Stock/Edit/@Model.Id';" class="btn btn-primary">Modifier</button>
+              <button class="btn btn-outline-secondary">Whatsapp</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="header">
+            <h2>À propos</h2>
+            <ul class="header-dropdown">
+              <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li>
+                    <a href="javascript:void(0);">Modifier</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);">Supprimer</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);">Désactiver</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="body">
+            <small class="text-muted">Nom Article:</small>
+            <p>@Model.Nom_article</p>
+            <small class="text-muted">Catégorie:</small>
+            <p>@Model.Categorie</p>
+            <small class="text-muted">Date de création:</small>
+            <p>
+              <a href="javascript:void(0)" class="__cf_email__">@Model.Create_date</a>
+            </p>
+            <hr>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-12">
+        <div class="card">
+          <div class="row profile_state">
+            <div class="col-lg-4 col-md-12">
+              <div class="body">
+                <div class="form-group">
+                  <label class="d-block">Actif?
+                    <span class="float-right">Oui</span>
+                  </label>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100" style="width: 77%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+              <div class="body">
+                <div class="form-group">
+                  <label class="d-block">Type d'article
+                    <span class="float-right">@Model.Type</span>
+                  </label>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+              <div class="body">
+                <div class="form-group">
+                  <label class="d-block">Prix:
+                    <span class="float-right">@Model.Prix_vente</span>
+                  </label>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100" style="width: 23%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul class="nav nav-tabs3">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#Basic">Informations générales</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#Account">Comptabilité</a>
+            </li>
+          </ul>
+        </div>
+        <div class="tab-content padding-0">
+          <div class="tab-pane active" id="Basic">
+            <div class="card">
+              <div class="header">
+                <h2>@Model.Nom_article</h2>
+                <ul class="header-dropdown dropdown">
+                  <li>
+                    <a href="javascript:void(0);" class="full-screen">
+                      <i class="fa fa-expand"></i>
+                    </a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    <ul class="dropdown-menu theme-bg gradient">
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-eye"></i>View Details</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-share-alt"></i>Share</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-copy"></i>Copy to</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-folder"></i>Move to</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-edit"></i>Rename</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-trash"></i>Delete</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="body">
+               
+                <h6 style="color: #82b540;" class="font-bold">Informations générales</h6>
+                <ul class="list-group">
+                    <li class="list-group-item m-r-5">Nom Article: @Model.Nom_article</li>
+                    <li class="list-group-item m-r-5">Catégorie: @Model.Categorie</li>
+                    <li class="list-group-item m-r-5">Type d'article: @Model.Type</li>
+                    <li class="list-group-item m-r-5">Emplacement: @Model.Lieu_stockage</li>
+                    <li class="list-group-item m-r-5">Prix de Vente: @Model.Prix_vente</li>
+                    <li class="list-group-item m-r-5">Prix d'achats: @Model.Prix_achat</li>
+                    <li class="list-group-item m-r-5">Description: @Model.Description</li>
+                </ul>
+                <br>
+                <h6 style="color: #82b540;" class="font-bold">Informations de Stockage</h6>
+                <ul class="list-group">
+                    <li class="list-group-item m-r-5">Unité: @Model.unité</li>
+                    <li class="list-group-item m-r-5">Quantité en stock: @Model.Quantitee</li>
+                    <li class="list-group-item m-r-5">Quantité minimale: @Model.Stock_minimal</li>
+                </ul>
+                <br>
+                <h6 style="color: #82b540;" class="font-bold">Autres informations</h6>
+                <ul class="list-group">
+                    <li class="list-group-item m-r-5">Code Barre: @Model.codebarre</li>
+                    <li class="list-group-item m-r-5">Références: @Model.Reference</li>
+                </ul>
+                <br>
+                <h6 style="color: #82b540;" class="font-bold">Comptabilité</h6>
+                <ul class="list-group">
+                    <li class="list-group-item m-r-5">Compte général achat: @Model.Compte_general_entree</li>
+                    <li class="list-group-item m-r-5">Compte général Vente: @Model.Compte_general_sortie</li>
+                </ul>
+
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="Account">
+            <div class="card">
+              <div class="header">
+               
+                <ul class="header-dropdown dropdown">
+                  <li>
+                    <a href="javascript:void(0);" class="full-screen">
+                      <i class="fa fa-expand"></i>
+                    </a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    <ul class="dropdown-menu theme-bg gradient">
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-eye"></i>View Details</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-share-alt"></i>Share</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-copy"></i>Copy to</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-folder"></i>Move to</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-edit"></i>Rename</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-trash"></i>Delete</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+
+                <h6 style="color: #82b540;" class="font-bold">Comptabilité</h6>
+                <ul class="list-group">
+                    <li class="list-group-item m-r-5">Compte général achat: @Model.Compte_general_entree</li>
+                    <li class="list-group-item m-r-5">Compte général Vente: @Model.Compte_general_sortie</li>
+                </ul>
+
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="General">
+            <div class="card">
+              <div class="header">
+                <h2>General Information</h2>
+                <ul class="header-dropdown dropdown">
+                  <li>
+                    <a href="javascript:void(0);" class="full-screen">
+                      <i class="fa fa-expand"></i>
+                    </a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    <ul class="dropdown-menu theme-bg gradient">
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-eye"></i>View Details</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-share-alt"></i>Share</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-copy"></i>Copy to</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-folder"></i>Move to</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-edit"></i>Rename</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);">
+                          <i class="dropdown-icon fa fa-trash"></i>Delete</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

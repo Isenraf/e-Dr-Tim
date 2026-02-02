@@ -1,0 +1,659 @@
+@model BANA.Models.Facture
+
+@{
+    ViewData["Title"] = "Facture - "+ @Model.Nom + @Model.Prenom;
+    int st=0;
+    int controla=0;
+}
+
+<input  type="hidden" id="target" asp-for="Type">
+<input  type="hidden" id="lf1" asp-for="Ligne_facturation1">
+<input  type="hidden" id="lf2" asp-for="Ligne_facturation2">
+<input  type="hidden" id="lf3" asp-for="Ligne_facturation3">
+<input  type="hidden" id="lf4" asp-for="Ligne_facturation4">
+
+@if (Model.Etat_patient=="Cloturé")
+{
+  <link rel="stylesheet" media="print" href="/css/matricielle.css">
+}
+
+
+   <!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Caisse Principale
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+            <div class="card py-3 px-3">
+              <div class="d-flex align-items-center justify-content-between mt-2 gy-3">
+                <h5 class="card-title">Polyclinique de Poitiers<br /><span style="font-size: 12px; color: #4c545e">Recap des factures</span>
+                </h5>
+
+                <div class="d-flex flex-wrap gap-1">
+                  <div class="d-flex align-items-center box-shadow px-3 py-1 rounded-2">
+                    <i class="ri-pie-chart-2-fill text-success fs-4"></i>
+                    <span class="me-1 fw-semibold ps-1">@Model.Net_a_payer_patient</span>
+                    <span class="text-success">Montant Total</span>
+                  </div>
+                  <div
+                    class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                  >
+                    <i class="ri-pie-chart-2-fill text-success fs-4"></i>
+                    <span class="me-1 fw-semibold ps-1"><span class="separateur">@Model.Montant_recu_patient</span> FCFA</span>
+                    <span class="text-success">Montant Payé</span>
+                  </div>
+
+                  <div
+                    class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                  >
+                    <i class="ri-pie-chart-2-fill text-danger fs-4"></i>
+                    <span class="me-1 fw-semibold ps-1"><span class="separateur">@(Model.Net_a_payer_patient-Model.Montant_recu_patient)</span> FCFA</span>
+                    <span class="text-danger">Reste à Payer</span>
+                  </div>
+                </div>
+              </div>
+              <br />
+             
+
+             
+            
+
+                          <div style="margin-bottom: 20px;" class="d-flex align-items-center justify-content-between  gy-3">
+                            <h5 class="card-title"><br /><h7 style="font-size: 12px; color: #4c545e"></h7>
+                            </h5>
+
+                            <div class="d-flex flex-wrap gap-1">
+
+ 
+                            @if (Model.Etat_patient!="Cloturé" && Model.Net_a_payer_patient-Model.Montant_recu_patient==0)
+                            {
+                              <button class="btn btn-warning  gradient" id="Cloturebt" >
+                                <i class="fa fa-check"></i> Valider la Cloture</button>
+                            }
+                            @if ((Model.Net_a_payer_patient-Model.Montant_recu_patient)>0 && Model.Etat_patient!="Cloturé")
+                            {
+                              <button class="btn btn-warning  gradient" id="paidButton" data-toggle="modal" data-target="#AddDepartments">
+                                <i class="fa fa-check"></i> Valider le paiement</button>
+                            }
+                            
+
+                            @if (Model.Etat_patient!="Cloturé" && Model.Intervenant=="" && Model.Ligne_facturation2!="λ" && Model.Type.Contains("assurance"))
+                            {
+                              <button class="btn btn-danger  gradient" id="genererexamens" >
+                                <i class="fa fa-check"></i> Générer les résultats</button>
+                            }
+                            <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Facture/Caisseprincipale';">
+                                <i class="fa fa-previous"></i> Fermer</button>
+                            @if (Model.Etat_patient=="Cloturé"){
+                                   <button class="btn btn-primary theme-bg gradient" id="printpaie" >
+                                      <i class="fa fa-print"></i> Print</button>
+                                }
+                              
+                               
+                              
+                            </div>
+                          </div>
+
+                          
+
+                  <div>
+                    
+                   
+                  </div>
+                  <div >
+                  <div >
+                          
+                  <div id='printMe' style="font-family: Courier New, Courier, monospace;" class="body" >
+
+                    <div class="">
+                        <img style="margin-top: 20px;float: left;" src="/img1/p1.png" width="150px" data-toggle="tooltip" data-placement="top" title="" alt="CLINIQUE DES ANGES"  data-original-title="CLINIQUE DES ANGES">
+                      <img style="margin-top: 20px;float: right;" src="/img1/p1.png" width="150px" data-toggle="tooltip" data-placement="top" title="" alt="CLINIQUE DES ANGES"  data-original-title="CLINIQUE DES ANGES">
+                    </div>
+                  
+             
+                  <div style="line-height: 1.2em;text-align: center;color:black;font-weight: 600;margin: 0px 0px 0px 200px;">
+                    <h2 style="margin:0;font-weight: bold;" >POLYCLINIQUE DE POITIERS</h2>
+                     <p>Sise à vallé Trois Boutiques ( entre Feu Rouge BESSENGUE et rond point Deido<br>
+                    Tél: 233410151/690073467/675018191/656238323/680586697/677459997<br>
+                    Email:info@polycliniquedepoitiers.com / polycliniquedepoitiers@yahoo.fr <br>
+                    Site web: www.polycliniquedepoitiers.com<br>
+                    RC DOUALA/2008/B/2014 NIU: M110800026452Z <br><br>
+                    </p>
+                  </div>
+                  <hr style="border: solid;color: #000000;">
+                
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <table style="text-transform: uppercase;width: 100%;color: black;" >
+                        <tr>
+                          <td>
+                            <div style="padding: 5px;border: 2px dashed #444;">
+                              @if (!Model.Type.Contains("caution"))
+                              {
+                              <p style="margin: 0;">
+                                Reçu Fact Nº: - <span class="text-danger">#@Model.Numero_de_facture</span>
+                              </p>
+                              }else{
+                                <p style="margin: 0;">
+                                CAUTION Nº: - <span class="text-danger">#009</span>
+                              </p>
+                              }
+                              <span style="margin: 0;" >Nº DOSSIER: @Model.Numero_dossier</span><br>
+                              <span style="margin: 0;" >Prescripteur: @Model.Medecin</span>
+                              <p style="margin: 0;" >@Model.Create_date.ToLongDateString() @Model.Create_date.ToShortTimeString()</p>
+
+                            </div>
+                         </td> 
+                          
+                          <td style="width: 100px;"></td>
+                          <td rowspan="3" style="width: 400px; border: 1px solid; color: black;padding: 0.3rem 0.3rem 0rem 0.3rem;" ><h6 style="margin:0;" >@Model.Nom @Model.Prenom</h6>
+                          <span style="font-weight: 600;">Téléphone: @Model.Phone  </span><br>
+                         <span style="font-weight: 600;">Age:@((int)((DateTime.Now-Model.DateNaissance).TotalDays/365)) ans  @((int)(((DateTime.Now-Model.DateNaissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-Model.DateNaissance).TotalDays)%365)%30) jours ,Sexe: @Model.Genre</span><br>Adresse: @Model.Quartier
+                          </td>
+                        </tr>
+
+                      </table>
+                      <small style="font-weight: 600;font-size: 16px;text-transform: uppercase;color: black;">.</small>
+                    </div>
+                 
+                  </div>
+                  
+                  <div class="row clearfix">
+                    <div class="col-md-12">
+                      <div >
+                        @* <div style="text-align: center;color: black;"><strong><h6>CONSULTATIONS</h6></strong>  </div> *@
+                        <table  style="color: black; width: 100%;padding: 0rem;">
+                          <thead>
+                           
+                            <tr style="font-size: 17px;text-transform: uppercase;">
+                              @* <th  style="width: 2px;padding: 0rem;"><strong>#</strong></th> *@
+                              <th style="color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Désignation</strong></th>
+                              <th class="text-center" style="color: black;width: 80px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Cote</strong></th>
+                              <th class="text-center" style="display:none;color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Assurance</strong></th>
+                              <th class="text-right" style="display:none;color: black;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Plafond</strong></th>
+                              <th class="text-right" style="color: black;border: 1px solid;width: 120px;padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Montant</strong></th>
+                              <th class="hidden-sm-down" style="color: black;border: 1px solid;width: 80px;padding: 0rem 0.3rem 0rem 0.3rem;text-align: center;"><strong>Quantité</strong></th>
+                              <th style="color: black;border: 1px solid;width: 150px; text-align: right; padding: 0rem 0.3rem 0rem 0.3rem;"><strong>Total</strong></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @{st=0;}
+                              @for (int i = 0; i < @ViewBag.Lignes1.Count-1; i+=7)
+                              {
+                                <tr class="table1" style="font-size: 17px;text-transform: uppercase;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                  <td style="border-left: 1px solid; border-right: 1px solid; padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes1[i]</span></td>
+                                  <td  class="text-center" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <span>@ViewBag.Lignes1[i+1]</span>
+                                  </td>
+                                  <td class="text-center" style="display:none;border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@ViewBag.Lignes1[i+2] %</td>
+                                  <td class="text-right" style="display:none;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="hidden-sm-down text-right">@ViewBag.Lignes1[i+3]</td>
+                                  <td class="text-right" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">@ViewBag.Lignes1[i+4]</td>
+                                  <td class="text-center" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes1[i+5]</td>
+                                  <td class="text-right" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes1[i+6]</td>
+                                </tr>
+                                st+=Int32.Parse(ViewBag.Lignes1[i+6].Replace(" ",""));
+                                controla+=st;
+                              }
+                             
+                              
+                            
+                            
+                              
+                             
+                              @for (int i = 0; i < @ViewBag.Lignes2.Count-1; i+=7)
+                              {
+                                <tr class="table2" style="font-size: 17px;text-transform: uppercase;border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                  <td style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes2[i]</span></td>
+                                  <td  class="text-center" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <span>@ViewBag.Lignes2[i+1]</span>
+                                  </td>
+                                  <td class="text-center" style="display:none;border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@ViewBag.Lignes2[i+2] %</td>
+                                  <td class="text-right" style="display:none;border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="hidden-sm-down text-right">@ViewBag.Lignes2[i+3]</td>
+                                  <td class="text-right" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">@ViewBag.Lignes2[i+4]</td>
+                                  <td class="text-center" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes2[i+5]</td>
+                                  <td class="text-right" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes2[i+6]</td>
+                                </tr>
+                                st+=Int32.Parse(ViewBag.Lignes2[i+6].Replace(" ",""));
+                              }
+                             
+                             
+                              
+                              @for (int i = 0; i < @ViewBag.Lignes3.Count-1; i+=7)
+                              {
+                                <tr  class="table3" style="font-size: 17px;text-transform: uppercase;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                  <td style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes3[i]</span></td>
+                                  <td  class="text-center" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <span>@ViewBag.Lignes3[i+1]</span>
+                                  </td>
+                                  <td class="text-center" style="display:none;border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@ViewBag.Lignes3[i+2] %</td>
+                                  <td class="text-right" style="display:none;border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="hidden-sm-down text-right">@ViewBag.Lignes3[i+3]</td>
+                                  <td class="text-right" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">@ViewBag.Lignes3[i+4]</td>
+                                  <td class="text-center" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes3[i+5]</td>
+                                  <td class="text-right" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes3[i+6]</td>
+                                </tr>
+                                st+=Int32.Parse(ViewBag.Lignes3[i+6].Replace(" ",""));
+                              }  
+                              
+
+                             
+                             
+                              @{st=0;}
+                              @for (int i = 0; i < @ViewBag.Lignes4.Count-1; i+=7)
+                              {
+                                <tr class="table4" style="font-size: 17px;text-transform: uppercase;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                  <td style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes4[i]</span></td>
+                                  <td  class="text-center" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <span>@ViewBag.Lignes4[i+1]</span>
+                                  </td>
+                                  <td class="text-center" style="display:none;border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">@ViewBag.Lignes4[i+2] %</td>
+                                  <td class="text-right" style="display:none;border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="hidden-sm-down text-right">@ViewBag.Lignes4[i+3]</td>
+                                  <td class="text-right" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">@ViewBag.Lignes4[i+4]</td>
+                                  <td class="text-center" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes4[i+5]</td>
+                                  <td class="text-right" style="border-left: 1px solid; border-right: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-right">@ViewBag.Lignes4[i+6]</td>
+                                </tr>
+                                st+=Int32.Parse(ViewBag.Lignes4[i+6].Replace(" ",""));
+                              } 
+                              
+                           
+                            
+
+                          </tbody>
+                          <tfoot>
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                 <td style="border-top: 1px solid;" colspan="5"></td>
+                            </tr>
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                <td style="padding: 0rem 0.3rem 0rem 0.3rem;" rowspan="10" colspan="2">
+                                  <div style="border: 0;margin-top: 10px;" id="qrcode"></div>
+                                 <div style="position: absolute;margin-top: -100px;margin-left: 120px;max-width: 510px;">
+                                    Facture générée le @Model.Create_date.ToString("dd/MM/yyyy") @Model.Create_date.ToShortTimeString(), <br> 
+                                    Facturé par: @Model.Facture_par, <br>Encaissée par: @Model.Encaisse_par<br/> 
+                                    <strong  id="montant_lettre">@Model.Montant_en_lettre_patient</strong><br/>
+                                    @if (controla>0){ <span>Date Validité Consultations: @(Model.Create_date.AddDays(14).ToString("dd/MM/yyyy")) @Model.Create_date.AddDays(14).ToShortTimeString()</span><br> }
+                                    Nous vous souhaitons un prompt retablissement 
+                                 </div>
+
+                                </td>
+                                
+                                <td style="font-weight: 600;font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>TOTAL HT:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"> <strong ><span class="separateur">@(Model.Total_ht)</span> FCFA</strong></td>
+                            </tr>
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                               
+                                <td style="font-weight: 600;font-size: 17px;padding: 0rem 0.3rem 0rem 0.3rem;border: 1px solid;" colspan="2" class="text-right">
+                                <span>TVA:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong > Exonérée </strong></td>
+                            </tr>
+                             <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                               
+                                <td style="font-weight: 600;font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>TOTAl TTC:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong > <span class="separateur">@(Model.Total_ht)</span> FCFA</strong></td>
+                            </tr>
+                            @if (Model.Type!=null)
+                            {
+                              if (Model.Type.Contains("assurance"))
+                              {
+                                <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                    <td style="font-weight: 600;font-size: 17px;text-transform: uppercase;padding: 0rem 0.3rem 0rem 0.3rem;border: 1px solid;" colspan="2" class="text-right">
+                                    <span>Net à Payer Assur:</span>
+                                    </td>
+                                    <td class="text-right" style="font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong > <span class="separateur">@Model.Net_a_payer_assurance</span> FCFA</strong></td>
+                                </tr>
+                              }
+                              
+                            }
+                            @if (Model.Remise>0)
+                            {
+                              <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="font-weight: 600;font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Remise:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong ><span class="separateur">@(Model.Remise)</span> FCFA</strong></td>
+                            </tr>
+                            }
+                            @if (Model.ticketmoderateur>0)
+                            {
+                              <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="font-weight: 600;font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Ticket Modérateur:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong ><span class="separateur">@(Model.ticketmoderateur)</span> FCFA</strong></td>
+                            </tr>
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="font-weight: 600;font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Complément patient:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong ><span class="separateur">@(Model.Net_a_payer_patient-Model.ticketmoderateur+Model.Remise)</span> FCFA</strong></td>
+                            </tr>
+                            }
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="font-weight: 600;font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Net à Payer Patient:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong ><span class="separateur">@(Model.Net_a_payer_patient)</span> FCFA</strong></td>
+                            </tr>
+                            
+                            
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="font-weight: 600;font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Montant payé:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong ><span class="separateur">@(Model.Montant_recu_patient)</span> FCFA</strong></td>
+                            </tr>
+                            <tr style="padding: 0rem 0.3rem 0rem 0.3rem;">
+                                
+                                <td style="font-weight: 600;font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" colspan="2" class="text-right">
+                                <span>Reste à payé:&nbsp;&nbsp;</span>
+                                </td>
+                                <td class="text-right" style="font-size: 17px;text-transform: uppercase;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><strong><span class="separateur">@(Model.Net_a_payer_patient-Model.Montant_recu_patient)</span> FCFA</strong></td>
+                            </tr>
+                            
+                          </tfoot>
+                        </table>
+                        <br> 
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      <span>
+                        <input  id="text" type="text" value="https://www.polycliniquedepoitiers.com/Resultat/Create" style="display: none;" />
+                    </div>
+                    <div class="col-md-6 text-right">
+                     
+                        
+                          
+                        
+                          
+                    </div>
+                  </div>
+                </div>
+                        
+
+                    </div>  
+
+                  </div>
+                  
+                </div>
+                <!-- App body ends -->
+              </div>
+
+
+
+              
+<style>
+  /* Modale */
+      .modal, .modal2{
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 40%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      }
+
+      .modal-content2 {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      }
+
+      .modal-header {
+      padding: 10px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      }
+
+      .modal-body {
+      flex: 1;
+      overflow: hidden;
+      }
+
+      .modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .modal2 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      }
+</style>
+
+
+@if (Model.Etat_patient=="Cloturé" && Model.Montant_recu_patient>0){
+    <!-- Modal -->
+      <div id="pdfModal2" class="modal">
+        <div class="modal-content2">
+          <div class="modal-header">
+          <span>📄 Détails Facture </span>
+          <button class="close-btn" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+          <iframe id="target" src="/Facture/PdfMatrix/@Model.Id?target=cash#navpanes=0"></iframe> <!-- Remplace par ton PDF -->
+          </div>
+        </div>
+      </div>
+  }
+
+ 
+
+
+
+            
+<!-- Modal -->
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+    <span>🧾 Validez le paiement </span>
+    <button class="close-btn" onclick="closeModal()">&times;</button>
+    </div>
+    
+              <div class="modal-body">
+
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+
+                      <div class="col-12">
+                        <div class="card mb-3">
+                          <div class="card-body">
+                            <div class="input-group">
+                              <span class="input-group-text">Montant</span>
+                              <input type="number" id="net" value="@(Model.Net_a_payer_patient-Model.Montant_recu_patient)" class="form-control" placeholder="Montant">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xxl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                          <div class="card-body">
+                            <div class="m-0">
+                              <label class="form-label" >Selectionner la caisse</label>
+                              <select class="form-select show-tick" id="cai" asp-for="Genre"  aria-label="Default select example">
+                                <option  value="">- Selectionner la caisse -</option>
+                                <option  value="Caisse Poitiers">Caisse Poitiers</option>
+                                <option  value="Caisse Scanner">Caisse Scanner</option>
+                                <option  value="Caisse IRM">Caisse IRM</option>
+                                <option  value="Caisse Esthétique">Caisse Esthétique</option>
+                                <option  value="Caisse Bio dianostique">Caisse Bio dianostique</option>
+                                <option  value="Caisse Thérapie de vie">Caisse Thérapie de vie</option>
+                                <option  value="Caisse Thérapie du sommeil">Caisse Thérapie du sommeil</option>
+                                <option  value="Caisse Grenn energy">Caisse Grenn energy</option>
+                                <option  value="Caisse Médicaments/ tenofovi">Caisse Médicaments/ tenofovi</option>
+                                <option  value="Caisse Lunette">Caisse Lunette</option>
+                                <option  value="Caisse Quantiferon">Caisse Quantiferon</option>
+                                <option  value="Caisse TEP SCAN">Caisse TEP SCAN</option>
+                              </select>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-xxl-4 col-sm-6 col-12">
+                        <div class="card mb-3">
+                          <div class="card-body">
+                            <div class="m-0">
+                              <label class="form-label" >Mode Paiement</label>
+                              <select class="form-select show-tick" id="Mop" asp-for="Genre"  aria-label="Default select example">
+                                <option  value="">- Mode de Paiement -</option>
+                                <option  value="especes">Espèces</option>
+                                <option  value="orange money">Orange Money</option>
+                                <option  value="momo">MTN Mobile Money</option>
+                                <option  value="banque">Carte Bancaire</option>
+                                <option  value="caution">Caution</option>
+                                <option  value="autre">Autres</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12" id="fdr" style="display:none">
+                        <div class="card mb-3">
+                          <div class="card-body">
+                            <div class="input-group">
+                              <span class="input-group-text">Frais transaction</span>
+                              <input type="number" id="frais_retrait" class="form-control" placeholder="Frais transaction">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12" id="caut" style="display:none">
+                        <div class="card mb-3">
+                          <div class="card-body">
+                            <div class="input-group">
+                              <span class="input-group-text">Nº Caution</span>
+                              <input  id="caution" class="form-control" placeholder="Nº Caution" list="mescautions" autocomplete="off">
+                              <datalist id="mescautions">
+                                @foreach (var item in ViewBag.caution)
+                                {
+                                  <option  value="Caution Nº @item.Numero_de_facture">@(item.Net_a_payer_patient-item.Nombre_impression)</option>
+                                }
+                              </datalist>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      
+                      <div class="col-12">
+                        <div class="card mb-3">
+                          <div class="card-body">
+                            <div class="input-group">
+                              <span class="input-group-text">Observation</span>
+                              <textarea class="form-control" id="obser_p"   class="form-control no-resize" placeholder="Observations..." name="Description" aria-label="With textarea"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <!-- Row ends -->
+
+                  <span id="ldrr" style="font-weight: bold;color: red;">Solde: <span id="rembourssement" class="separateur">@(Model.Montant_recu_patient-Model.Net_a_payer_patient)</span> FCFA</span>
+              </div>
+              <div class="modal-footer">
+                  <button style="display: none;" type="button" id="valider_paiement" class="btn  btn-primary">
+                        <i class="fa fa-save"></i> Enregistrer</button>
+                  <button type="button"  class="btn btn-round btn-default" data-dismiss="modal">Fermer</button>
+              </div>
+              </div>
+  </div>
+</div>
+ <input type="hidden" asp-for="Id" id="identifiant_fact" />
+  <input type="hidden" asp-for="Numero_dossier" id="numerodossier" />
+  <input type="hidden" asp-for="Nom" id="nom" />
+  <input type="hidden" asp-for="Prenom" id="prenom"  />
+  <input type="hidden" asp-for="Numero_de_facture" id="numerofacture"  />
+  <input type="hidden" asp-for="Net_a_payer_patient" id="napp"  />
+  <input type="hidden" asp-for="Montant_recu_patient" id="mrp"  />
+  <input type="hidden" asp-for="Type" id="facture_tip"  />
+
+
+<script>
+    const modal = document.getElementById('pdfModal');
+    const modal2 = document.getElementById('pdfModal2');
+    function closeModal() {
+      modal.style.display = 'none';
+      modal2.style.display = 'none';
+      document.getElementById("target").setAttribute("src", "");
+    }
+    // Fermer si on clique en dehors du contenu
+    window.onclick = event => {
+      if (event.target === modal) {
+        closeModal();
+      }
+
+       if (event.target === modal2) {
+        closeModal();
+      }
+    };
+</script>
+
+
+
+
+       
+       
+
+   

@@ -1,0 +1,146 @@
+@model IEnumerable<BANA.Models.Facture>
+
+@{
+    ViewData["Title"] = "Index";
+    int i=1;
+}
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+              <div class="col-lg-4 col-md-12 col-sm-12">
+                <h1>Policlinique de Poitiers</h1>
+                <span>Factures directes,</span>
+              </div>
+              <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0 hidden-xs">
+                    <p class="text-muted mb-1">Total facture</p>
+                    <h5 class="mb-0">@Model.Count()</h5>
+                  </div>
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                    <p class="text-muted mb-1">Montant total</p>
+                    <h5 class="mb-0"><span class="separateur">@ViewBag.montanttotal</span> FCFA</h5>
+                  </div>
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                    <p class="text-muted mb-1">En Cours</p>
+                    <h5 class="mb-0">@ViewBag.encours</h5>
+                  </div>
+                  <div class="mb-3 mb-xl-0">
+                    <p class="text-muted mb-1">Terminées</p>
+                    <h5 class="mb-0">@ViewBag.fini</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-12">
+              <nav class="navbar navbar-expand-lg page_menu">
+                <a class="navbar-brand" asp-action="Index3">Toutes les factures</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <i class="fa fa-bars text-muted"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item vivify swoopInTop delay-150 ">
+                      <a class="nav-link" asp-action="Index3" asp-route-Etat="En attente Paiement">Factures en Cours</a>
+                    </li>
+                    <li class="nav-item vivify swoopInTop delay-250">
+                      <a class="nav-link" asp-action="Index3" asp-route-Etat="Cloturé">Facture réglées</a>
+                    </li>
+                    
+                  </ul>
+                  <div class="ml-auto">
+                    <a href="javascript:void(0);">Créer nouveau</a>
+                    <a href="javascript:void(0);" class="btn btn-default">Filtre Date</a>
+                  </div>
+                </div>
+              </nav>
+            </div>
+            <div class="col-12">
+              <div class="card">
+                <div class="body">
+                  
+                  <form asp-controller="Facture" asp-action="Index"  method="get">
+                    <div class="input-group">
+                      <input type="search" id="search" name="SearchString" class="form-control" placeholder="Barre de recherche...">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="search-mail">
+                          <i class="icon-magnifier"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="card">
+                <div class="body">
+                  <div class="table-responsive invoice_list">
+                    <table id="testfiltre" class="table table-hover js-basic-example dataTable">
+                      <thead>
+                        <tr>
+                          
+                          <th>Coordonnées du client</th>
+                          <th>Date</th>
+                          <th style="width: 120px;">Montant</th>
+                          <th style="width: 80px;">État</th>
+                          <th style="width: 100px;">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach (var item in Model)
+                        {
+                       
+                        <tr class="montest">
+                          <td>
+                            <div class="d-flex align-items-center">
+                             <img src="/template2/assets/images/invoice.png" style="box-shadow: 0 5px 5px rgb(18 106 239);" class="img-2xx me-2" alt="@item.Nom @item.Prenom"/>
+                              <div class="ml-3">
+                                <a href="#" title="">Facture Nº @item.Numero_de_facture</a>
+                                <p class="mb-0">@item.Nom @item.Prenom  @item.Numero_dossier</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>@item.Create_date.ToString("dd/MM/yyyy") @item.Create_date.ToShortTimeString()</td>
+                          <td><span class="separateur">@item.Net_a_payer_patient</span> FCFA</td>
+                          <td>@if (item.Etat_patient=="Cloturé"){<span class="badge border border-success text-success ml-0 mr-0">@item.Etat_patient</span>}else if(item.Etat_patient=="En cours"){<span class="badge border border-warning text-warning  ml-0 mr-0">@item.Etat_patient</span>}else{<span class="badge border border-danger text-danger  ml-0 mr-0">@item.Etat_patient</span>}
+                          </td>
+                          <td>
+                            @if (item.Etat_patient=="En attente Paiement")
+                            {
+                              if (item.Type!=null && item.Type.Contains("assurance"))
+                              {
+                                <button onclick="location.href='/Facture/Edit2/@item.Id';" type="button" class="btn btn-outline-secondary" title="Edit Invoice">
+                                  <i class="fa fa-edit"></i>
+                                </button>
+                              }else
+                              {
+                                <button onclick="location.href='/Facture/Edit/@item.Id';" type="button" class="btn btn-outline-secondary" title="Edit Invoice">
+                                  <i class="fa fa-edit"></i>
+                                </button>
+                              }
+                            }
+                            <button onclick="location.href='/Facture/Details/@item.Id';" type="button" class="btn btn-outline-secondary " title="Voir">
+                              <i class="fa fa-eye"></i>
+                            </button>
+                            @* <button type="button" class="btn btn-outline-secondary" title="Delete">
+                              <i class="fa fa-trash"></i>
+                            </button> *@
+                          </td>
+                        </tr>
+                        }
+                        
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a  style="color: white;position: fixed;right: 50px;bottom: 45px;" onclick="return tableToExcel('testfiltre', 'Example Table');" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-file-excel-o"></i></a>
+   
+

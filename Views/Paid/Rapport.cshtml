@@ -1,0 +1,33 @@
+@model IEnumerable<BANA.Models.Paid>
+@{
+    ViewData["Title"] = "Rapport de caisse";
+    List<int> caisses = new List<int>();
+    int i=0;
+    Layout=null;
+}
+<iframe id="pdfFrame" src="/Paid/Pdf" width="100%" height="100%" class="border border-dark responsive-pdf"></iframe>
+
+
+
+<button class="btn-retour" onclick="window.history.back();">⟵ Retour</button>
+
+<style>
+  .btn-retour {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 12px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .btn-retour:hover {
+    background-color: #0056b3;
+  }
+</style>

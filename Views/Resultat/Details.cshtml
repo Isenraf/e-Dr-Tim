@@ -1,0 +1,456 @@
+@model BANA.Models.Resultat
+
+@{
+    ViewData["Title"] = "Details";
+}
+<style>
+  .card{
+  margin: auto;
+  width: 21cm;
+  height: 29.7cm; 
+  background-image: url('/img1/pppp2.jpg');
+  background-repeat: round;
+
+  }
+</style>
+
+<link rel="stylesheet" media="print" href="/css/print.css">
+<!-- App container starts -->
+<div class="app-container">
+  <!-- App hero header starts -->
+  <div class="app-hero-header d-flex align-items-center">
+    <!-- Breadcrumb starts -->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+        <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item text-primary" aria-current="page">
+        Détails Résultat
+      </li>
+    </ol>
+    <!-- Breadcrumb ends -->
+  </div>
+  <!-- App Hero header ends -->
+<input type="hidden" value="@Model.Id" id="identifiant"/>
+
+
+  <!-- App body start -->
+  <div class="app-body">
+
+    <div  style="margin-bottom: 20px;background-color: #126aef12;padding: 10px;border-radius: 10px;text-align: right;" class="">
+        <div class="">
+                  @if (Model.Categorie=="Analyse Médicale")
+                    {
+                      
+
+                      <!-- Example Dropdown Button -->
+                      <div class="btn-group">
+                          <div class="dropdown">
+                              <button class="btn btn-success dropdown-toggle mx-2 my-2" type="button" data-bs-toggle="dropdown"
+                              aria-expanded="false">
+                              Impression groupée
+                              </button>
+                              <ul style="padding: 10px;width: max-content;" class="dropdown-menu" id="mlist">
+                              @foreach(var item in ViewBag.autres){
+                                <li>
+                                  <div class="form-check" id="targ">
+                                    <input class="form-check-input" type="checkbox" value="@item.Id">
+                                    <label class="form-check-label" >@item.Nom</label>
+                                  </div>
+                                </li>
+                              }
+
+                              <li>
+                                <button class="btn btn-outline-secondary" id="selectall">
+                                <i class="fa fa-previous"></i> Tout sélectionner</button>
+                              </li>
+                              </ul>
+                          </div>
+                      </div>
+                      
+                    
+                    }
+                    <button class="btn btn-warning" onclick="location.href='/Resultat/Stoneviewer/@Model.Id';">
+                        <i class="fa fa-previous"></i>Viewer</button>
+                    <button class="btn btn-outline-secondary" onclick="location.href='/Resultat/Couverture/@Model.Id';">
+                        <i class="fa fa-previous"></i>Couverture</button>
+                    <button type="button" class="btn btn-outline-secondary" id="actualiser_resultat" title="Actualiser le patient">
+                      <i class="fa fa-refresh"></i>
+                    </button>
+                    @* <button type="button" class="btn btn-outline-secondary" title="Download">
+                      <i class="fa fa-file-pdf-o"></i>
+                    </button>
+                    <button type="button" onclick="printDiv('printMe')" class="btn btn-outline-secondary" title="Print">
+                      <i class="fa fa-print"></i>
+                    </button> *@
+                    @if (Model.valide_par==null)
+                    {
+
+                      <!-- Example Dropdown Button -->
+                      <div class="btn-group">
+                          <div class="dropdown">
+                              <button class="btn btn-warning  dropdown-toggle mx-2 my-2" type="button" data-bs-toggle="dropdown"
+                              aria-expanded="false">
+                              Valider
+                              </button>
+                              <ul style="padding: 10px;width: max-content;" class="dropdown-menu" id="mlist">
+                                  
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                <select id="result"  class="form-control show-tick">
+                                                  <option  value="">- Selectionner Resultat -</option>
+                                                  <option  value="Positif">Positif</option>
+                                                  <option  value="Négatif">Négatif</option>
+                                                  <option  value="Autre">Autre</option>
+                                                </select>
+                                              </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button style="display: none;" type="button" id="valider_result" class="btn  btn-primary">
+                                                      <i class="fa fa-save"></i> Enregistrer</button>
+                                            </div>
+                                          
+                                      
+                              </ul>
+                          </div>
+                      </div>
+                      
+
+
+                        
+
+
+                    }
+                    @if (Model.Categorie=="Imagerie Médicale")
+                    {
+                      <button class="btn btn-primary theme-bg gradient"  id="printResultat">
+                              <i class="fa fa-print"></i> Print</button>
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Imagerie?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }else if(Model.Categorie=="Anapath"){
+                       <button class="btn btn-primary theme-bg gradient"  id="printResultat">
+                              <i class="fa fa-print"></i> Print</button>
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Anapath?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }else if(Model.Categorie=="Ophtalmologie"){
+                      <button class="btn btn-primary theme-bg gradient"  id="printResultat">
+                              <i class="fa fa-print"></i> Print</button>
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Ophtalmologie?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }
+                    else{
+                      //@if(Model.valide_par!=null || Model.Nom=="HP AG" ){
+                        <button class="btn btn-primary theme-bg gradient"  id="printResultat">
+                                <i class="fa fa-print"></i> Print</button>
+                      //}
+                      <button class="btn btn-outline-secondary" id="closeButton"  onclick="location.href='/Resultat/Labo?SearchString=@Model.NumeroFacture';">
+                        <i class="fa fa-previous"></i> Fermer</button>
+                    }
+                    
+                          
+
+        </div>
+      </div>
+
+
+
+    <div class="col-sm-12">
+
+          <div class="row clearfix">
+            
+            <div class="col-lg-12">
+              <div id="tdt1" class="card card2">
+                
+                  <div style="padding: 15px;margin-top: 21%;">
+                  <table style="width: 100%;">
+                    <tr style="color: black;font-family: Arial, Helvetica, sans-serif;"></tr>
+                        <td style="width: 50%;border: solid;"><strong>Nom Patient:</strong> @Model.NomPatient <br>
+                            <strong>Age:</strong> @((int)((DateTime.Now-Model.Date_de_naissance).TotalDays/365)) ans  @((int)(((DateTime.Now-Model.Date_de_naissance).TotalDays%365)/30)) mois @((((int)(DateTime.Now-Model.Date_de_naissance).TotalDays)%365)%30) jours <br>
+                            <strong>Sexe:</strong> @Model.Genre <br>
+                            <strong>Téléphone:</strong> @Model.Telephone_patient <br>
+                            <strong>Numero dossier:</strong> @Model.NumeroDossier , <strong>Numero Facture:</strong> @(Model.NumeroFacture)
+
+                        </td>
+                        <td style="width: 5%;"></td>
+                        <td style="padding: 5px;border-left: solid;border-top: solid;border-bottom: solid;width: 10%;">
+                          <div style="margin-top: 10px;" id="qrcode"></div>
+                        </td>
+                        <td style="border-right: solid;border-top: solid;border-bottom: solid;padding-left: 7px; width: 35%;">
+                          
+                          <div style="max-width: 510px;color: black;font-family: Arial, Helvetica, sans-serif;">
+                            <small style="color: black;"> Resultat générée le @Model.Date_de_finalisation,
+                            <br> Édité par: @Model.fait_par, <br> Validé par: @Model.valide_par
+                            <br>Prescripteur: @Model.Prescripteur</small>
+                            <input  id="text" type="text" value="https://www.polycliniquedepoitiers.com/Resultat/Create" style="display: none;" />
+                          </div>
+                        </td>
+                      </tr>
+                  </table><br>
+                  @* <style>p,ul{margin: 0px;}</style> *@
+
+                  <div style="padding: 10px;" class="row clearfix">
+                   @Html.Raw(Model.Contenu)
+
+                   
+
+                   @if(ViewBag.Lignes1.Count>1){
+                                          <br>
+                                          <p style="margin-left: 10%;font-family: Arial, Helvetica, sans-serif;">@ViewBag.Lignes1[0]</p>
+                                          <table style="margin-left: 10%;width: 80%;font-family: Arial, Helvetica, sans-serif;">
+                                            <tr style="font-weight: 300;font-size: 12px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                              <tr style="font-weight: 600;font-size: 12px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                              <th style="width: 60%;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">Antibiotique</th>
+                                              <th style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">Sensible</th>
+                                              <th style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">Intermédiaire</th>
+                                              <th style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">Résistant</th>
+                                            </tr>
+                                            </tr>
+                                            @for (int i = 1; i < @ViewBag.Lignes1.Count-1; i+=2)
+                                            {
+                                              if(ViewBag.Lignes1[i+1]=="Sensible"){
+                                                <tr style="font-weight: 600;font-size: 12px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;font-family: Arial, Helvetica, sans-serif;">
+                                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes1[i]</span></td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span>X</span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                </tr>
+                                              }
+                                            }
+                                            @for (int i = 1; i < @ViewBag.Lignes1.Count-1; i+=2)
+                                            {
+                                              if(ViewBag.Lignes1[i+1]=="Intermédiaire"){
+                                                <tr style="font-weight: 600;font-size: 12px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;font-family: Arial, Helvetica, sans-serif;">
+                                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes1[i]</span></td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span>X</span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                </tr>
+                                              }
+                                            }
+                                            @for (int i = 1; i < @ViewBag.Lignes1.Count-1; i+=2)
+                                            {
+                                              if(ViewBag.Lignes1[i+1]=="Résistant"){
+                                                <tr style="font-weight: 600;font-size: 12px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;font-family: Arial, Helvetica, sans-serif;">
+                                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes1[i]</span></td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span>X</span>
+                                                  </td>
+                                                </tr>
+                                              }
+                                            }
+                                          </table>
+                                        }
+
+                                        @if(ViewBag.Lignes2.Count>1){
+                                          <br>
+                                        <p style="margin-left: 10%;">@ViewBag.Lignes2[0]</p>
+                                          <table style="margin-left: 10%;width: 80%;">
+                                            <tr style="font-weight: 300;font-size: 12px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;font-family: Arial, Helvetica, sans-serif;">
+                                              <th style="width: 60%;border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">Antibiotique</th>
+                                              <th style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">Sensible</th>
+                                              <th style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">Intermédiaire</th>
+                                              <th style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;" class="text-center">Résistant</th>
+                                            </tr>
+                                            @for (int i = 1; i < @ViewBag.Lignes2.Count-1; i+=2)
+                                            {
+                                              if(ViewBag.Lignes2[i+1]=="Sensible"){
+                                                <tr style="font-weight: 600;font-size: 12px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;font-family: Arial, Helvetica, sans-serif;">
+                                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes2[i]</span></td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span>X</span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                </tr>
+                                              }
+                                            }
+                                            @for (int i = 1; i < @ViewBag.Lignes2.Count-1; i+=2)
+                                            {
+                                              if(ViewBag.Lignes2[i+1]=="Intermédiaire"){
+                                                <tr style="font-weight: 600;font-size: 12px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;font-family: Arial, Helvetica, sans-serif;">
+                                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes2[i]</span></td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span>X</span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                </tr>
+                                              }
+                                            }
+                                            @for (int i = 1; i < @ViewBag.Lignes2.Count-1; i+=2)
+                                            {
+                                              if(ViewBag.Lignes2[i+1]=="Résistant"){
+                                                <tr style="font-weight: 600;font-size: 12px;color: black;;padding: 0rem 0.3rem 0rem 0.3rem;font-family: Arial, Helvetica, sans-serif;">
+                                                  <td style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;"><span>@ViewBag.Lignes2[i]</span></td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span></span>
+                                                  </td>
+                                                  <td  class="text-center" style="border: 1px solid;padding: 0rem 0.3rem 0rem 0.3rem;">
+                                                    <span>X</span>
+                                                  </td>
+                                                </tr>
+                                              }
+                                            }
+                                          </table>
+                                        }
+
+                 
+                  </div> 
+                  <br>
+                  
+                  <div class="row clearfix">
+                    <div class="col-md-6">
+                      <span>
+                        <input  id="text" type="text" value="https://www.polycliniquedepoitiers.com/Resultat/Create" style="display: none;" />
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+        </div>
+        <input type="hidden" asp-for="Id" id="identifiant_result">
+
+      <!-- App body end -->
+
+
+       @if(Model.Categorie=="Analyse Médicale"){
+          <a id="editbt" style="position: fixed;right: 50px;bottom: 45px;" asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-edit"></i></a>
+
+        }else{
+           <a id="editbt" style="position: fixed;right: 50px;bottom: 45px;" asp-action="Edit3" asp-route-Id="@Model.Id" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-edit"></i></a>
+        }
+   
+
+
+
+
+
+<style>
+  /* Modale */
+      .modal, .modal2{
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 0;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      }
+
+      .modal-header {
+      padding: 10px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      }
+
+      .modal-body {
+      flex: 1;
+      overflow: hidden;
+      }
+
+      .modal iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .modal2 iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      }
+
+      .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      }
+</style>
+
+
+      <!-- Modal -->
+        <div id="pdfModal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+            <span>📄 Détails Résultat @Model.NomPatient </span>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+            <iframe id="target" src=""></iframe> <!-- Remplace par ton PDF -->
+            </div>
+          </div>
+        </div>
+  
+
+
+
+
+<script>
+    const modal = document.getElementById('pdfModal');
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.getElementById("target").setAttribute("src", "");
+    }
+
+    // Fermer si on clique en dehors du contenu
+    window.onclick = event => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+</script>

@@ -1,0 +1,397 @@
+@model BANA.Models.Hospi
+
+@{
+    ViewData["Title"] = "Index";
+    Layout="_Layout3";
+}
+<style>
+      @@media print {
+        body * {
+          visibility: hidden;
+        }
+
+        .card,
+        .card * {
+          visibility: visible;
+        }
+
+        .card {
+          position: absolute;
+          left: 0;
+          top: 0;
+          box-shadow: none;
+        }
+
+        /* Hide buttons */
+        .card button {
+          visibility: hidden !important;
+        }
+
+        /* Force hide the last column header & cells */
+        .card table th:last-child,
+        .card table td:last-child {
+          display: none !important;
+          visibility: hidden !important;
+        }
+      }
+    </style>
+
+<!-- App container starts -->
+<div class="app-container">
+    <!-- App hero header starts -->
+    <div class="app-hero-header d-flex align-items-center">
+        <!-- Breadcrumb starts -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+            </li>
+            <li class="breadcrumb-item text-primary" aria-current="page">
+                Plan de soins
+            </li>
+        </ol>
+        <!-- Breadcrumb ends -->
+
+    </div>
+    <!-- App Hero header ends -->
+
+     <!-- App body starts -->
+          <div class="app-body">
+            <div class="col-sm-12">
+              <div class="card">
+                <div
+                  class="card-header d-flex justify-content-between align-items-center"
+                >
+                  <h5 class="card-title mb-0">FICHE DE MEDICAMENT</h5>
+                  <div>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="window.print()">
+                        Imprimer
+                    </button>
+
+                    <button type="button" class="btn btn-outline-info btn-sm add-modal" data-bs-toggle="modal" data-bs-target="#parametreSoins">
+                        Ajouter un medicament
+                    </button>
+
+                     <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/Hospi/Details/@Model.Id'">
+                            Dossier Hospitalisation
+                        </button>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <div class="">
+                        <div class="d-flex mb-3 align-items-end justify-content-between">
+                                    <!-- Stats starts -->
+                                    <div class="d-flex align-items-center flex-wrap gap-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-account-circle-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Nom du patient</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Nom @ViewBag.patient.Prenom</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                               @if(ViewBag.patient.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Genre</p>
+                                                <h4 class="mb-1">@ViewBag.patient.Genre</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-arrow-right-up-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                              <p class="m-0">Âge du patient</p>
+                                                <h4 class="mb-1">@((int)(DateTime.Now-ViewBag.patient.DateNaissance).TotalDays/365) ans</h4>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                                <i class="ri-contrast-drop-2-line fs-3"></i>
+                                            </div>
+                                            <div>
+                                               <p class="m-0">Groupe sanguin</p>
+                                                <h4 class="mb-1">@ViewBag.patient.GroupeSanguin</h4>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- Stats ends -->
+                                    @if(ViewBag.patient.Genre=="M"){
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient2.png" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }else{
+                                      <img style="width: 100px;height: 100px;" src="/template2/assets/images/patient1.jpg" class="ms-auto" alt="@ViewBag.patient.Nom @ViewBag.patient.Prenom" />
+                                    }           
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="table-responsive mb-3">
+                      <table
+                        class="table table-bordered truncate m-0 text-center"
+                      >
+                        <caption
+                          class="small text-center"
+                          style="caption-side: top; font-weight: bold"
+                        ></caption>
+
+                        <thead>
+                          <tr>
+                            <th>Médicaments</th>
+                            <th>Dose</th>
+                            <th>Voie</th>
+                            <th>Prise</th>
+                            <th>Duree</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal parametre -->
+              <div
+                class="modal fade"
+                id="parametreSoins"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">
+                        MEDICAMENTS
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <form id="myForm">
+                        <div class="row gx-3">
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label for="" class="form-label"
+                                >Medicaments
+                              </label>
+                              <select class="form-select" name="medicaments">
+                                <option value="">-- Choisissez --</option>
+                                <option value="paracetamol">Paracétamol</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label for="" class="form-label">Dose</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                name="dose"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label for="" class="form-label">Voie</label>
+                              <select class="form-select" name="voie">
+                                <option value="">-- Choisissez --</option>
+                                <option value="intra-musculaire">
+                                  Intra Musculaire
+                                </option>
+                                <option value="intra-veineuse">
+                                  Intra Veineuse
+                                </option>
+                                <option value="sous-cutane">Sous Cutane</option>
+                                <option value="intra-recta">Intra Recta</option>
+                                <option value="voie-orale">Voie Orale</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label for="" class="form-label">Prise</label>
+
+                              <input
+                                type="time"
+                                class="form-control"
+                                name="time"
+                                min="00:00"
+                                max="23:59"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-sm-12">
+                            <div class="mb-3">
+                              <label for="" class="form-label">Duree</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                name="duree"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button
+                        type="submit"
+                        class="btn btn-outline-success"
+                        form="myForm"
+                      >
+                        Enregistrer
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger"
+                        data-bs-dismiss="modal"
+                      >
+                        Annuler
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- App body ends -->
+
+
+        
+    <!-- My script -->
+    <script>
+      let state = [];
+      let editingRow = null;
+
+      const caption = document.querySelector("caption");
+      const tableBody = document.querySelector("table tbody");
+      const form = document.querySelector("#myForm");
+      const cancelBtn = document.querySelector(
+        '.modal-footer button[type="button"]'
+      );
+      const closeBtn = document.querySelector(".btn-close");
+      const addButton = document.querySelector(".add-modal");
+      const todaysDate = new Date().toLocaleString().split(",")[0];
+
+      function editRow(index) {
+        addButton.click();
+        const row = state.find((_, i) => i === index);
+
+        for (const [key, val] of Object.entries(row)) {
+          if (form.elements[key]) {
+            form.elements[key].value = val;
+          }
+        }
+
+        editingRow = index;
+      }
+
+      function deleteRow(index) {
+        state = state.filter((_, i) => i !== index);
+        render();
+      }
+
+      function clearChartData(ch) {
+        ch.data.labels = [];
+        ch.data.datasets.forEach((dataset) => {
+          dataset.data = [];
+        });
+        ch.update();
+      }
+
+      function render() {
+        let markup = "";
+
+        state.forEach((row, index) => {
+          const { time, medicaments, dose, voie, prise, duree } = row;
+          markup += `
+            <tr>
+              <td>${time}</td>
+              <td>${medicaments}</td>
+              <td>${dose}</td>
+              <td>${voie}</td>
+              <td>${prise}</td>
+              <td>${duree}</td>
+              <td class="d-flex gap-2" style="border-left: 0;">
+                <button onclick="editRow(${index})" class="btn btn-outline-success btn-sm">
+                  <i class="ri-edit-fill"></i>
+                </button>
+
+                <button onclick="deleteRow(${index})" class="btn btn-outline-danger btn-sm">
+                  <i class="ri-delete-row"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+        tableBody.innerHTML = markup;
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const data = new FormData(form);
+        const time = data.get("time");
+        const medicaments = data.get("medicaments");
+        const dose = data.get("dose");
+        const voie = data.get("voie");
+        const prise = data.get("prise");
+        const duree = data.get("duree");
+
+        const params = {
+          time,
+          medicaments,
+          dose,
+          voie,
+          prise,
+          duree,
+        };
+
+        if (editingRow || editingRow === 0) {
+          state[editingRow] = params;
+          render();
+          editingRow = null;
+        } else {
+          state.push(params);
+          render();
+        }
+
+        form.reset();
+      });
+
+      caption.textContent = todaysDate;
+
+      closeBtn.addEventListener("click", function () {
+        form.reset();
+      });
+      cancelBtn.addEventListener("click", function () {
+        form.reset();
+      });
+
+      render();
+    </script>
+ 
+

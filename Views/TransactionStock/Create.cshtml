@@ -1,0 +1,160 @@
+@model BANA.Models.TransactionStock
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+ <!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Emplacements
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+            <div class="col-sm-12">
+              <div class="card mb-3">
+                
+                <div class="card-header justify-content-between">
+                  <h5 class="card-title">
+                    @ViewBag.emplacement[0].Nom<br />
+                    <h7 style="font-size: 12px; color: #4c545e">Effectuer un mouvement de stock,</h7>
+                  </h5>
+                
+                    <div class="d-flex flex-wrap gap-1">
+                      <div
+                        class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                      >
+                        <i class="ri-pie-chart-2-fill text-success fs-4"></i>
+                        <span class="me-1 fw-semibold ps-1">0</span>
+                        <span class="text-success">Total </span>
+                      </div>
+                      <div
+                        class="d-flex align-items-center box-shadow px-3 py-1 rounded-2"
+                      >
+                        <i class="ri-pie-chart-2-fill text-danger fs-4"></i>
+                        <span class="me-1 fw-semibold ps-1">1</span>
+                        <span class="text-danger">Nombre d'article</span>
+                      </div>
+                     
+                    
+                  </div>
+                </div>
+               
+                <div class="card-body">
+                  <form asp-action="Create">
+                        <div class="row">
+                        <div class="col-12">
+                          <div class="card mb-3">
+                            @if (ViewData["Ancien"]!=null)
+                            {
+                              <div class="alert alert-success" role="alert">
+                                @ViewData["Ancien"]
+                              </div>
+                            }
+                            <div class="form-control">
+                              <label class="form-label" for="">Nom de l'article
+                                <span class="text-danger">*</span>
+                              </label>
+                              <input value="" asp-for="Nom_article" list="articles" autocomplete="off" type="text" class="form-control" style="height: 50px; border: #c3dff1"/>
+                              <datalist id="articles">
+                                @foreach (var item in ViewBag.articles)
+                                {
+                                <option value="@item.Nom_article">Quantité en Stock: <span class="separateur">@(item.Quantitee==null?0:(int)item.Quantitee)</span></option>
+                                }
+                             </datalist>
+                             <span asp-validation-for="Nom_article" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Quantité
+                                <span class="text-danger">*</span>
+                              </label>
+                              <input asp-for="Quantitee"   class="form-control" style="height: 50px; border: #c3dff1"/>
+                              <span asp-validation-for="Quantitee" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">operation </label>
+                              <div class="input-group">
+                               
+                                <select asp-for="TypeOperation" class="form-select" id="" style="height: 50px; border: #c3dff1">
+                                  <option asp-for="TypeOperation" value="">- Selectionner l'Opération -</option>
+                                  <option asp-for="TypeOperation" value="Entrée">Entrée</option>
+                                  <option asp-for="TypeOperation" value="Sortie">Sortie</option>
+                                   @if (ViewBag.emplacement[0].Nom.ToString()=="MAGASIN GÉNÉRAL")
+                                     {
+                                         <option asp-for="TypeOperation" value="transfert">Transfert Magasin vers PHARMACIE</option>
+                                     }
+                                </select>
+                                <span asp-validation-for="TypeOperation" class="text-danger"></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="card mb-3">
+                            <div class="form-control">
+                              <label class="form-label" for="">Emplacement
+                                <span class="text-danger">*</span>
+                              </label>
+                              <div class="input-group">
+                               
+                                <select asp-for="Emplacement" class="form-select" id="a9" style="height: 50px; border: #c3dff1">
+                                  <option asp-for="Emplacement" value="">- Selectionner un Emplacement -</option>
+                                   @foreach (var item in ViewBag.emplacement)
+                                    {
+                                        <option asp-for="Emplacement" value="@item.Nom">@item.Nom</option>
+                                    }
+                                </select>
+                                 <span asp-validation-for="Emplacement" class="text-danger"></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col mb-4">
+                            <textarea asp-for="Observation" style="height: 100px;"   class=" form-control" name="" id=""placeholder="Entrez une observation.."></textarea>
+                            <span asp-validation-for="Observation" class="text-danger"></span>
+                        </div>  
+                    </div>
+                    <div style="display: flex; justify-content: end; gap: 10px">
+                      <button type="submit" class="btn btn-info">
+                        <i class="ri-save-3-line"></i> Enregistrer et continuer
+                      </button>
+                      <div class="d-flex flex-wrap gap-2">
+                        <button type="button" onclick="history.back()" class="btn btn-outline-secondary">
+                          Annuler
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+          
+            <!-- app body end-->
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

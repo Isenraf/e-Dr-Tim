@@ -1,0 +1,203 @@
+@model BANA.Models.Patient
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+              <div class="col-lg-4 col-md-12 col-sm-12">
+               <h1>Policlinique de Poitiers</h1>
+                <span>Suppression définitive,</span>
+              </div>
+              <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0 hidden-xs">
+                    <p class="text-muted mb-1">Actifs</p>
+                    <h5 class="mb-0">@ViewData["Actifs"]</h5>
+                  </div>
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                    <p class="text-muted mb-1">Inactifs</p>
+                    <h5 class="mb-0">@ViewData["Inactifs"]</h5>
+                  </div>
+                  <div class="pr-4 mb-2 mb-xl-0">
+                    <p class="text-muted mb-1">Total</p>
+                    <h5 class="mb-0">@ViewData["total"]</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="body">
+                  <form asp-action="Delete">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                     <input type="hidden" asp-for="Create_date" />
+                      <input type="hidden" asp-for="Etat" />
+                      <input type="hidden" asp-for="Derniere_visite" />
+                      <input type="hidden" asp-for="Numero_dossier" />
+                    <div class="form-group row">
+                      <label class="col-md-2 col-sm-4 col-form-label">Informations de base</label>
+                      <div class="col-md-8 col-sm-8">
+                        <div class="row clearfix">
+                          <div class="col-md-4 col-sm-12">
+                            <div class="form-group c_form_group">
+                              <label>Noms
+                                <span class="text-danger">*</span>
+                              </label>
+                              <input asp-for="Nom" class="form-control" disabled>
+                              <span asp-validation-for="Nom" class="text-danger"></span>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-sm-12">
+                            <div class="form-group c_form_group">
+                              <label>Prenoms
+                                <span class="text-danger"></span>
+                              </label>
+                              <input asp-for="Prenom" class="form-control" disabled>
+                              <span asp-validation-for="Prenom" class="text-danger"></span>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-sm-12">
+                            <div class="form-group c_form_group">
+                              <label>Téléphone.</label>
+                              <input asp-for="Phone" class="form-control" disabled>
+                              <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row clearfix">
+                          <div class="col-md-3 col-sm-6">
+                            <div class="form-group c_form_group">
+                              <label>Date de Naissance
+                                <span class="text-danger">*</span>
+                              </label>
+                              <input asp-for="DateNaissance"  class="form-control" placeholder="Select Date" disabled>
+                              <span asp-validation-for="DateNaissance" class="text-danger"></span>
+                            </div>
+                          </div>
+                          <div class="col-md-3 col-sm-6">
+                            <div class="form-group c_form_group">
+                              <label>Profession
+                                <span class="text-danger"></span>
+                              </label>
+                              <input asp-for="Profession" class="form-control" placeholder="Enter here" disabled>
+                               <span asp-validation-for="Profession" class="text-danger"></span>
+                            </div>
+                          </div>
+                          <div class="col-md-3 col-sm-6">
+                            <div class="form-group c_form_group">
+                              <label>Genre
+                                <span class="text-danger">*</span>
+                              </label>
+                              <select  asp-for="Genre" class="form-control show-tick" disabled>
+                                <option asp-for="Genre" value="">- Select -</option>
+                                <option asp-for="Genre" value="Homme">Homme</option>
+                                <option asp-for="Genre" value="Femme">Femme</option>
+                              </select>
+                               <span asp-validation-for="Genre" class="text-danger"></span>
+                            </div>
+                          </div>
+                          <div class="col-md-3 col-sm-6">
+                            <div class="form-group c_form_group">
+                              <label>Adresse Email
+                                <span class="text-danger"></span>
+                              </label>
+                              <input asp-for="Email" class="form-control" placeholder="Enter here" disabled>
+                              <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row clearfix">
+                          <div class="col-lg-12">
+                            <input type="file" class="dropify">
+                          </div>
+                          <div class="col-sm-12">
+                            <div class="form-group m-t-20">
+                              <textarea asp-for="Description" rows="6" class="form-control" placeholder="Description" disabled>
+                              </textarea>
+                              <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <div class="form-group m-t-20">
+                              <textarea asp-for="Notesimportant" rows="6" class="form-control" placeholder="Notes importantes" disabled>
+                              </textarea>
+                              <span asp-validation-for="Notesimportant" class="text-danger"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row mt-5">
+                      <label class="col-md-2 col-sm-4 col-form-label">Informations d'enregistrement</label>
+                      <div class="col-md-8 col-sm-10">
+                        <div class="row clearfix">
+                          <div class="col-sm-6">
+                            <div class="form-group c_form_group">
+                              <label>Groupe sanguin
+                                <span class="text-danger"></span>
+                              </label>
+                              <select  asp-for="GroupeSanguin" class="form-control show-tick" disabled>
+                                <option asp-for="GroupeSanguin" value="">- Select -</option>
+                                <option asp-for="GroupeSanguin" value="A+">A+</option>
+                                <option asp-for="GroupeSanguin" value="A-">A-</option>
+                                <option asp-for="GroupeSanguin" value="B+">B+</option>
+                                <option asp-for="GroupeSanguin" value="B-">B-</option>
+                                <option asp-for="GroupeSanguin" value="AB">AB</option>
+                                <option asp-for="GroupeSanguin" value="O+">O+</option>
+                                <option asp-for="GroupeSanguin" value="O-">O-</option>
+                              </select>
+                              <span asp-validation-for="GroupeSanguin" class="text-danger"></span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group c_form_group">
+                              <label>Personne mandatée
+                                <span class="text-danger"></span>
+                              </label>
+                              <input asp-for="AutresContact" class="form-control"  placeholder="Enter here" disabled>
+                              <span asp-validation-for="AutresContact" class="text-danger"></span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group c_form_group">
+                              <label>Adresse de résidence
+                                <span class="text-danger"></span>
+                              </label>
+                              <input asp-for="Quartier" class="form-control"  placeholder="Enter here" disabled>
+                              <span asp-validation-for="Quartier" class="text-danger"></span>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                           <div class="form-group form-check">
+                              <label class="form-check-label">
+                                  <input  asp-for="Acrif" /> Activé
+                              </label>
+                          </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <button type="submit" class="btn btn-danger">
+                              <i class="fa fa-delete"></i> Suppression définitive</button>
+                            </button>
+                            
+                            <button type="button" onclick="history.back()" class="btn btn-outline-secondary">Annuler</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

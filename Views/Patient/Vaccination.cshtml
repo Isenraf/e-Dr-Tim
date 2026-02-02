@@ -1,0 +1,1676 @@
+@model BANA.Models.Patient
+
+@{
+    ViewData["Title"] = "Details";
+     Layout="_Layout3";
+}
+
+
+<style>
+    
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        bottom: 100%; /* place le menu au-dessus */
+        left: -20px; /* décale un peu vers la gauche */
+        background-color: #fff;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 10px;
+        z-index: 1;
+      }
+
+      .dropdown-content button {
+        display: block;
+        margin: 5px 0;
+        text-align: left;
+        padding: 8px;
+        border: none;
+        background-color: #eee;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .dropdown-content button:hover {
+        background-color: #ddd;
+      }
+
+      .dropdown.show .dropdown-content {
+        display: block;
+      }
+
+      button.main-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+    </style>
+<link href="/css/stock2.css" rel="stylesheet">
+<input type="hidden" id="dossier" value="@Model.Numero_dossier">
+<!-- App container starts -->
+        <div class="app-container">
+            <!-- App hero header starts -->
+            <div class="app-hero-header d-flex align-items-center">
+                <!-- Breadcrumb starts -->
+                
+                
+                <!-- Breadcrumb ends -->
+
+                <!-- Sales stats starts -->
+                <div class="d-lg-flex d-none flex-row">
+                    <div class="d-flex flex-row gap-1 day-sorting">
+                        
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box lg bg-primary rounded-5 me-2">
+                                <i class="ri-account-circle-line fs-3"></i>
+                            </div>
+                                <div>
+                                    <p class="m-0">Nom du patient</p>
+                                    <h5 class="mb-1">@Model.Nom @Model.Prenom</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    @if(Model.Genre=="M"){<i class="ri-men-line fs-3"></i>}else{<i class="ri-women-line fs-3"></i>}
+                                </div>
+                                <div>
+                                    <p class="m-0">Genre</p>
+                                    <h5 class="mb-1">@Model.Genre</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-arrow-right-up-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Âge du patient</p>
+                                    <h5 class="mb-1">@((int)(DateTime.Now-Model.DateNaissance).TotalDays/365) ans</h5>
+                                    
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box lg bg-primary rounded-5 me-2">
+                                    <i class="ri-contrast-drop-2-line fs-3"></i>
+                                </div>
+                                <div>
+                                    <p class="m-0">Groupe sanguin</p>
+                                    <h5 class="mb-1">@Model.GroupeSanguin</h5>
+                                    
+                                </div>
+                            </div>
+                            @if(Model.Genre=="M"){
+                                <img style="width: 60px;height: 60px;" src="/template2/assets/images/patient2.png" class="ms-auto" alt="@Model.Nom @Model.Prenom" />
+                            }else{
+                                <img style="width: 60px;height: 60px;" src="/template2/assets/images/patient1.jpg" class="ms-auto" alt="@Model.Nom @Model.Prenom" />
+                            }
+                                       
+                    </div>
+                </div>
+                <!-- Sales stats ends -->
+            </div>
+            <!-- App Hero header ends -->
+
+
+
+            <!-- App body starts -->
+<div class="app-body">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+              <div id="calendarvac">
+              @if(ViewBag.vaccination!=null){
+                @Html.Raw(ViewBag.vaccination.contenu)
+                <input type="hidden" value="@ViewBag.vaccination.Id" id="identifiant">
+                
+              }else{
+                <input type="hidden" value="0" id="identifiant">
+                    <div class="table-responsive mb-3">
+                        <h5 class="card-title mb-3">
+                            CALENDRIER DE VACCINATION DE L'ENFANT
+                        </h5>
+                        <table class="table table-bordered mb-3 text-center" style="vertical-align: middle;">
+                            <thead>
+                                <tr style="background-color: #0c90ac; color: white;">
+                                    <th>Contacts</th>
+                                    <th>Age</th>
+                                    <th>
+                                        Vaccins <br />
+                                        /autres intrants
+                                    </th>
+                                    <th>Voie d'administration</th>
+                                    <th>Maladies evitables</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <!-- 01 -->
+                                <tr>
+                                    <th rowspan="3">
+                                        <span>1er contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe2.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="3">A la naissance</td>
+                                    <th>VPO-0</th>
+                                    <td>Orale</td>
+                                    <td>Poliomyelite</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>BCG</th>
+                                    <td>Intradermique</td>
+                                    <td>Tuberculose</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>HepB-DN</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Hepatite virale B</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 02 -->
+                                <tr>
+                                    <th rowspan="4">
+                                        <span>2eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe1.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="4">
+                                        6 semaines <br />
+                                        (1 mois et demi)
+                                    </td>
+                                    <th>VPO-1</th>
+                                    <td>Orale</td>
+                                    <td>Poliomyelite</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>ROTA-1</th>
+                                    <td>Orale</td>
+                                    <td>Diarrhees a Rotavirus</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>DTC-HepB-Hib-1</th>
+                                    <td>Intramusculaire</td>
+                                    <td>
+                                        Diphterie, Tetanos, Coqueluche, hepatite virale B, infections a Haemophilus influenzae type b
+                                    </td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Pneumo 13-2</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Les infections a Pneumocoque</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 03 -->
+                                <tr>
+                                    <th rowspan="5">
+                                        <span>3eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe1.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="5">
+                                        10 semaines <br />
+                                        (2 mois et demi)
+                                    </td>
+                                    <th>VPO-2</th>
+                                    <td>Orale</td>
+                                    <td>Poliomyelite</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>ROTA-2</th>
+                                    <td>Orale</td>
+                                    <td>Diarrhees a Rotavirus</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>TPln-1</th>
+                                    <td>Orale</td>
+                                    <td>Paludisme</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>DTC-HepB-Hib-2</th>
+                                    <td>Intramusculaire</td>
+                                    <td>
+                                        Diphterie, Tetanos, Coqueluche, hepatite virale B, infections a Haemophilus influenzae type b
+                                    </td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Pneumo 13-2</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Les infections a Pneumocoque</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 04 -->
+                                <tr>
+                                    <th rowspan="6">
+                                        <span>4eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe4.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="6">
+                                        14 semaines <br />
+                                        (3 mois et demi)
+                                    </td>
+                                    <th>VPO-3</th>
+                                    <td>Orale</td>
+                                    <td>Poliomyelite</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>ROTA-3</th>
+                                    <td>Orale</td>
+                                    <td>Diarrhees a Rotavirus</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>TPln-2</th>
+                                    <td>Orale</td>
+                                    <td>Paludisme</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>DTC-HepB-Hib-3</th>
+                                    <td>Intramusculaire</td>
+                                    <td>
+                                        Diphterie, Tetanos, Coqueluche, hepatite virale B, infections a Haemophilus influenzae type b
+                                    </td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Pneumo 13-3</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Les infections a Pneumocoque</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>VPI-1</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Poliomyelite</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 05 -->
+                                <tr>
+                                    <th rowspan="3">
+                                        <span>5eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe4.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="3">A 6 mois</td>
+                                    <th>Vitamine A</th>
+                                    <td>Orale</td>
+                                    <td>Carence en vitamine A</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>TPln-3</th>
+                                    <td>Orale</td>
+                                    <td>Paludisme</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>VAP-1</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Paludisme</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 06 -->
+                                <tr>
+                                    <th>
+                                        <span>6eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe4.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td>A 7 mois</td>
+                                    <th>VAP-2</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Paludisme</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 07 -->
+                                <tr>
+                                    <th rowspan="7">
+                                        <span>7eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe5.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="7">A 9 mois</td>
+                                    <th>RR-1</th>
+                                    <td>Sous-cutanee</td>
+                                    <td>Rougeole - Rubeole</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>VAA</th>
+                                    <td>Sous-cutanee</td>
+                                    <td>Fievre jaune</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>VPI-2</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Poliomyelite</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>VAP-3</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Paludisme</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>VIT A</th>
+                                    <td>Orale</td>
+                                    <td>Carence en vitamine A</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>TPln - 4</th>
+                                    <td>Orale</td>
+                                    <td>Paludisme</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>MILDA</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 08 -->
+                                <tr>
+                                    <th rowspan="2">
+                                        <span>8eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe5.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="2">A 12 mois</td>
+                                    <th>Vitamine A</th>
+                                    <td>Orale</td>
+                                    <td>Carence en vitamine A</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Mebendazole</th>
+                                    <td>Orale</td>
+                                    <td>Parasitose intestinale</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 09 -->
+                                <tr>
+                                    <th rowspan="3">
+                                        <span>9eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe5.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="3">A 15 mois</td>
+                                    <th>RR-2</th>
+                                    <td>Sous-cutanee</td>
+                                    <td>Rougeole - Rubeole</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Men A / ACYW135</th>
+                                    <td>Intramusculaire</td>
+                                    <td>
+                                        Meninhites et autres infections severes a meningoscoques
+                                    </td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>TPI-5</th>
+                                    <td>Orale</td>
+                                    <td>Paludisme</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 10 -->
+                                <tr>
+                                    <th rowspan="2">
+                                        <span>10eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe6.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="2">A 18 mois</td>
+                                    <th>Vit A</th>
+                                    <td>Orale</td>
+                                    <td>Carence en vitamine A</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Mebendazole</th>
+                                    <td>Orale</td>
+                                    <td>Parasitose intestinale</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 11 -->
+                                <tr>
+                                    <th rowspan="3">
+                                        <span>11eme contact</span>
+                                        <div class="mt-2">
+                                            <img src="/template2/fiche5/bebe6.png" alt="une image" width="75px" height="auto" />
+                                        </div>
+                                    </th>
+                                    <td rowspan="3">A 24 mois</td>
+                                    <th>VAP-4</th>
+                                    <td>Intramusculaire</td>
+                                    <td>Paludisme</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Vit A</th>
+                                    <td>Orale</td>
+                                    <td>Creance en vitamine A</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>Mebendazole</th>
+                                    <td>Orale</td>
+                                    <td>Parasitose intestinale</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 class="card-title mb-3">
+                            CALENDRIER DE VACCINATION DE ADOLESCENT(E)
+                        </h5>
+                        <table class="table table-bordered mb-3 text-center" style="vertical-align: middle;">
+                            <caption>
+                                *dose unique (un seul contact) pour le vaccin contre le HPV
+                            </caption>
+                            <thead>
+                                <tr>
+                                    <th>Contact</th>
+                                    <th>Age</th>
+                                    <th>Vaccin</th>
+                                    <th>Voie d'administration</th>
+                                    <th>Maladies evitables</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <!-- 01 -->
+                                <tr>
+                                    <th>Contact unique</th>
+                                    <td>9 ans*</td>
+                                    <td>
+                                        Vaccin anti HPV contre les types 6, 11, 16, 18
+                                    </td>
+                                    <td>Intramusculaire</td>
+                                    <td>
+                                        <ul style="list-style-position: outside; margin: 0; text-align: left;">
+                                            <li>
+                                                Cancers du col de l'uterus, de l'anus, de la gorge, du penis
+                                            </li>
+                                            <li>Condylomes ou verrues ano-genitales</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        @if(Model.Genre=="F"){
+                        <h5 class="card-title mb-3">
+                            CALENDRIER DE VACCINATION DE LA FEMME ENCEINTE VACCINEE DANS L'ENFANCE
+                        </h5>
+                        <table class="table table-bordered mb-3 text-center" style="vertical-align: middle;">
+                            <caption>
+                                <i>NB: toute dose de Td recue ne doit pas etre reprise quelle que soit la duree entre la dose recue et celle a recevoir.</i>
+                            </caption>
+                            <thead>
+                                <tr>
+                                    <th>Doses</th>
+                                    <th>Periode d'administration</th>
+                                    <th>Voie d'administration</th>
+                                    <td>Duree de protection</td>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Td1</td>
+                                    <td>
+                                        Au premier contact ou des que possible pendant la grossesse
+                                    </td>
+                                    <td rowspan="3">Intramusculaire</td>
+                                    <td>1 a 3 ans</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Td2</td>
+                                    <td>Au moins 4 semaines apres Td1</td>
+                                    <td>Au moins 5ans</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Td3</td>
+                                    <td>
+                                        Au moins 6 mois apres Td2 ou pendant la grossesse survenue apres Td2
+                                    </td>
+                                    <td>Toute la vie feconde voire au-dela</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 class="card-title mb-3">
+                            CALENDRIER DE VACCINATION DE LA FEMME ENCEINTE NON VACCINEE DANS L'ENFANCE
+                        </h5>
+                        <table class="table table-bordered m-0 text-center" style="vertical-align: middle;">
+                            <thead>
+                                <tr>
+                                    <th>Doses</th>
+                                    <th>Periode d'administration</th>
+                                    <th>Duree de protection</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Td1</td>
+                                    <td>
+                                        Au premier contact ou des que possible pendant la grossesse
+                                    </td>
+                                    <td>Aucune</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Td2</td>
+                                    <td>Au moins 4 semaines apres Td1</td>
+                                    <td>1 a 3 ans</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Td3</td>
+                                    <td>
+                                        Au moins 6 mois apres Td2 ou pendant la grossesse survenue apres Td2
+                                    </td>
+                                    <td>Au moins 5 ans</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Td4</td>
+                                    <td>
+                                        Au moins 1 an apres Td3 ou pendant la grossesse survenue apres Td3
+                                    </td>
+                                    <td>Au moins 10 ans</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Td5</td>
+                                    <td>
+                                        Au moins 1 an apres Td4 ou pendant la grossesse survenue apres Td4
+                                    </td>
+                                    <td>Toute la vie feconde voire au-dela/td></td>
+                                    <td>
+                                        <div class="action-container">
+                                            <!-- Première version = dropdown -->
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Valider
+                                                </button>
+
+                                                <ul class="dropdown-menu p-3" style="min-width: 300px;">
+                                                    <li>
+                                                        <div class="d-flex flex-column gap-2">
+                                                            <input type="date" class="form-control inputDate" />
+                                                            <input type="text" class="form-control inputLot" placeholder="# Numéro de lot" />
+                                                            <textarea rows="3" class="form-control inputObs" placeholder="Observation"></textarea>
+                                                            <button type="button" class="btn btn-outline-info btnSave">Enregistrer</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        }
+                    </div>
+                
+
+              }
+              </div> 
+               
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- App body ends -->
+
+<style>
+/* Style vert pour ligne validée */
+tr.table-success { background-color: #d4edda; }
+
+/* Style tooltip */
+.custom-tooltip-danger .tooltip-inner {
+  background:#0991ac; 
+  color:#fff; 
+  white-space:pre-line; 
+  border-radius:6px; 
+  padding:6px 10px;
+}
+.custom-tooltip-danger .tooltip-arrow::before {
+  border-left-color:#0991ac!important; 
+}
+
+</style>
+
+

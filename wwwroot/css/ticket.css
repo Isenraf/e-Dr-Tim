@@ -1,0 +1,169 @@
+﻿.wrapper {
+    max-width: 112.5rem;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem;
+}
+
+.grid {
+    --grid-min-size: 80px;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(var(--grid-min-size), 1fr));
+    gap: 0.5rem;
+}
+
+.item {
+    background: linear-gradient(to top left, #ffffff, #ffffff);
+    color: black;
+    text-align: center;
+    padding: 1rem 0rem 1rem 0rem;
+    border-radius: 0.5rem;
+    /* height: 100px; */
+    box-shadow: 0rem 0.5rem 0.5rem hsla(0, 0%, 0%, 0.6);
+}
+
+th {
+    min-width: none;
+}
+
+
+.blue {
+    color: blue;
+}
+
+.item::-webkit-scrollbar {
+    display: none;
+}
+
+.cl10 {
+    font-size: 10px;
+}
+
+.cl20 {
+    font-size: 20px;
+}
+
+
+/* @media only screen and (min-width: 1024px) {
+    .grid {
+        --grid-min-size: 130px;
+        display: grid;
+        grid-template-columns: repeat( auto-fill, minmax(var(--grid-min-size), 1fr));
+        gap: 0.5rem;
+    }
+    .item {
+        background: linear-gradient(to bottom right, #e9e9e9, #f3f6f9);
+        color: black;
+        text-align: center;
+        padding: 1rem 0rem 1rem 0rem;
+        border-radius: 0.5rem;
+        height: 130px;
+        box-shadow: 0rem 0.5rem 0.5rem hsla(0, 0%, 0%, 0.6);
+    }
+    .cl10 {
+        font-size: 15px;
+    }
+    .cl20 {
+        font-size: 30px;
+    }
+} */
+
+
+/*Trigger Button*/
+
+.login-trigger {
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(to bottom right, #B05574, #F87E7B);
+    padding: 15px 30px;
+    border-radius: 30px;
+    position: relative;
+    top: 50%;
+}
+
+
+/*Modal*/
+
+h4 {
+    font-weight: bold;
+    color: #fff;
+}
+
+.close {
+    color: #fff;
+    transform: scale(1.2)
+}
+
+.modal-content {
+    font-weight: bold;
+    background: linear-gradient(to bottom right, #763dd3, #1f0a62);
+}
+
+.form-control {
+    margin: 1em 0;
+}
+
+.form-control:hover,
+.form-control:focus {
+    box-shadow: none;
+    border-color: #fff;
+}
+
+.username,
+.password {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 2px solid #eee;
+    padding-left: 0;
+    font-weight: normal;
+    background: transparent;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #eee;
+}
+
+.form-control:focus::-webkit-input-placeholder {
+    font-weight: bold;
+    color: #fff;
+}
+
+.login {
+    padding: 6px 20px;
+    border-radius: 20px;
+    background: none;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    font-weight: bold;
+    transition: all .5s;
+    margin-top: 1em;
+}
+
+.login:hover {
+    background: #FAB87F;
+    color: #fff;
+}
+
+button.close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+}
+
+.close {
+    color: #fff;
+    transform: scale(1.2);
+}
+
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+}

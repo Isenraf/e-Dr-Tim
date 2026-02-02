@@ -1,0 +1,101 @@
+@model IEnumerable<BANA.Models.TransactionStock>
+
+@{
+    ViewData["Title"] = "Index";
+    int x=1;
+}
+
+
+<link rel="stylesheet" href="/template2/table/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/template2/table/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="/template2/table/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="/template2/table/style.css" />
+<!-- App container starts -->
+        <div class="app-container">
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a asp-action="Index" asp-controller="Departement">Acceuil</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Mouvement des stock
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- app body start -->
+          <div class="app-body">
+            <div class="card mb-3 px-2">
+              <div
+                class="card-header d-flex align-items-center justify-content-between"
+              >
+                <h5 class="card-title">
+                  Polyclinique de Poitiers<br /><h7
+                    style="font-size: 12px; color: #4c545e"
+                    >Mouvement des stock</h7
+                  >
+                </h5>
+              </div>
+              <br />
+
+              <div class="row gx-3 gy-3">
+                <div class="row gx-3">
+                 
+                 
+                    <div  id="containerexample" >
+                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                      <thead class="">
+                        <tr>
+                          <th style="border: solid;white-space: nowrap;">Nom Article</th>
+                          <th style="border: solid;white-space: nowrap;">Quantité</th>
+                          <th style="border: solid;white-space: nowrap;">Opération</th>
+                          <th style="border: solid;white-space: nowrap;">Emplacement</th>
+                          <th style="border: solid;white-space: nowrap;">Fait par</th>
+                          <th style="border: solid;white-space: nowrap;">Date</th>
+                          <th style="border: solid;white-space: nowrap;">Observation</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-bordered">
+                            
+
+                            @foreach (var item in Model)
+                            {
+                                <tr class="montest">
+                                    <td border: solid;white-space: nowrap;>@item.Nom_article</td>
+                                    <td border: solid;white-space: nowrap;>@((int)item.Quantitee)</td>
+                                    <td border: solid;white-space: nowrap;>@if (item.TypeOperation=="Entrée"){<span class="badge border border-success text-success">@item.TypeOperation</span>}else{<span class="badge border border-danger text-danger">@item.TypeOperation</span>}
+                                    </td>
+                                    <td border: solid;white-space: nowrap;>@item.Emplacement</td>
+                                    <td border: solid;white-space: nowrap;>@item.utilisateur</td>
+                                    <td border: solid;white-space: nowrap;>@item.Create_date</td>
+                                    <td border: solid;white-space: nowrap;>@item.Observation</td>
+                                </tr>
+                                x++;
+                            } 
+                      </tbody>
+                    </table>
+                    <br />
+                    <br />
+                  </div>
+
+                 
+                </div>
+              </div>
+              <!-- App body ends -->
+            </div>
+          </div>
+
+          <div id="loadercontainer">
+            <div class="d-flex justify-content-center" id="loader" style="color: #126aef;">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+          </div>
+        
+<input id="username" type="hidden" value="@ViewBag.user.nom" />

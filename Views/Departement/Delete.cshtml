@@ -1,0 +1,89 @@
+@model BANA.Models.Departement
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+      <div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+              <div class="col-lg-4 col-md-12 col-sm-12">
+                <h1>Salut, bienvenue !</h1>
+                <span>Département: @Model.Nom,</span>
+              </div>
+              <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0 hidden-xs">
+                    <p class="text-muted mb-1">-
+                      <span id="mini-bar-chart3" class="mini-bar-chart">
+                      </span>
+                    </p>
+                    <h5 class="mb-0">_</h5>
+                  </div>
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                    <p class="text-muted mb-1">-
+                      <span id="mini-bar-chart2" class="mini-bar-chart">
+                      </span>
+                    </p>
+                    <h5 class="mb-0">_</h5>
+                  </div>
+                  <div class="mb-3 mb-xl-0">
+                    <p class="text-muted mb-1">-
+                      <span id="mini-bar-chart1" class="mini-bar-chart">
+                      </span>
+                    </p>
+                    <h5 class="mb-0">_</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="body">
+                <form asp-action="Delete">
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Nom du département:</label>
+                      <div class="col-md-6 col-sm-10 col-form-label">
+                        @Html.DisplayFor(model => model.Nom)
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Description:</label>
+                      <div class="col-md-6 col-sm-10 col-form-label">
+                        @Html.DisplayFor(model => model.Description)
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Image</label>
+                      <div class="col-md-6 col-sm-10">
+                       <div class="dropify-preview" style="display: block;">
+                          <span class="dropify-render">
+                            <img width="150px" src="/img1/@Model.Image">
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Activer:</label>
+                      <div class="col-md-6 col-sm-10 col-form-label">
+                        @Html.DisplayFor(model => model.Actif)
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">
+                      </label>
+                      <div class="col-md-6 col-sm-10">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="submit" value="Supprimer définitivement" class="btn btn-danger" /> |
+                            <button type="button" onclick="location.href='/Departement/index';" class="btn btn-default">Annuler</button>                       
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+

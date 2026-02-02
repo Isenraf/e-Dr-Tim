@@ -1,0 +1,96 @@
+@model IEnumerable<BANA.Models.Paid>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+      <div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                  <h1>Salut, bienvenue !</h1>
+                  <span>Listing des paiements Assurances</span>
+                </div>
+                <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                  <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                      <div class="border-right pr-4 mr-4 mb-2 mb-xl-0 hidden-xs">
+                        <p class="text-muted mb-1">Aujourd'hui</p>
+                        <h5 class="mb-0"><span class="separateur">@ViewData["day"]</span> FCFA</h5>
+                      </div>
+                      @* <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                        <p class="text-muted mb-1">Cette Semaine</p>
+                        <h5 class="mb-0"><span class="separateur"></span> FCFA</h5>
+                      </div> *@
+                      <div class="pr-4 mb-2 mb-xl-0">
+                        <p class="text-muted mb-1">Ce Mois</p>
+                        <h5 class="mb-0"><span class="separateur">@ViewData["Month"]</span> FCFA</h5>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="body">
+                  <form>
+                    <div class="input-group">
+                      <input type="search" id="search" class="form-control" placeholder="Barre de recherche...">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="search-mail">
+                          <i class="icon-magnifier"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+                <div class="card">
+                  <div class="body">
+                      <div class="table-responsive">
+                        <table id="testfiltre" class="table table-border table-hover js-basic-example dataTable">
+                            <thead>
+                              <tr style="color: #76b440;">
+                                  <th><strong>#Numéro facture</strong></th>
+                                  <th><strong>Date de paiement</strong></th>
+                                  <th><strong>Patient</strong></th>
+                                  <th><strong>Numéro dossier</strong></th>
+                                  <th><strong>Montant</strong></th>
+                                  <th><strong>Moyen Paiement</strong></th>
+                                   <th><strong>Caissier</strong></th>
+                                  <th><strong>Observation</strong></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach (var item in Model)
+                              {
+                                <tr class="montest">
+                                    @if (item.fact_type.Contains("caution"))
+                                    {
+                                      <td style="border: 1px solid #dee2e6;">#Caution Nº: @item.Numero_facture</td>
+                                    }else{
+                                      <td style="border: 1px solid #dee2e6;">#Facture Nº: @item.Numero_facture</td>
+                                    }
+                                    <td>@item.Create_date.ToString("dd/MM/yyyy") @item.Create_date.ToShortTimeString()</td>
+                                    <td>@item.Patient</td>
+                                    <td>@item.Numero_dossier</td>
+                                    <td><span class="separateur">@item.Montant</span> FCFA</td>
+                                    <td>@item.Moyen_paiement</td>
+                                    <td>@item.Caissier</td>
+                                    <td>@item.Observation</td>
+                                </tr>
+                              }
+                              
+
+                             
+                            </tbody>
+                        </table>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      <a  style="color: white;position: fixed;right: 100px;bottom: 45px;" onclick="return tableToExcel('testfiltre', 'Example Table');" class="btn btn-lg btn-primary btn-lg-square"><i  class="fa fa-file-excel-o"></i></a>
+

@@ -1,0 +1,73 @@
+@model IEnumerable<BANA.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout="_Layout3";
+}
+
+    <!-- Calendar CSS -->
+    <link rel="stylesheet" href="/template2/assets/vendor/calendar/css/main.min.css">
+    <link rel="stylesheet" href="/template2/assets/vendor/calendar/css/custom2.css">
+
+ <!-- App container starts -->
+        <div class="app-container">
+
+          <!-- App hero header starts -->
+          <div class="app-hero-header d-flex align-items-center">
+
+            <!-- Breadcrumb starts -->
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <i class="ri-home-8-line lh-1 pe-3 me-3 border-end"></i>
+                <a href="index.html">Home</a>
+              </li>
+              <li class="breadcrumb-item text-primary" aria-current="page">
+                Appointments
+              </li>
+            </ol>
+            <!-- Breadcrumb ends -->
+
+            <!-- Sales stats starts -->
+            <div class="ms-auto d-lg-flex d-none flex-row">
+              <div class="d-flex flex-row gap-1 day-sorting">
+                <button class="btn btn-sm btn-primary">Today</button>
+                <button class="btn btn-sm">7d</button>
+                <button class="btn btn-sm">2w</button>
+                <button class="btn btn-sm">1m</button>
+                <button class="btn btn-sm">3m</button>
+                <button class="btn btn-sm">6m</button>
+                <button class="btn btn-sm">1y</button>
+              </div>
+            </div>
+            <!-- Sales stats ends -->
+
+          </div>
+          <!-- App Hero header ends -->
+
+          <!-- App body starts -->
+          <div class="app-body">
+
+            <!-- Row starts -->
+            <div class="row gx-3">
+              <div class="col-sm-12 col-12">
+                <div class="card">
+                  <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="card-title">Rendez-vous</h5>
+                    <a asp-action="Create" class="btn btn-primary ms-auto">ajoutez un Rendez-vous</a>
+                  </div>
+                  <div class="card-body">
+
+                    <div id="appointmentsCal"></div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Row ends -->
+
+          </div>
+          <!-- App body ends -->
+
+ <!-- Calendar JS -->
+    <script src="/template2/assets/vendor/calendar/js/main.min.js"></script>
+    <script src="/template2/assets/vendor/calendar/custom/appointments-calendar.js"></script>

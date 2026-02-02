@@ -1,0 +1,111 @@
+@model IEnumerable<BANA.Models.Resultat>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row clearfix">
+              <div class="col-lg-4 col-md-12 col-sm-12">
+                <h1>Resultats d'Examens!</h1>
+                <span>@ViewData["tipe"]</span>
+              </div>
+              <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
+                <div class="d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0 flex-wrap vivify pullUp delay-550">
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0 hidden-xs">
+                    <p class="text-muted mb-1">Analyse Médicale</p>
+                     <h5 class="mb-0 separateur">0</h5> 
+                  </div>
+                  <div class="border-right pr-4 mr-4 mb-2 mb-xl-0">
+                    <p class="text-muted mb-1">Imagerie Médicale</p>
+                    <h5 class="mb-0 separateur">0</h5>
+                  </div>
+                  <div class="pr-4 mb-2 mb-xl-0">
+                    <p class="text-muted mb-1">Total</p>
+                    <h5 class="mb-0 separateur">@Model.Count()</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="body">
+                  <form asp-controller="Resultat" asp-action="ImpressionLabo"  method="get">
+                    <div class="input-group">
+                      <input type="search" id="search" name="SearchString" class="form-control" placeholder="Barre de recherche...">
+                      <div class="input-group-append">
+                        <span class="input-group-text" id="search-mail">
+                          <i class="icon-magnifier"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+               <div class="card">
+                <div  class="table-responsive">
+                  <table  class="table table-hover mb-0">
+                    <thead>
+                      <tr>
+                        
+                        <th><strong>Nomination</strong></th>
+                        <th><strong>Patient</strong></th>
+                        <th><strong>Date Creation</strong></th>
+                        <th><strong>Nº Facture</strong></th>
+                        <th><strong>Status</strong></th>
+                        <th><strong>Actions</strong></th>
+                      </tr>
+                    </thead>
+                    <tbody id="testfiltre">
+                        @foreach (var item in Model)
+                        {
+                         
+                          <tr class="montest">
+                            <td class="w60">
+                             <div class="d-flex align-items-center">
+                              <img src="/img1/reactifs.png" data-toggle="tooltip" data-placement="top" title="@item.Nom" alt="Avatar" class="rounded-circle w35 h35">
+                              <div class="ml-3">
+                                <a asp-action="Detailsgroupe" asp-route-Id="@item.Id" title="">@item.Nom</a>
+                                <p class="mb-0">Numéro dossier: @item.NumeroDossier</p>
+                              </div>
+                            </div>
+                            </td>
+                            <td><div style="max-width: 200px;overflow: hidden;">@item.NomPatient</div> </td>
+                            <td>@item.Create_date.ToString("dd/MM/yyyy") @item.Create_date.ToShortTimeString()</td>
+                            <td>@item.NumeroFacture</td>
+                            <td>@if (item.valide_par!=null){<span class="badge border border-success text-success">Cloturé</span>}else{<span class="badge border border-warning text-warning">En cours</span>}
+                              
+                            </td>
+                            <td> 
+                              @if (item.valide_par==null)
+                              {
+                                 <button type="button" onclick="location.href='/Resultat/Edit/@item.Id';" class="btn btn-outline-secondary" title="Edit">
+                                  <i class="fa fa-pencil"></i>
+                                </button>
+                              }
+                             
+                            </td>
+                          </tr>
+                         
+                        }
+                    </tbody>
+                  </table>
+                </div>
+              </div> 
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">Previous</a>
+                  </li>
+                  
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0);">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
